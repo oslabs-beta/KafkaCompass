@@ -5,10 +5,15 @@ import { useNavigate } from 'react-router-dom';
 const LandingPage = (props) => {
     const navigate = useNavigate();
 
+    function openDashboard () {
+        console.log('open Dashboard Clicked')
+        navigate('/dashboard');
+    }
+
     return (
         <div >
-            LandingPage!
-            <button onClick={navigate('/dashboard')}>Navigate to Dashboard</button>
+            <h1>LandingPage!</h1>
+            <button onClick={openDashboard}>Navigate to Dashboard</button>
         </div>
     )
 }
