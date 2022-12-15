@@ -18,11 +18,16 @@ module.exports = {
     },
     proxy: {
       '/': 'http://localhost:3000',
+      // '/': {
+      //   target: 'http://localhost:8080',
+      //   router: () => 'http://localhost:3000',
+      //   secure: false,
+      // },
     },
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './index.html',
+      template: 'index.html',
     }),
   ],
   module: {
@@ -55,5 +60,5 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
-  }
+  },
 };
