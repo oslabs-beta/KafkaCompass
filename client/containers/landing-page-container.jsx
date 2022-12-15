@@ -13,9 +13,14 @@ const LandingPage = (props) => {
 
     return (
         <div>
+            <div className="navbar bg-neutral text-neutral-content flex-row">
+            <a className="btn btn-ghost normal-case text-4xl shadow-outline text-red-200">KafkaCompass</a>
+            <a className="btn btn-ghost normal-case text-5xl order-2 text-gray-800">About</a>
+            <a className="btn btn-ghost normal-case text-sm order-4">Login/SignUp</a>
+            </div>
             <h1>LandingPage!</h1>
-            <button className="bg-sky-600 hover:bg-sky-700 px-5 py-3 text-white rounded-lg text-3xl">THIS IS A TEST BUTTON</button>
-            <button className="btn">DAISY UI BUTTON</button>
+            <button className="btn btn-main shadow">THIS IS A TEST BUTTON</button>
+            <button class="btn btn-main">DAISY UI BUTTON</button>
             <button onClick={openDashboard}>Navigate to Dashboard</button>
         </div>
     )
