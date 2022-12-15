@@ -26,3 +26,23 @@
 .tool-bar { grid-area: tool-bar; }
 
 .view-container { grid-area: view-container; }
+
+
+.navbar {
+  border-bottom: 1 px solud lightgray;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 60vw;
+  margin: auto;
+}
+
+.landing-container article h1 {
+  text-align: center;
+}
