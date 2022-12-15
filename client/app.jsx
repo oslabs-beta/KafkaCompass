@@ -10,6 +10,7 @@ import {
 import DashboardContainer from './containers/dashboard-container';
 import LandingPage from './containers/landing-page-container';
 import NotFound from './containers/NotFound';
+import './static/styles.css';
 
 function App() {
   const navigate = useNavigate();
