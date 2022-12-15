@@ -5,9 +5,11 @@ import {
   Routes,
   useNavigate,
   NavLink,
+  Switch,
 } from 'react-router-dom';
 import DashboardContainer from './containers/dashboard-container';
 import LandingPage from './containers/landing-page-container';
+import NotFound from './containers/NotFound';
 
 function App() {
   const navigate = useNavigate();
@@ -18,11 +20,12 @@ function App() {
 
   return (
     <div>
-      App!!
+      {/* App!!
       <div>
         <NavLink to='/dashboard'>Link to Dashboard</NavLink>
-      </div>
+      </div> */}
       <Routes>
+        <Route path='*' element={<NotFound />} />
         <Route exact path='/dashboard' element={<DashboardContainer />} />
         <Route exact path='/' element={<LandingPage />} />
       </Routes>

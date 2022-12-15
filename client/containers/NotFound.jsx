@@ -1,5 +1,13 @@
+import React, { useState } from 'react';
+import dog from '../resources/images/404-dog.jpg';
+
 const NotFound = () => {
-  return <h1>404 Error: Not Found</h1>;
+  return (
+    <div>
+      <h1>404 Error: Not Found</h1>
+      <img src={dog}></img>
+    </div>
+  );
 };
 
-export default DashboardContainer;
+export default NotFound;
