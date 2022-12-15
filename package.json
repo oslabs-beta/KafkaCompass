@@ -24,7 +24,8 @@
     "nodemon": "^2.0.20",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.4.5"
+    "react-router-dom": "^6.4.5",
+    "tailwindcss": "^3.2.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.5",
