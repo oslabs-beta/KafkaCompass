@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "NODE_ENV=production webpack",
     "start": "nodemon server/server.js",
-    "dev": " concurrently \"nodemon server/server.js\" \"NODE_ENV=development webpack-dev-server --open --hot --progress --color\""
+    "watch-css": "npx tailwindcss -i ./client/static/styles.css -o ./dist/output.css --watch",
+    "dev": " concurrently \"nodemon server/server.js\" \"npm run watch-css\" \"NODE_ENV=development webpack-dev-server --open --hot --progress --color\""
   },
   "repository": {
     "type": "git",
