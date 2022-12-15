@@ -3,6 +3,7 @@ import { redirect } from "react-router";
 import { useNavigate } from 'react-router-dom';
 import '../static/styles.css'
 
+
 const LandingPage = (props) => {
     const navigate = useNavigate();
 
@@ -12,17 +13,13 @@ const LandingPage = (props) => {
     }
 
     return (
-        <div>
-            <div className="navbar bg-neutral text-neutral-content flex-row">
-            <a className="btn btn-ghost normal-case text-4xl shadow-outline text-red-200">KafkaCompass</a>
-            <a className="btn btn-ghost normal-case text-5xl order-2 text-gray-800">About</a>
-            <a className="btn btn-ghost normal-case text-sm order-4">Login/SignUp</a>
-            </div>
-            <h1>LandingPage!</h1>
-            <button className="btn btn-main shadow">THIS IS A TEST BUTTON</button>
-            <button class="btn btn-main">DAISY UI BUTTON</button>
-            <button onClick={openDashboard}>Navigate to Dashboard</button>
-        </div>
+        <main className='landing-container'>
+            <article className='font-mono'>
+                <h1 className='text-3xl'>Kafka Compass</h1>
+                <p className='my-7'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </article>
+            <button className="btn" onClick={openDashboard}>Navigate to Dashboard</button>
+        </main>
     )
 }
 

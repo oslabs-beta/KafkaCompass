@@ -10,6 +10,7 @@ import {
 import DashboardContainer from './containers/dashboard-container';
 import LandingPage from './containers/landing-page-container';
 import NotFound from './containers/NotFound';
+import Navbar from './components/nav-bar';
 import './static/styles.css';
 
 function App() {
@@ -21,10 +22,7 @@ function App() {
 
   return (
     <div>
-      {/* App!!
-      <div>
-        <NavLink to='/dashboard'>Link to Dashboard</NavLink>
-      </div> */}
+      <Navbar />
       <Routes>
         <Route path='*' element={<NotFound />} />
         <Route exact path='/dashboard' element={<DashboardContainer />} />

@@ -5,5 +5,25 @@
 @layer components {
   .btn-main {
     @apply bg-sky-600 hover:bg-sky-700 px-5 py-3 text-white rounded-lg;
-  }
+  } 
+
+
+.navbar {
+  border-bottom: 1 px solud lightgray;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 60vw;
+  margin: auto;
+}
+
+.landing-container article h1 {
+  text-align: center;
+}
 }
