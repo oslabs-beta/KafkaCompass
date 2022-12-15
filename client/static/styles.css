@@ -5,9 +5,7 @@
 @layer components {
   .btn-main {
     @apply bg-sky-600 hover:bg-sky-700 px-5 py-3 text-white rounded-lg;
-<<<<<<< HEAD
-<<<<<<< HEAD
-  } */
+  } 
 
 
 .navbar {
@@ -27,10 +25,5 @@
 
 .landing-container article h1 {
   text-align: center;
-=======
-  }
->>>>>>> dev
-=======
-  }
->>>>>>> dev
+}
 }
