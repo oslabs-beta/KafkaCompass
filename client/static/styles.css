@@ -2,27 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @layer components {
+@layer components {
   .btn-main {
     @apply bg-sky-600 hover:bg-sky-700 px-5 py-3 text-white rounded-lg;
-  } */
-
-  .dashboard-container {  display: grid;
-    grid-template-columns: 1fr 1fr 1.2fr 0.8fr;
-    grid-template-rows: 0.5fr 1fr 1fr 1fr 1fr;
-    gap: 0px 0px;
-    grid-auto-flow: row;
-    grid-template-areas:
-      "nav-bar nav-bar nav-bar nav-bar"
-      "tool-bar view-container view-container view-container"
-      "tool-bar view-container view-container view-container"
-      "tool-bar view-container view-container view-container"
-      "tool-bar view-container view-container view-container";
   }
-  
-  .nav-bar { grid-area: nav-bar; }
-  
-  .tool-bar { grid-area: tool-bar; }
-  
-  .view-container { grid-area: view-container; }
-  
+}
+
+.dashboard-container {  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr 0.8fr;
+  grid-template-rows: 0.5fr 1fr 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "nav-bar nav-bar nav-bar nav-bar"
+    "tool-bar view-container view-container view-container"
+    "tool-bar view-container view-container view-container"
+    "tool-bar view-container view-container view-container"
+    "tool-bar view-container view-container view-container";
+}
+
+.nav-bar { grid-area: nav-bar; }
+
+.tool-bar { grid-area: tool-bar; }
+
+.view-container { grid-area: view-container; }
