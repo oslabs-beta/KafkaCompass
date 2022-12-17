@@ -17,7 +17,7 @@ module.exports = {
       publicPath: '/',
     },
     proxy: {
-      '/': 'http://localhost:3000',
+      '/api': 'http://localhost:3000',
       // '/': {
       //   target: 'http://localhost:8080',
       //   router: () => 'http://localhost:3000',
