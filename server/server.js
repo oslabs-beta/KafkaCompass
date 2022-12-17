@@ -5,6 +5,7 @@ const PORT = 3000;
 
 const app = express();
 
+// to parse incoming json objects 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
