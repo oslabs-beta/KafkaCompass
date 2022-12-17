@@ -18,7 +18,9 @@
   width: 60vw;
   height: 500px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   z-index: 9;
   position: fixed;
   background-color: white;

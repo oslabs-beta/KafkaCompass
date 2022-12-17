@@ -11,20 +11,20 @@ const LandingPage = (props) => {
     const navigate = useNavigate();
     const {register, handleSubmit } = useForm();
     const [username, setUsername] = useState('');
-    const [displayAuth, setDisplay] = useState(false);
+    const [displayLogin, setDisplayLogin] = useState(false);
     const nodeRef = useRef(null);
 
     function openDashboard () {
-        console.log('open Dashboard Clicked')
         navigate('/dashboard');
     }
+
 
     const onLogin = data => {
         setUsername(data.username);
     }
 
     const handleLogin = () => {
-        setDisplay(true);
+        setDisplayLogin(true);
     }
  
     return (
@@ -37,14 +37,17 @@ const LandingPage = (props) => {
             </article>
             <button className="btn" onClick={openDashboard}>Navigate to Dashboard</button>
 
-            {displayAuth &&
-            <form ref={nodeRef} className='auth-form' onSubmit={handleSubmit(onLogin)} >
-                    <div className='wrapper shadow'>
-                        <input className="my-7 input input-bordered input-accent w-full max-w-xs" placeholder="Username..." {...register("username", { required: true })} name="username" type="text" />
-                        <input className="my-2 input input-bordered input-accent w-full max-w-xs" placeholder="Password..." {...register("password", { required: true })} name="password" type="password" />
-                        <input className="btn my-7 btn-outline btn-accent auth-input" value="Log In" type="submit" />
-                    </div>
-            </form>}
+            {displayLogin &&
+            <>
+                <form ref={nodeRef} className='auth-form' onSubmit={handleSubmit(onLogin)} >
+                        <div className='wrapper shadow'>
+                            <input className="my-7 input input-bordered input-accent w-full max-w-xs" placeholder="Username..." {...register("username", { required: true })} name="username" type="text" />
+                            <input className="my-2 input input-bordered input-accent w-full max-w-xs" placeholder="Password..." {...register("password", { required: true })} name="password" type="password" />
+                            <input className="btn my-7 btn-outline btn-accent auth-input" value="Log In" type="submit" />
+                        </div>
+                        <button onClick={() => setDisplayLogin(false)} className="btn btn-accent">Back to main</button>
+                </form>
+            </>}
         </main>
         </>
     )
