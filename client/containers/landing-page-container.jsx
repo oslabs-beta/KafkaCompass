@@ -20,13 +20,24 @@ const LandingPage = (props) => {
 
     const onLogin = async data => {
         try {
-            const response = await fetch('/api/login');
-            const data = await response.json();
+            console.log('in login frontend')
             console.log(data);
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                  },
+                body: JSON.stringify({
+                    username: data.username,
+                    password: data.password
+                })
+            });
+            const logged = await response.json();
+            console.log(logged);
+            setUsername(data.username);
         } catch(err) {
             console.log('Login failed');
         }
-        setUsername(data.username);
     }
 
     const handleLogin = () => {

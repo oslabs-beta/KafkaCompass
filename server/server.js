@@ -5,6 +5,10 @@ const PORT = 3000;
 
 const app = express();
 
+// to parse incoming json objects 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(express.static(path.resolve(__dirname, '../dist')));
 
 app.use(session({
@@ -25,7 +29,6 @@ app.use('/api/login', (req, res, next) => {
 //   console.log('WE ARE HERE');
 //   res.sendFile(path.resolve(__dirname, '../dist/index.html'));
 // });
-
 //requests to server go here
 
 //catch-all that sends index.html file to client-side
