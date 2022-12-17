@@ -99,12 +99,12 @@ const DashboardContainer = (props) => {
     async function submitNewCluster () {
         // create object to send to db
         const newCluster = {
-            APIKey: newAPIKeyInput,
-            APISecret: newAPISecretInput,
-            cloudKey: newCloudKeyInput,
-            cloudSecret: newCloudSecretInput,
-            RESTEndpoint: newRESTEndpointInput,
+            API_KEY: newAPIKeyInput,
+            API_SECRET: newAPISecretInput,
+            CLOUD_KEY: newCloudKeyInput,
+            CLOUD_SECRET: newCloudSecretInput,
             clusterId: newClusterIdInput,
+            RESTendpoint: newRESTEndpointInput,
         }
         console.log('newCluster: ', newCluster);
         // send post request to backend
