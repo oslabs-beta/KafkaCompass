@@ -20,6 +20,8 @@ function App() {
   //     useNavigate('/dashboard');
   // }
 
+  const [page, setPage] = useState('landing');
+
   return (
     <div>
       <Routes>

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 import Navbar from '../components/nav-bar';
 import '../static/styles.css'
+import Navbar from "../components/nav-bar";
 
 
 const LandingPage = (props) => {
@@ -29,7 +30,7 @@ const LandingPage = (props) => {
  
     return (
         <>
-        <Navbar handleLogin={handleLogin} />
+        <Navbar handleLogin={handleLogin}  renderDrawerButton={false}/>
         <main className='landing-container'>
             <article className='font-mono'>
                 <h1 className='text-3xl'>Kafka Compass</h1>
