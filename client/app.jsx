@@ -20,9 +20,10 @@ function App() {
   //     useNavigate('/dashboard');
   // }
 
+  const [page, setPage] = useState('landing');
+
   return (
     <div>
-      <Navbar />
       <Routes>
         <Route path='*' element={<NotFound />} />
         <Route exact path='/dashboard' element={<DashboardContainer />} />

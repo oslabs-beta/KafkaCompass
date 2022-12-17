@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { redirect } from "react-router";
 import { useNavigate } from 'react-router-dom';
 import '../static/styles.css'
+import Navbar from "../components/nav-bar";
 
 
 const LandingPage = (props) => {
@@ -13,6 +14,8 @@ const LandingPage = (props) => {
     }
 
     return (
+        <>
+        <Navbar renderDrawerButton={false}/>
         <main className='landing-container'>
             <article className='font-mono'>
                 <h1 className='text-3xl'>Kafka Compass</h1>
@@ -20,6 +23,7 @@ const LandingPage = (props) => {
             </article>
             <button className="btn" onClick={openDashboard}>Navigate to Dashboard</button>
         </main>
+        </>
     )
 }
 
