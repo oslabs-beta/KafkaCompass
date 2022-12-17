@@ -77,7 +77,7 @@ const getListOfTopics = async() => {
     console.log(data);
 }
 
-// getListOfTopics();
+getListOfTopics();
 
 // Returns a list of configuration parameters for the specified Kafka cluster.
 // I don't know, the data array is empty in my case

@@ -22,7 +22,6 @@ function App() {
 
   return (
     <div>
-      <Navbar />
       <Routes>
         <Route path='*' element={<NotFound />} />
         <Route exact path='/dashboard' element={<DashboardContainer />} />
