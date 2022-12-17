@@ -28,10 +28,11 @@ const DashboardContainer = (props) => {
         <Navbar renderDrawerButton={true}/>
         <div class="drawer">
             <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-            <div class="drawer-content">
+            <div class="drawer-content border-solid border-2 border-black-500">
                 <div className="flex justify-around">
                     <div class="btn-group">
-                        <button class="btn btn-active">Realtime Monitoring</button>
+                        <button class="btn btn-active">View Cluster</button>
+                        <button class="btn">Realtime Monitoring</button>
                         <button class="btn">Cluster Comparison</button>
                     </div>
                 </div>
@@ -41,8 +42,8 @@ const DashboardContainer = (props) => {
                 <label for="my-drawer" class="drawer-overlay"></label>
                 <ul class="menu p-4 w-80 bg-base-100 text-base-content">
                 {/* <!-- Sidebar content here --> */}
-                <li><a>Sidebar Item 1</a></li>
-                <li><a>Sidebar Item 2</a></li>
+                <li><a>bytes-in/bytes-out</a></li>
+                <li><a>Shutdown Time</a></li>
                 </ul>
             </div>
         </div>

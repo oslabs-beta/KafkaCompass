@@ -8,7 +8,7 @@ const Navbar = (props) => {
     if (renderDrawerButton) {
         drawerButton = (
         <div class="flex-1">
-            <label for="my-drawer" class="btn btn-primary drawer-button mr-10 my-7">Change Metrics</label>
+            <label for="my-drawer" class="btn btn-primary drawer-button mr-10 my-7">Select Metrics</label>
             <button className="btn btn-secondary btn-outline mr-10 my-7">Cluster History</button>
             <button className="btn btn-secondary mr-10 my-7">Add New Cluster</button>
         </div>);
