@@ -33,6 +33,24 @@ const DashboardContainer = (props) => {
         setMode('clusterComparison');
     };
 
+    // sets current dashboard view
+    let dashboardView = <></>;
+    if (mode === 'viewCluster') {
+        dashboardView = (
+            <button className = 'btn btn-secondary'>Choose Cluster</button>
+        )
+    }
+    else if (mode === 'realTimeMonitoring') {
+        dashboardView = (
+            <></>
+        )
+    }
+    else {
+        dashboardView = (
+            <></>
+        )
+    }
+
     // update metrics object with desired viewing metrics
     function changeBytesInPerSecMetric () {
         const setting = metricSelection.bytesInPerSec ? false : true;
@@ -78,16 +96,30 @@ const DashboardContainer = (props) => {
     function updateNewClusterIdInput (e) {
         setNewClusterIdInput(e.target.value);
     }
-    function submitNewCluster () {
+    async function submitNewCluster () {
+        // create object to send to db
         const newCluster = {
             APIKey: newAPIKeyInput,
             APISecret: newAPISecretInput,
             cloudKey: newCloudKeyInput,
-            cloudSecret: NewCloudSecretInput,
+            cloudSecret: newCloudSecretInput,
             RESTEndpoint: newRESTEndpointInput,
-            ClusterId: NewClusterIdInput,
+            clusterId: newClusterIdInput,
         }
         console.log('newCluster: ', newCluster);
+        // send post request to backend
+        const response = await fetch ('/api/cloudAuth', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+              },
+            body: JSON.stringify(newCluster)
+        })
+        const message = await response.json();
+
+        //add functionality here to tell user if cluster was successfully added to DB, using status code as indicator
+        //maybe a green banner saying request was successful and red if not successful
+        //fields will clear out if this cluster was successfully added
         setNewAPIKeyInput('');
         setNewAPISecretInput('');
         setNewCloudKeyInput('');
@@ -108,6 +140,9 @@ const DashboardContainer = (props) => {
                         <button className={mode === 'realtimeMonitoring' ? 'btn btn-active' : 'btn'} onClick={changeModeRealtimeMonitoring}>Realtime Monitoring</button>
                         <button className={mode === 'clusterComparison' ? 'btn btn-active' : 'btn'} onClick={changeModeClusterComparison}>Cluster Comparison</button>
                     </div>
+                </div>
+                <div className="flex justify-around pt-10">
+                    {dashboardView}
                 </div>
                 <input type="checkbox" id="my-modal-4" class="modal-toggle" />
                 <label for="my-modal-4" class="modal cursor-pointer">
