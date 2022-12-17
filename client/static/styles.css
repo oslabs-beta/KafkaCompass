@@ -60,6 +60,7 @@
 .wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   background-color: rgb(46, 52, 64);
   border-radius: 20px;
