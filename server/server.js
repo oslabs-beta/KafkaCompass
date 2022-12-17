@@ -4,11 +4,13 @@ const PORT = 3000;
 
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(express.static(path.resolve(__dirname, '../dist')));
 
-app.use('/api/login', (req, res, next) => {
-  console.log('in server');
-  res.status(200).json('Daria');
+app.use('/api/login', checkId, (req, res, next) => {
+
 })
 
 // app.get('/', (req, res) => {
