@@ -11,7 +11,7 @@ const LandingPage = (props) => {
     const navigate = useNavigate();
     const {register, handleSubmit } = useForm();
     const [username, setUsername] = useState('');
-    const [displayLogin, setDisplayLogin] = useState(false);
+    const [displayAuth, setDisplayAuth] = useState({display: false, mode: ''});
 
     function openDashboard () {
         navigate('/dashboard');
@@ -20,9 +20,7 @@ const LandingPage = (props) => {
 
     const onLogin = async data => {
         try {
-            console.log('in login frontend')
-            console.log(data);
-            const response = await fetch('/api/login', {
+            await fetch('/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -32,21 +30,28 @@ const LandingPage = (props) => {
                     password: data.password
                 })
             });
-            const logged = await response.json();
-            console.log(logged);
-            setUsername(data.username);
+            setUsername({username: data.username});
+            setDisplayLogin(false);
         } catch(err) {
             console.log('Login failed');
         }
     }
 
-    const handleLogin = () => {
-        setDisplayLogin(true);
+    const onSignup = () => {
+        console.log('sign up');
     }
+
+    // when button for sign uo or log in is clicked, app displays authorization form
+    // if login form should be displayed, we set mode to login
+    // if sign up form should be displayed, we set mode to sign up
+    const handleAuth = mode => {
+        setDisplayAuth({display: true, mode: mode});
+    }
+
  
     return (
         <>
-        <Navbar handleLogin={handleLogin}  renderDrawerButton={false}/>
+        <Navbar handleAuth={handleAuth}  renderDrawerButton={false}/>
         <main className='landing-container'>
             <article className='font-mono'>
                 <h1 className='text-3xl'>Kafka Compass</h1>
@@ -54,7 +59,13 @@ const LandingPage = (props) => {
             </article>
             <button className="btn" onClick={openDashboard}>Navigate to Dashboard</button>
 
-            {displayLogin && <Auth register={register} setDisplayLogin={setDisplayLogin} onLogin={onLogin} handleSubmit={handleSubmit} /> }
+            {displayAuth.display && <Auth 
+                                mode={displayAuth.mode}
+                                register={register} 
+                                setDisplayAuth={setDisplayAuth} 
+                                onLogin={onLogin} 
+                                onSignup={onSignup}
+                                handleSubmit={handleSubmit} /> }
         </main>
         </>
     )
