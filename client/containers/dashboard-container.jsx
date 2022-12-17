@@ -5,25 +5,53 @@ import Navbar from "../components/nav-bar";
 
 const DashboardContainer = (props) => {
 
-    const [mode, setMode] = useState('realtime');
+    const [mode, setMode] = useState('viewCluster');
+    const [metricSelection, setMetricSelection] = useState({
+        bytesInPerSec: false,
+        bytesOutPerSec: false,
+        shutdownOperationsTime: false,
+        requestLatencyAvg: false,
+        ioWaitTimeAvg: false,
+    });
+
+    // mode switching functions
+    function changeModeViewCluster () {
+        setMode('viewCluster');
+    };
+    function changeModeRealtimeMonitoring () {
+        setMode('realtimeMonitoring');
+    };
+    function changeModeClusterComparison () {
+        setMode('clusterComparison');
+    };
+
+    // update metrics object with desired viewing metrics
+    function changeBytesInPerSecMetric () {
+        const setting = metricSelection.bytesInPerSec ? false : true;
+        setMetricSelection((prev) => ({...prev, bytesInPerSec: setting}));
+    }
+    function changeBytesOutPerSecMetric () {
+        const setting = metricSelection.bytesOutPerSec ? false : true;
+        setMetricSelection((prev) => ({...prev, bytesOutPerSec: setting}));
+    }
+    function changeShutdownOperationsTime () {
+        const setting = metricSelection.shutdownOperationsTime ? false : true;
+        setMetricSelection((prev) => ({...prev, shutdownOperationsTime: setting}));
+    }
+    function changeShutdownOperationsTime () {
+        const setting = metricSelection.shutdownOperationsTime ? false : true;
+        setMetricSelection((prev) => ({...prev, shutdownOperationsTime: setting}));
+    }
+    function changeRequestLatencyAvg () {
+        const setting = metricSelection.requestLatencyAvg ? false : true;
+        setMetricSelection((prev) => ({...prev, requestLatencyAvg: setting}));
+    }
+    function changeIoWaitTimeAvg () {
+        const setting = metricSelection.ioWaitTimeAvg ? false : true;
+        setMetricSelection((prev) => ({...prev, ioWaitTimeAvg: setting}));
+    }
 
     return (
-        // <>
-        // <h1 >
-        //     DashboardContainer!
-        // </h1>
-        // <div class="dashboard-container">
-        //     <div class="nav-bar">Nav Bar</div>
-        //     <div class="tool-bar border-solid border-2 border-indigo-600 ">
-        //         <h2>Tool Bar</h2>
-        //     </div>
-        //     <div className="view-container border-solid border-2 border-indigo-600 text-red-500">
-        //         <h2>View Container</h2>
-        //         <div>Views!</div>
-        //     </div>
-        // </div>
-        // </>
-           // <>
         <>
         <Navbar renderDrawerButton={true}/>
         <div class="drawer">
@@ -31,9 +59,9 @@ const DashboardContainer = (props) => {
             <div class="drawer-content border-solid border-2 border-black-500">
                 <div className="flex justify-around">
                     <div class="btn-group">
-                        <button class="btn btn-active">View Cluster</button>
-                        <button class="btn">Realtime Monitoring</button>
-                        <button class="btn">Cluster Comparison</button>
+                        <button className={mode === 'viewCluster' ? 'btn btn-active' : 'btn'} onClick={changeModeViewCluster}>View Cluster</button>
+                        <button className={mode === 'realtimeMonitoring' ? 'btn btn-active' : 'btn'} onClick={changeModeRealtimeMonitoring}>Realtime Monitoring</button>
+                        <button className={mode === 'clusterComparison' ? 'btn btn-active' : 'btn'} onClick={changeModeClusterComparison}>Cluster Comparison</button>
                     </div>
                 </div>
                 {/* <!-- Page content here --> */}
@@ -42,8 +70,11 @@ const DashboardContainer = (props) => {
                 <label for="my-drawer" class="drawer-overlay"></label>
                 <ul class="menu p-4 w-80 bg-base-100 text-base-content">
                 {/* <!-- Sidebar content here --> */}
-                <li><a>bytes-in/bytes-out</a></li>
-                <li><a>Shutdown Time</a></li>
+                <li onClick={changeBytesInPerSecMetric} class={metricSelection.bytesInPerSec ? 'bg-secondary' : ''}><a>Bytes-in/sec</a></li>
+                <li onClick={changeBytesOutPerSecMetric} class={metricSelection.bytesOutPerSec ? 'bg-secondary' : ''}><a>Bytes-out/sec</a></li>
+                <li onClick={changeShutdownOperationsTime} class={metricSelection.shutdownOperationsTime ? 'bg-secondary' : ''}><a>Shutdown Operations Time</a></li>
+                <li onClick={changeRequestLatencyAvg} class={metricSelection.requestLatencyAvg ? 'bg-secondary' : ''}><a>Request Latency Average</a></li>
+                <li onClick={changeIoWaitTimeAvg} class={metricSelection.ioWaitTimeAvg ? 'bg-secondary' : ''}><a>io Wait Time Average</a></li>
                 </ul>
             </div>
         </div>
