@@ -10,7 +10,7 @@ const Navbar = (props) => {
         <div class="flex-1">
             <label for="my-drawer" class="btn btn-primary drawer-button mr-10 my-7">Select Metrics</label>
             <button className="btn btn-secondary btn-outline mr-10 my-7">Cluster History</button>
-            <button className="btn btn-secondary mr-10 my-7">Add New Cluster</button>
+            <label for="my-modal-4" class="btn">Add New Cluster</label>
         </div>);
     }
 
