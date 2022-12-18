@@ -35,15 +35,24 @@
 }
 
 .auth-form {
-  width: 60vw;
   height: 500px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  z-index: 9;
-  position: fixed;
   background-color: white;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(46, 52, 64);
+  border-radius: 20px;
+  width: 30vw;
+  height: 400px;
+  padding: 20px;
 }
 
 .auth-form-enter {
@@ -55,18 +64,6 @@
   opacity: 1;
   transform: translateX(0);
   transition: opacity 300ms, transform 300ms;
-}
-
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: rgb(46, 52, 64);
-  border-radius: 20px;
-  width: 50%;
-  height: 400px;
-  padding: 20px;
 }
 
 .wrapper input {
