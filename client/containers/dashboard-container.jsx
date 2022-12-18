@@ -4,6 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from "../components/nav-bar";
 
 const DashboardContainer = (props) => {
+    useEffect( () => {
+        props.setDrawerButton(true);
+    });
+
     // dictates the view mode on dashbaord
     const [mode, setMode] = useState('viewCluster');
     // keeps track of user-selected metrics
@@ -130,7 +134,6 @@ const DashboardContainer = (props) => {
 
     return (
         <>
-        <Navbar renderDrawerButton={true}/>
         <div class="drawer">
             <input id="my-drawer" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content border-solid border-2 border-black-500">

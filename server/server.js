@@ -21,10 +21,15 @@ app.use(session({
 }))
 
 app.use('/api/login', (req, res, next) => {
-  console.log('in server');
+  console.log('in login');
   console.log(req.session);
   console.log(req.sessionID);
   res.status(200).json('Daria');
+})
+
+// testing endpoint for sign up
+app.use('/api/signup', (req, res, next) => {
+  res.sendStatus(200);
 })
 
 // app.get('/', (req, res) => {
@@ -41,6 +46,18 @@ app.post('/api/cloud-auth', cloudAuthController.encryptCredentials, (req, res) =
 //   console.log('here');
 //   res.sendFile(path.resolve(__dirname, '../dist/index.html'));
 // });
+
+// global error handler
+app.use((err, req, res, next) => {
+  const defaultErr = {
+    log: 'Express error handler caught unknown middleware error',
+    status: 400,
+    message: { err: 'Unknown error occurred' },
+  };
+  const errorObj = Object.assign(defaultErr, err);
+  console.log('Global error handler caught: ', errorObj.log);
+  return res.status(errorObj.status).json(errorObj.message);
+});
 
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);
