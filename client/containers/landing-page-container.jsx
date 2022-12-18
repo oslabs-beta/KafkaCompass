@@ -20,7 +20,7 @@ const LandingPage = (props) => {
 
     const onLogin = async data => {
         try {
-            await fetch('/api/login', {
+            const response = await fetch('/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -30,15 +30,42 @@ const LandingPage = (props) => {
                     password: data.password
                 })
             });
-            setUsername({username: data.username});
-            setDisplayLogin(false);
+            if (response.ok) {
+                setUsername({username: data.username});
+                setDisplayAuth({display: false});
+                return openDashboard();
+            }
+            console.log('Login failed: invalid password or username');
         } catch(err) {
-            console.log('Login failed');
+            console.log('Network error occurred');
         }
     }
 
-    const onSignup = () => {
-        console.log('sign up');
+    const onSignup = async data => {
+        const credentials = {username: data.username, 
+                            password: data.password,
+                            email: data.email};
+
+        if (data.firstName) credentials.firstName = data.firstName;
+        if (data.lastName) credentials.lastName = data.lastName;
+
+        try {
+            const response = await fetch('/api/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                  },
+                body: JSON.stringify(credentials)
+            });
+            if (response.ok) {
+                setUsername({username: data.username});
+                setDisplayAuth({display: false});
+                return openDashboard();
+            }
+            console.log('Sign up failed: this email or username is already taken');
+        } catch(err) {
+            console.log('Network error occurred');
+        }
     }
 
     // when button for sign uo or log in is clicked, app displays authorization form
