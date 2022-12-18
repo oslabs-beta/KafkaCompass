@@ -27,7 +27,7 @@ app.use('/api/login', (req, res, next) => {
 
 // testing endpoint for sign up
 app.use('/api/signup', (req, res, next) => {
-  res.sendStatus(400);
+  res.sendStatus(200);
 })
 
 // app.get('/', (req, res) => {
