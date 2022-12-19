@@ -102,24 +102,35 @@ const DashboardContainer = (props) => {
     }
     async function submitNewCluster () {
         // create object to send to db
-        const newCluster = {
-            API_KEY: newAPIKeyInput,
-            API_SECRET: newAPISecretInput,
-            CLOUD_KEY: newCloudKeyInput,
-            CLOUD_SECRET: newCloudSecretInput,
-            clusterId: newClusterIdInput,
-            RESTendpoint: newRESTEndpointInput,
+        try {
+            const newCluster = {
+                API_KEY: newAPIKeyInput,
+                API_SECRET: newAPISecretInput,
+                CLOUD_KEY: newCloudKeyInput,
+                CLOUD_SECRET: newCloudSecretInput,
+                clusterId: newClusterIdInput,
+                RESTendpoint: newRESTEndpointInput,
+            }
+            console.log('newCluster: ', newCluster);
+            // send post request to backend
+            const data = await fetch ('/api/cloudAuth', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    },
+                body: JSON.stringify(newCluster)
+            })
+            const response = await response.json();
+            if (response.ok) {
+                console.log('cluster added')
+            }
+            else {
+                console.log('error adding cluster')
+            }
         }
-        console.log('newCluster: ', newCluster);
-        // send post request to backend
-        const response = await fetch ('/api/cloudAuth', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-              },
-            body: JSON.stringify(newCluster)
-        })
-        const message = await response.json();
+        catch (pizza) {
+            console.log('network error')
+        }
 
         //add functionality here to tell user if cluster was successfully added to DB, using status code as indicator
         //maybe a green banner saying request was successful and red if not successful
