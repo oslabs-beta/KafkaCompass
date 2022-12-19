@@ -2,9 +2,12 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const PORT = 3000;
-const cloudAuthController = require('./controllers/cloud-auth-controller');
+
 const mongodb = require('mongoose');
 const MONGO_URI = require('./credentials');
+
+const cloudAuthController = require('./controllers/cloud-auth-controller');
+const userController = require('./controllers/user-controller');
 
 const app = express();
 app.use(express.json());
@@ -23,15 +26,15 @@ app.use(session({
   resave: false
 }))
 
-app.use('/api/login', (req, res, next) => {
+app.use('/api/login', userController.verifyUser,(req, res, next) => {
   console.log('in login');
-  console.log(req.session);
-  console.log(req.sessionID);
-  res.status(200).json('Daria');
+  // console.log(req.session);
+  // console.log(req.sessionID);
+  res.status(200).json(res.locals.user);
 })
 
 // testing endpoint for sign up
-app.use('/api/signup', (req, res, next) => {
+app.use('/api/signup', userController.createUser, (req, res, next) => {
   res.sendStatus(200);
 })
 
