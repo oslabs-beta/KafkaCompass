@@ -8,6 +8,7 @@ const Auth = ({authMode, setDisplayAuth, navigate, setDrawerButton}) => {
     const renderLogin = authMode === 'login' ? true : false;
 
     const onSubmit = async data => {
+        console.log('in onSubmit');
         let endPoint = '/api/login';
         let errorMessage = 'Login failed: invalid password or username';
         
