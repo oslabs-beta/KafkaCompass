@@ -13,39 +13,56 @@ const app = express();
 app.use(express.json());
 
 mongodb.connect(MONGO_URI);
-// to parse incoming json objects 
+// to parse incoming json objects
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.resolve(__dirname, '../dist')));
 
-app.use(session({
-  secret: 'test',
-  saveUninitialized: true,
-  cookie: { maxAge: 50000 },
-  resave: false
-}))
+app.use(
+  session({
+    secret: 'test',
+    saveUninitialized: true,
+    cookie: { maxAge: 50000 },
+    resave: false,
+  })
+);
 
-app.use('/api/login', userController.verifyUser, userController.authorizeUser, (req, res, next) => {
-  console.log('in login');
-  // console.log(req.session);
-  // console.log(req.sessionID);
-  res.status(200).json(res.locals.user);
-})
+app.use(
+  '/api/login',
+  userController.verifyUser,
+  userController.authorizeUser,
+  (req, res, next) => {
+    console.log('in login');
+    // console.log(req.session);
+    // console.log(req.sessionID);
+    res.status(200).json(res.locals.user);
+  }
+);
 
 // testing endpoint for sign up
-app.use('/api/signup', userController.createUser, userController.authorizeUser, (req, res, next) => {
-  res.sendStatus(200);
-})
+app.use(
+  '/api/signup',
+  userController.createUser,
+  userController.authorizeUser,
+  (req, res, next) => {
+    res.sendStatus(200);
+  }
+);
 
 // app.get('/', (req, res) => {
 //   console.log('WE ARE HERE');
 //   res.sendFile(path.resolve(__dirname, '../dist/index.html'));
 // });
 //requests to server go here
-app.post('/api/cloud-auth', cloudAuthController.encryptCredentials, userController.addCloudCluster, (req, res) => {
-  return res.json(res.locals.credentials);
-});
+app.post(
+  '/api/cloud-auth',
+  cloudAuthController.encryptCredentials,
+  userController.addCloudCluster,
+  (req, res) => {
+    return res.json(res.locals.credentials);
+  }
+);
 
 //catch-all that sends index.html file to client-side
 // app.get('/*', (req, res) => {

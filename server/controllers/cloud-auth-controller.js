@@ -1,4 +1,4 @@
-const { encrypt, decrypt } = require("../encryption");
+const { encrypt, decrypt } = require('../encryption');
 
 const cloudAuthController = {};
 
@@ -21,7 +21,7 @@ cloudAuthController.encryptCredentials = (req, res, next) => {
     RESTendpoint,
   };
 
-  for(const key in credentials){
+  for (const key in credentials) {
     credentials[key] = encrypt(credentials[key]);
   }
 

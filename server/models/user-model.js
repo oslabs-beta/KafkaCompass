@@ -8,10 +8,12 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   firstName: String,
   lastName: String,
-  cloudCluster: [{
-    type: Schema.Types.ObjectId,
-    ref: 'CloudCluster'
-  }]
+  cloudCluster: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'CloudCluster',
+    },
+  ],
 });
 
 module.exports = new model('User', userSchema);
