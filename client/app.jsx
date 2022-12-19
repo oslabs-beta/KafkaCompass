@@ -9,6 +9,7 @@ import LandingPage from './containers/landing-page-container';
 import NotFound from './containers/NotFound';
 import Navbar from './components/nav-bar';
 import Auth from './containers/auth';
+import ClusterHistory from './containers/cluster-history';
 import './static/styles.css';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
                                                  navigate={navigate}
                                                  setDisplayAuth={setDisplayAuth}
                                                  setDrawerButton={setDrawerButton} />} />
+        <Route exact path='/cluster-history' element={<ClusterHistory setDrawerButton={setDrawerButton} />}/>
         <Route exact path='/' element={<LandingPage navigate={navigate} setDrawerButton={setDrawerButton} />} />
       </Routes>
     </div>
