@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/oslabs-beta/KafkaCompass#readme",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "classnames": "^2.3.2",
     "concurrently": "^7.6.0",
     "daisyui": "^2.45.0",

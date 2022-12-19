@@ -1,25 +1,26 @@
 const User = require('../models/user-model');
 const CloudCluster = require('../models/cloud-cluster-model');
 const { Session } = require('express-session');
+const bcrypt = require('bcrypt');
 
 const userController = {};
 
 userController.verifyUser = async (req, res, next) => {
   const { username, password } = req.body;
 
-  if(username === undefined || password === undefined){
+  if (username === undefined || password === undefined) {
     return next({
       log: 'userController.verifyUser: ERROR: Missing info',
       message: {
-        err: 'missing info'
-      }
+        err: 'missing info',
+      },
     });
   }
 
   try {
     const user = await User.findOne({ username }).populate('cloudCluster');
 
-    if(user.password !== password) throw new Error();
+    if (user.password !== password) throw new Error();
 
     res.locals.user = user;
     return next();
@@ -27,8 +28,8 @@ userController.verifyUser = async (req, res, next) => {
     return next({
       log: 'userController.verifyUser: ERROR: wrong info',
       message: {
-        err: 'wrong info'
-      }
+        err: 'wrong info',
+      },
     });
   }
 };
@@ -38,24 +39,26 @@ userController.createUser = async (req, res, next) => {
 
   const credentials = { email, username, password };
 
-  if(Object.keys(credentials).some(key => credentials[key] === undefined)) {
+  if (Object.keys(credentials).some((key) => credentials[key] === undefined)) {
     return next({
       log: 'userController.createUser: ERROR: Missing essential info',
       message: {
-        err: 'missing essential info'
-      }
-    })
+        err: 'missing essential info',
+      },
+    });
   }
 
   credentials.firstName = firstName;
   credentials.lastName = lastName;
 
-  try { 
+  try {
+    //Using bcrypt to hash password
+    const hashedPassword = await bcrypt.hash(credentials.password, 10);
     const user = await User.create(credentials);
     res.locals.user = user;
     return next();
   } catch (error) {
-    return next(error)
+    return next(error);
   }
 };
 
@@ -64,15 +67,16 @@ userController.authorizeUser = (req, res, next) => {
   req.session.authorized = true;
   req.session.save();
   return next();
-}
+};
 
 userController.addCloudCluster = async (req, res, next) => {
-  if(!req.session.user) return next({
-    log: 'userController.addCloudCluster: ERROR: Unauthorized',
+  if (!req.session.user)
+    return next({
+      log: 'userController.addCloudCluster: ERROR: Unauthorized',
       message: {
-        err: 'Unauthorized'
-      }
-  });
+        err: 'Unauthorized',
+      },
+    });
 
   const { _id } = req.session.user;
 
@@ -82,8 +86,8 @@ userController.addCloudCluster = async (req, res, next) => {
     CLOUD_KEY,
     CLOUD_SECRET,
     clusterId,
-    RESTendpoint
-  } = req.body
+    RESTendpoint,
+  } = req.body;
 
   let user;
 
@@ -93,9 +97,9 @@ userController.addCloudCluster = async (req, res, next) => {
     return next({
       log: 'userController.addCloudCluster: ERROR: unknown user',
       message: {
-        err: 'unknown user'
-      }
-    })
+        err: 'unknown user',
+      },
+    });
   }
 
   const clusterInfo = {
@@ -104,27 +108,27 @@ userController.addCloudCluster = async (req, res, next) => {
     CLOUD_KEY,
     CLOUD_SECRET,
     clusterId,
-    RESTendpoint
-  }
+    RESTendpoint,
+  };
 
   console.log(clusterInfo);
 
   try {
     const cluster = await CloudCluster.create(clusterInfo);
-    console.log(cluster) 
-    console.log(user)
-    user.cloudCluster.push(cluster)
+    console.log(cluster);
+    console.log(user);
+    user.cloudCluster.push(cluster);
     user.save();
   } catch (error) {
     return next({
       log: 'userController.addCloudCluster: ERROR: failed to create cluster',
       message: {
-        err: 'failed to create cluster'
-      }
-    })
+        err: 'failed to create cluster',
+      },
+    });
   }
-  
+
   return next();
-}
+};
 
 module.exports = userController;
