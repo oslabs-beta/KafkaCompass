@@ -22,11 +22,11 @@ app.use(express.static(path.resolve(__dirname, '../dist')));
 app.use(session({
   secret: 'test',
   saveUninitialized: true,
-  cookie: { secure: true, maxAge: 50000 },
+  cookie: { maxAge: 50000 },
   resave: false
 }))
 
-app.use('/api/login', userController.verifyUser,(req, res, next) => {
+app.use('/api/login', userController.verifyUser, userController.authorizeUser, (req, res, next) => {
   console.log('in login');
   // console.log(req.session);
   // console.log(req.sessionID);
@@ -34,7 +34,7 @@ app.use('/api/login', userController.verifyUser,(req, res, next) => {
 })
 
 // testing endpoint for sign up
-app.use('/api/signup', userController.createUser, (req, res, next) => {
+app.use('/api/signup', userController.createUser, userController.authorizeUser, (req, res, next) => {
   res.sendStatus(200);
 })
 
@@ -43,7 +43,7 @@ app.use('/api/signup', userController.createUser, (req, res, next) => {
 //   res.sendFile(path.resolve(__dirname, '../dist/index.html'));
 // });
 //requests to server go here
-app.post('/api/cloud-auth', cloudAuthController.encryptCredentials, (req, res) => {
+app.post('/api/cloud-auth', cloudAuthController.encryptCredentials, userController.addCloudCluster, (req, res) => {
   return res.json(res.locals.credentials);
 });
 
