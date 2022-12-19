@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { redirect } from "react-router";
-import { useNavigate } from 'react-router-dom';
 import AddClusterForm from "../components/add-cluster-form";
-import Navbar from "../components/nav-bar";
+import Topics from "../components/topics";
+
 
 const DashboardContainer = (props) => {
     useEffect( () => {
@@ -35,7 +34,10 @@ const DashboardContainer = (props) => {
     let dashboardView = <></>;
     if (mode === 'viewCluster') {
         dashboardView = (
-            <button className = 'btn btn-secondary'>Choose Cluster</button>
+            <div className="cluster-container">
+                <button className = 'btn btn-secondary'>Choose Cluster</button>
+                <Topics />
+            </div>
         )
     }
     else if (mode === 'realTimeMonitoring') {

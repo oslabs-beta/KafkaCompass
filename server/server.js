@@ -46,7 +46,7 @@ app.use(
   userController.createUser,
   userController.authorizeUser,
   (req, res, next) => {
-    res.sendStatus(200);
+    res.send(200).json(res.locals.user);
   }
 );
 
