@@ -2,3 +2,5 @@ node_modules
 package-lock.json
 dist/*
 .env
+encryption.js
+credentials.js
