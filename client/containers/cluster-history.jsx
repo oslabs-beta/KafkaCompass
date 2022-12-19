@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AddClusterForm from '../components/add-cluster-form';
 import ClusterItem from '../components/cluster-item';
 
 const ClusterHistory = (props) => {
@@ -21,11 +22,15 @@ const ClusterHistory = (props) => {
   };
 
   return (
+    <>
     <div>
       <h1 className='text-center text-xl font-bold'>Cluster History</h1>
       {clusterItems}
       <div className='flex justify-around'><button onClick={backToDashboard} className='btn'>Return to Dashboard</button></div>
     </div>
+    <input type="checkbox" id="my-modal-4" class="modal-toggle" />
+    <AddClusterForm />
+    </>
   );
 };
 
