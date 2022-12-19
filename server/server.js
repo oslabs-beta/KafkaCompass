@@ -3,10 +3,13 @@ const session = require('express-session');
 const path = require('path');
 const PORT = 3000;
 const cloudAuthController = require('./controllers/cloud-auth-controller');
+const mongodb = require('mongoose');
+const MONGO_URI = require('./credentials');
 
 const app = express();
 app.use(express.json());
 
+mongodb.connect(MONGO_URI);
 // to parse incoming json objects 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
