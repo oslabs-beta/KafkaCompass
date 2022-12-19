@@ -20,7 +20,8 @@ userController.verifyUser = async (req, res, next) => {
   try {
     const user = await User.findOne({ username }).populate('cloudCluster');
 
-    if (user.password !== password) throw new Error();
+    //Using bcrypt to compare password with its hashed version
+    if (!(await bcrypt.compare(password, user.password))) throw new Error();
 
     res.locals.user = user;
     return next();
@@ -54,6 +55,7 @@ userController.createUser = async (req, res, next) => {
   try {
     //Using bcrypt to hash password
     const hashedPassword = await bcrypt.hash(credentials.password, 10);
+    credentials.password = hashedPassword;
     const user = await User.create(credentials);
     res.locals.user = user;
     return next();
