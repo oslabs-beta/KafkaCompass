@@ -7,11 +7,11 @@ const Navbar = ({setDisplayAuth, renderDrawerButton, navigate}) => {
     if (renderDrawerButton) {
         drawerButton = (
         <div class="flex-1">
-            <label for="my-drawer" class="btn btn-primary drawer-button mr-10 my-7">Select Metrics</label>
+            <label for="my-drawer" class="btn drawer-button mr-10 my-7">Select Metrics</label>
             <button onClick={() => {
                     navigate('/cluster-history');
-                }}className="btn btn-secondary btn-outline mr-10 my-7">Cluster History</button>
-            <label for="my-modal-4" class="btn">Add New Cluster</label>
+                }}className="btn btn-outline mr-10 my-7">Cluster History</button>
+            <label for="my-modal-4" class="btn btn-outline ">Add New Cluster</label>
         </div>);
     }
 

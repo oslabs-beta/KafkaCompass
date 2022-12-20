@@ -37,8 +37,7 @@ const Topics = (props) => {
           {
             label: 'bytes',
             data: mockData.map((topic) => topic.value),
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            borderColor: "rgb(46, 52, 64)",
+            backgroundColor: 'rgba(64, 180, 179, 0.5)',
             borderWidth: 1
           }
         ]
