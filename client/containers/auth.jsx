@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import AuthForm from '../components/authForm';
 
-const Auth = ({authMode, setDisplayAuth, navigate, setDrawerButton}) => {
+const Auth = ({authMode, setDisplayAuth, navigate, setDrawerButton, setLoggedIn, setUser}) => {
     const {register, handleSubmit } = useForm();
     // render either log in or sign up form
     const renderLogin = authMode === 'login' ? true : false;
@@ -36,6 +36,8 @@ const Auth = ({authMode, setDisplayAuth, navigate, setDrawerButton}) => {
             if (response.ok) {
                 setDrawerButton(true);
                 setDisplayAuth('');
+                setLoggedIn(true);
+                setUser(response);
                 return navigate('/dashboard');
             }
             console.log(errorMessage);
