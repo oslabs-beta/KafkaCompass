@@ -8,6 +8,7 @@ const MONGO_URI = require('./credentials');
 
 const cloudAuthController = require('./controllers/cloud-auth-controller');
 const userController = require('./controllers/user-controller');
+const apiController = require('./controllers/api-controller')
 
 const app = express();
 app.use(express.json());
@@ -63,6 +64,11 @@ app.post(
     return res.json(res.locals.credentials);
   }
 );
+
+//topic-related endpoints
+app.get('/api/topic', apiController.getTopics, (req, res) => {
+  return res.status(200).json(res.locals.topicList);
+});
 
 //catch-all that sends index.html file to client-side
 // app.get('/*', (req, res) => {
