@@ -97,3 +97,11 @@
   height:40vh; 
   width:45vw
 }
+
+.topic-chart p:last-of-type {
+  color: rgb(64, 180, 179);
+}
+
+.topic-chart p:last-of-type span {
+  font-weight: 800;
+}
