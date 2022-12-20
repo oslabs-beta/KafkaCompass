@@ -33,12 +33,19 @@ app.use(
   userController.verifyUser,
   userController.authorizeUser,
   (req, res, next) => {
-    console.log('in login');
-    // console.log(req.session);
     // console.log(req.sessionID);
     res.status(200).json(res.locals.user);
   }
 );
+
+app.get('/api/authenticate', userController.authorizeUser, (req, res, next) => {
+  res.status(200).json(req.session);
+})
+
+app.get('/api/logout', userController.logOut, (req, res, next) => {
+  console.log('user logged out');
+  res.status(200).json();
+})
 
 // testing endpoint for sign up
 app.use(
