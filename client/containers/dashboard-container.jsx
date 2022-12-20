@@ -35,7 +35,7 @@ const DashboardContainer = (props) => {
     if (mode === 'viewCluster') {
         dashboardView = (
             <div className="cluster-container">
-                <button className = 'btn btn-secondary'>Choose Cluster</button>
+                <button className = 'btn btn-accent'>Choose Cluster</button>
                 <Topics />
             </div>
         )
@@ -82,11 +82,11 @@ const DashboardContainer = (props) => {
         <div class="drawer">
             <input id="my-drawer" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content border-solid border-2 border-black-500">
-                <div className="flex justify-around">
+                <div className="mt-4 flex justify-around">
                     <div class="btn-group">
-                        <button className={mode === 'viewCluster' ? 'btn btn-active' : 'btn'} onClick={changeModeViewCluster}>View Cluster</button>
-                        <button className={mode === 'realtimeMonitoring' ? 'btn btn-active' : 'btn'} onClick={changeModeRealtimeMonitoring}>Realtime Monitoring</button>
-                        <button className={mode === 'clusterComparison' ? 'btn btn-active' : 'btn'} onClick={changeModeClusterComparison}>Cluster Comparison</button>
+                        <button className={mode === 'viewCluster' ? 'btn btn-accent' : 'btn'} onClick={changeModeViewCluster}>View Cluster</button>
+                        <button className={mode === 'realtimeMonitoring' ? 'btn btn-accent' : 'btn'} onClick={changeModeRealtimeMonitoring}>Realtime Monitoring</button>
+                        <button className={mode === 'clusterComparison' ? 'btn btn-accent' : 'btn'} onClick={changeModeClusterComparison}>Cluster Comparison</button>
                     </div>
                 </div>
                 <div className="flex justify-around pt-10">
