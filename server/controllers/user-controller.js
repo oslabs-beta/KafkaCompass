@@ -64,8 +64,13 @@ userController.createUser = async (req, res, next) => {
   }
 };
 
+userController.logOut = (req, res, next) => {
+  req.session.destroy();
+  return next();
+}
+
 userController.authorizeUser = (req, res, next) => {
-  req.session.user = res.locals.user;
+  if (res.locals.user) req.session.user = res.locals.user;
   req.session.authorized = true;
   req.session.save();
   return next();
