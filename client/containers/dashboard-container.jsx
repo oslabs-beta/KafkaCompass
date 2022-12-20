@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AddClusterForm from "../components/add-cluster-form";
 import Topics from "../components/topics";
-
+import TopicButtons from "../components/topic-buttons";
 
 const DashboardContainer = (props) => {
     useEffect( () => {
@@ -34,10 +34,10 @@ const DashboardContainer = (props) => {
     let dashboardView = <></>;
     if (mode === 'viewCluster') {
         dashboardView = (
-            <div className="cluster-container">
-                <button className = 'btn btn-accent'>Choose Cluster</button>
-                <Topics />
-            </div>
+            <main className="cluster-container">
+                    <Topics />
+                    <TopicButtons />
+            </main>
         )
     }
     else if (mode === 'realTimeMonitoring') {
