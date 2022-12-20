@@ -89,10 +89,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 2.5rem;
 }
 
 .chart-container {
   position: relative; 
   height:40vh; 
-  width:60vw
+  width:45vw
+}
+
+.topic-chart p:last-of-type {
+  color: rgb(64, 180, 179);
+}
+
+.topic-chart p:last-of-type span {
+  font-weight: 800;
 }
