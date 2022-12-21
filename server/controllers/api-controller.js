@@ -74,18 +74,7 @@ apiController.deleteTopic = async(req, res, next) => {
     const { topic } = req.body;
     
     // name for the new topic
-    const new_topic = 'songs';
-
-    const response = axios({
-       method: 'post',
-       url: `https://pkc-lzvrd.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-j33yz8/topics`,
-       data: {
-        "topic_name": `${new_topic}`
-       },
-       headers
-    });
-    const data = await response;
-    console.log(data);
+    
 }
 
 module.exports = apiController;
