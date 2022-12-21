@@ -39,9 +39,9 @@ const Navbar = ({setDisplayAuth, navigate, checkLoggedIn, renderDrawerButton, se
         className="btn btn-outline mr-10 my-7">Home</button>
 
         <button onClick={() => {
+            logUserOut();
             setDrawerButton(false);
             setLoggedIn(false);
-            logUserOut();
             navigate('/');
         }}
         className="btn btn-outline mr-10 my-7">Logout</button>
