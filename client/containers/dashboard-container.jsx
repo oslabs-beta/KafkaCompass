@@ -83,11 +83,8 @@ const DashboardContainer = (props) => {
     const [mode, setMode] = useState('viewCluster');
     // keeps track of user-selected metrics
     const [metricSelection, setMetricSelection] = useState({
-        bytesInPerSec: false,
-        bytesOutPerSec: false,
-        shutdownOperationsTime: false,
-        requestLatencyAvg: false,
-        ioWaitTimeAvg: false,
+        reqResBytes: false,
+        retainedBytes: false
     });
     
     // mode switching functions
@@ -130,29 +127,13 @@ const DashboardContainer = (props) => {
     }
 
     // update metrics object with desired viewing metrics
-    function changeBytesInPerSecMetric () {
-        const setting = metricSelection.bytesInPerSec ? false : true;
-        setMetricSelection((prev) => ({...prev, bytesInPerSec: setting}));
+    function changeReqResBytes () {
+        const setting = metricSelection.reqResBytes ? false : true;
+        setMetricSelection((prev) => ({...prev, reqResBytes: setting}));
     }
-    function changeBytesOutPerSecMetric () {
-        const setting = metricSelection.bytesOutPerSec ? false : true;
-        setMetricSelection((prev) => ({...prev, bytesOutPerSec: setting}));
-    }
-    function changeShutdownOperationsTime () {
-        const setting = metricSelection.shutdownOperationsTime ? false : true;
-        setMetricSelection((prev) => ({...prev, shutdownOperationsTime: setting}));
-    }
-    function changeShutdownOperationsTime () {
-        const setting = metricSelection.shutdownOperationsTime ? false : true;
-        setMetricSelection((prev) => ({...prev, shutdownOperationsTime: setting}));
-    }
-    function changeRequestLatencyAvg () {
-        const setting = metricSelection.requestLatencyAvg ? false : true;
-        setMetricSelection((prev) => ({...prev, requestLatencyAvg: setting}));
-    }
-    function changeIoWaitTimeAvg () {
-        const setting = metricSelection.ioWaitTimeAvg ? false : true;
-        setMetricSelection((prev) => ({...prev, ioWaitTimeAvg: setting}));
+    function changeRetainedBytes () {
+        const setting = metricSelection.RetainedBytes ? false : true;
+        setMetricSelection((prev) => ({...prev, RetainedBytes: setting}));
     }
 
     return (
@@ -176,14 +157,8 @@ const DashboardContainer = (props) => {
             <div class="drawer-side">
                 <label for="my-drawer" class="drawer-overlay"></label>
                 <ul class="menu p-4 w-80 bg-base-100 text-base-content">
-                {/* <!-- Sidebar content here --> */}
-                <h1 className='text-l font-bold'>Performance Metrics:</h1>
-                <li onClick={changeBytesInPerSecMetric} class={metricSelection.bytesInPerSec ? 'bg-secondary' : ''}><a>Bytes-in/sec</a></li>
-                <li onClick={changeBytesOutPerSecMetric} class={metricSelection.bytesOutPerSec ? 'bg-secondary' : ''}><a>Bytes-out/sec</a></li>
-                <li onClick={changeShutdownOperationsTime} class={metricSelection.shutdownOperationsTime ? 'bg-secondary' : ''}><a>Shutdown Operations Time</a></li>
-                <li onClick={changeRequestLatencyAvg} class={metricSelection.requestLatencyAvg ? 'bg-secondary' : ''}><a>Request Latency Average</a></li>
-                <li onClick={changeIoWaitTimeAvg} class={metricSelection.ioWaitTimeAvg ? 'bg-secondary' : ''}><a>io Wait Time Average</a></li>
-                <h1 className='text-l font-bold'>Content Metrics:</h1>
+                <li onClick={changeRetainedBytes} class={metricSelection.retainedBytes ? 'bg-secondary' : ''}><a>Retained bytes</a></li>
+                <li onClick={changeReqResBytes} class={metricSelection.reqResBytes ? 'bg-secondary' : ''}><a>Request/Response bytes</a></li>
                 </ul>
             </div>
         </div>
@@ -192,3 +167,18 @@ const DashboardContainer = (props) => {
 }
 
 export default DashboardContainer
+
+
+// <div class="drawer-side">
+//                 <label for="my-drawer" class="drawer-overlay"></label>
+//                 <ul class="menu p-4 w-80 bg-base-100 text-base-content">
+//                 {/* <!-- Sidebar content here --> */}
+//                 <h1 className='text-l font-bold'>Performance Metrics:</h1>
+//                 <li onClick={changeBytesInPerSecMetric} class={metricSelection.bytesInPerSec ? 'bg-secondary' : ''}><a>Bytes-in/sec</a></li>
+//                 <li onClick={changeBytesOutPerSecMetric} class={metricSelection.bytesOutPerSec ? 'bg-secondary' : ''}><a>Bytes-out/sec</a></li>
+//                 <li onClick={changeShutdownOperationsTime} class={metricSelection.shutdownOperationsTime ? 'bg-secondary' : ''}><a>Shutdown Operations Time</a></li>
+//                 <li onClick={changeRequestLatencyAvg} class={metricSelection.requestLatencyAvg ? 'bg-secondary' : ''}><a>Request Latency Average</a></li>
+//                 <li onClick={changeIoWaitTimeAvg} class={metricSelection.ioWaitTimeAvg ? 'bg-secondary' : ''}><a>io Wait Time Average</a></li>
+//                 <h1 className='text-l font-bold'>Content Metrics:</h1>
+//                 </ul>
+//             </div>
