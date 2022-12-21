@@ -86,13 +86,37 @@
 }
 
 .cluster-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto 1fr 1fr;
+}
+
+.buttons-container {
+  grid-column-start: 4;
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
   align-items: center;
 }
 
+.buttons-container button, .buttons-container label {
+  width: 120px;
+  height: 35px;
+  font-size: 12px;
+}
+
 .chart-container {
-  position: relative; 
+  grid-column-start: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   height:40vh; 
-  width:60vw
+  width:45vw
+}
+
+.topic-chart p:last-of-type {
+  color: rgb(64, 180, 179);
+}
+
+.topic-chart p:last-of-type span {
+  font-weight: 800;
 }

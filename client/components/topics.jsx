@@ -1,50 +1,25 @@
-import React, { useState }  from 'react';
-import BarChart from "./helper";
+import React, { useState, useEffect }  from 'react';
 import 'chart.js/auto';
+import { Bar } from "react-chartjs-2";
 
-const mockData = [
-    {
-      value: 0.0,
-      labels: { kafka_id: "lkc-j33yz8", topic: "new_poems" },
-    },
-    {
-      value: 285.0,
-      labels: { kafka_id: "lkc-j33yz8", topic: "poems" },
-    },
-    {
-      value: 288.0,
-      labels: { kafka_id: "lkc-j33yz8", topic: "poems_1" },
-    },
-    {
-      value: 288.0,
-      labels: { kafka_id: "lkc-j33yz8", topic: "poems_4" },
-    },
-    {
-      value: 94.0,
-      labels: { kafka_id: "lkc-j33yz8", topic: "songs" },
-    },
-    {
-      value: 0.0,
-      labels: { kafka_id: "lkc-j33yz8", topic: "texts" },
-    }
-  ]
-
-const Topics = (props) => {
-
-    const [chartData, setChartData] = useState({
-        labels: mockData.map((topic) => topic.labels.topic), 
-        datasets: [
-          {
-            label: 'bytes',
-            data: mockData.map((topic) => topic.value),
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            borderColor: "rgb(46, 52, 64)",
-            borderWidth: 1
-          }
-        ]
-      });
+const Topics = ({chartData, totalBytes}) => {
     return (
-        <BarChart className='topic-chart' chartData={chartData} />
+        <div className="topic-chart font-mono chart-container">
+          <button className = 'mb-5 btn btn-accent'>Choose Cluster</button>
+          <p style={{fontSize: "18px"}}>Topics in your cluster</p>
+          <br />
+          <Bar
+            width={"20%"}
+            type={'bar'}
+            data={chartData}
+            options={{
+                maintainAspectRatio: false
+            }}
+          />
+          <br />
+          <p>Total number of bytes retained by server: <span>{totalBytes}</span></p>
+        </div>
+       
     )
 }
 

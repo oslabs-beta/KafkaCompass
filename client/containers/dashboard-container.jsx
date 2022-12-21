@@ -1,9 +1,80 @@
 import React, { useEffect, useState } from "react";
 import AddClusterForm from "../components/add-cluster-form";
 import Topics from "../components/topics";
+import TopicButtons from "../components/topic-buttons";
+
+
+const mockData = [
+    {
+      value: 0.0,
+      labels: { kafka_id: "lkc-j33yz8", topic: "new_poems" },
+    },
+    {
+      value: 285.0,
+      labels: { kafka_id: "lkc-j33yz8", topic: "poems" },
+    },
+    {
+      value: 288.0,
+      labels: { kafka_id: "lkc-j33yz8", topic: "poems_1" },
+    },
+    {
+      value: 288.0,
+      labels: { kafka_id: "lkc-j33yz8", topic: "poems_4" },
+    },
+    {
+      value: 94.0,
+      labels: { kafka_id: "lkc-j33yz8", topic: "songs" },
+    },
+    {
+      value: 0.0,
+      labels: { kafka_id: "lkc-j33yz8", topic: "texts" },
+    }
+  ]
 
 
 const DashboardContainer = (props) => {
+    // state for Topic chart
+    const [chartData, setChartData] = useState({labels: [], datasets: []});
+    const [totalBytes, setTotal] = useState();
+
+    // Mock functionality to render mock data
+    // Comment out when server makes api calls
+    useEffect(() => {
+        const values =  mockData.map((topic) => topic.value);
+        setTotal(values.reduce((a, b) => a + b));
+        setChartData({labels: mockData.map((topic) => topic.labels.topic), 
+          datasets: [
+            {
+              label: 'bytes',
+              data: values,
+              backgroundColor: 'rgba(64, 180, 179, 0.5)',
+              borderWidth: 1
+            }
+          ]});
+      }, []);
+    
+    // Uncomment when we have server responding with api info
+    // useEffect(() => {
+    //   const getData = async() => {
+    //     const response = await fetch('/api/topic');
+    //     if (response.ok) {
+    //       const data = await response.json();
+    //       const values =  mockData.map((topic) => topic.value);
+    //       setTotal(values.reduce((a, b) => a + b));
+    //       setChartData({labels: data.map((topic) => topic.labels.topic), 
+    //         datasets: [
+    //           {
+    //             label: 'bytes',
+    //             data: values,
+    //             backgroundColor: 'rgba(64, 180, 179, 0.5)',
+    //             borderWidth: 1
+    //           }
+    //       ]});
+    //     }
+    //   }
+    //   getData();
+    // }, [])
+
     useEffect( () => {
         props.setDrawerButton(true);
     });
@@ -34,10 +105,17 @@ const DashboardContainer = (props) => {
     let dashboardView = <></>;
     if (mode === 'viewCluster') {
         dashboardView = (
-            <div className="cluster-container">
-                <button className = 'btn btn-secondary'>Choose Cluster</button>
-                <Topics />
-            </div>
+            <main className="cluster-container">
+                    <Topics chartData={chartData} 
+                            setChartData={setChartData}
+                            totalBytes={totalBytes}
+                            setTotal={setTotal} />
+                    <TopicButtons 
+                            chartData={chartData} 
+                            setChartData={setChartData} 
+                            totalBytes={totalBytes}
+                            setTotal={setTotal} />
+            </main>
         )
     }
     else if (mode === 'realTimeMonitoring') {
@@ -82,11 +160,11 @@ const DashboardContainer = (props) => {
         <div class="drawer">
             <input id="my-drawer" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content border-solid border-2 border-black-500">
-                <div className="flex justify-around">
+                <div className="mt-4 flex justify-around">
                     <div class="btn-group">
-                        <button className={mode === 'viewCluster' ? 'btn btn-active' : 'btn'} onClick={changeModeViewCluster}>View Cluster</button>
-                        <button className={mode === 'realtimeMonitoring' ? 'btn btn-active' : 'btn'} onClick={changeModeRealtimeMonitoring}>Realtime Monitoring</button>
-                        <button className={mode === 'clusterComparison' ? 'btn btn-active' : 'btn'} onClick={changeModeClusterComparison}>Cluster Comparison</button>
+                        <button className={mode === 'viewCluster' ? 'btn btn-accent' : 'btn'} onClick={changeModeViewCluster}>View Cluster</button>
+                        <button className={mode === 'realtimeMonitoring' ? 'btn btn-accent' : 'btn'} onClick={changeModeRealtimeMonitoring}>Realtime Monitoring</button>
+                        <button className={mode === 'clusterComparison' ? 'btn btn-accent' : 'btn'} onClick={changeModeClusterComparison}>Cluster Comparison</button>
                     </div>
                 </div>
                 <div className="flex justify-around pt-10">
