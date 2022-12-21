@@ -49,6 +49,30 @@ apiController.getTopics = async(req, res, next) => {
 // use cluster headers here
 apiController.addTopic = async(req, res, next) => {
     
+    const { cluster_id } = req.params;
+    const { topic } = req.body;
+    console.log('in add Topic')
+    try {
+        const response = axios({
+           method: 'post',
+           url: `${RESTendpoint}/kafka/v3/clusters/${cluster_id}/topics`,
+           data: {
+            "topic_name": `${topic}`
+           },
+           headers
+        });
+        const data = await response;
+        console.log(data);
+        next();
+    } catch(err) {
+        next({log: 'error in addTopic', message: 'could not add topic to cluster'})
+    }
+}
+
+apiController.deleteTopic = async(req, res, next) => {
+    const { cluster_id } = req.params;
+    const { topic } = req.body;
+    
     // name for the new topic
     const new_topic = 'songs';
 
