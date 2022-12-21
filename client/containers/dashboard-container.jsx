@@ -37,7 +37,7 @@ const DashboardContainer = (props) => {
     const [chartData, setChartData] = useState({labels: [], datasets: []});
     const [totalBytes, setTotal] = useState();
 
-        // Mock functionality to render mock data
+    // Mock functionality to render mock data
     // Comment out when server makes api calls
     useEffect(() => {
         const values =  mockData.map((topic) => topic.value);

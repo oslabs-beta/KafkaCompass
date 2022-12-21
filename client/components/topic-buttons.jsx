@@ -5,22 +5,23 @@ const TopicButtons = ({chartData, setChartData, totalBytes, setTotal}) => {
 
     const handleCreateTopic = async(topic) => {
         // send topic to the backend
+        // works only when connected to the backend!!
+        // to test it comment out everything besides lines 19 - 23
         try {
-            // const response = await fetch('/api/topic', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //       },
-            //       body: JSON.stringify({topic}),
-            // });
-            // if (response.ok) {
-            const newChartData = chartData;
-            newChartData.labels.push(topic);
-            newChartData.datasets[0].data.push(0);
-            setChartData(newChartData);
-            console.log(chartData);
-            return;
-            // }
+            const response = await fetch('/api/topic', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({topic}),
+            });
+            if (response.ok) {
+                const newChartData = chartData;
+                newChartData.labels.push(topic);
+                newChartData.datasets[0].data.push(0);
+                setChartData(newChartData);
+                return;
+            }
             console.log('Could not add new topic to the cluster');
         } catch(err) {
             console.log('Network error occurred');

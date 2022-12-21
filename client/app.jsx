@@ -26,18 +26,17 @@ function App() {
         const response = await fetch('/api/authenticate', {
             method: 'GET',
         });
-        console.log(response);
         if (response.ok) {
             let session = await response.json();
             if (session.user !== undefined) {
-            console.log('this is session', session.user);
+            // console.log('this is session', session.user);
             setUser(session.user);
             setLoggedIn(true);
             }
         }
         console.log(errorMessage);
       } catch(err) {
-        console.log('Network error occurred - User not logged in');
+        // console.log('Network error occurred - User not logged in');
       }
     }
 
