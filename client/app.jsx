@@ -32,6 +32,7 @@ function App() {
             if (session.user !== undefined) {
             console.log('this is session', session.user);
             setUser(session.user);
+            setLoggedIn(true);
             }
         }
         console.log(errorMessage);
@@ -47,6 +48,7 @@ function App() {
       });
       if (response.ok) {
         setUser({});
+        setLoggedIn(false);
       }
        } catch(err) {
         console.log('Network error in attempting to logout - user not logged out')
@@ -56,7 +58,7 @@ function App() {
 
   useEffect(() => {
       checkSession();
-    }, [checkLoggedIn]);
+    });
 
   return (
     <div>
