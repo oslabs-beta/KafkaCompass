@@ -18,30 +18,59 @@ function App() {
   const [renderDrawerButton, setDrawerButton] = useState(false);
   const [checkLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
+  const [displayAuthenticated, setDisplayAuthenticated] = useState(false);
   const [authMode, setDisplayAuth] = useState('');
 
   const checkSession = async () => {
-        
     try {
         const response = await fetch('/api/authenticate', {
             method: 'GET',
         });
-        console.log(response);
+        console.log('check session response', response);
         if (response.ok) {
-            let session = await response.json();
+            const session = await response.json();
             if (session.user !== undefined) {
-            console.log('this is session', session.user);
             setUser(session.user);
             setLoggedIn(true);
-            }
+            localStorage.setItem("token", session.token);
+            } 
         }
-        console.log(errorMessage);
       } catch(err) {
         console.log('Network error occurred - User not logged in');
       }
     }
 
+    const verifyUser = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setDisplayAuthenticated(false);
+        return;
+      }
+      try {
+        const response = await fetch('/api/authenticate', {
+          method: "GET",
+          headers: {
+            "x-access-token": localStorage.getItem("token"),
+          }
+        })
+        if (response.ok) {
+          const session = await response.json()
+          if (session.authenticated) {
+          setLoggedIn(true);
+          setUser(session.user);
+          setDisplayAuthenticated(true);
+          } else {
+            setLoggedIn(false);
+            setDisplayAuthenticated(false);
+          }
+        }
+    } catch(err) {
+      console.log('user is not authenticated')
+    }
+  }
+
     const logUserOut = async () => {
+      localStorage.removeItem("token");
       try {
       const response = await fetch('/api/logout', {
         method: 'GET'
@@ -58,7 +87,7 @@ function App() {
 
   useEffect(() => {
       checkSession();
-    });
+    }, [checkLoggedIn]);
 
   return (
     <div>
@@ -86,6 +115,7 @@ function App() {
                                                  setDrawerButton={setDrawerButton}
                                                  setLoggedIn={setLoggedIn}
                                                  setUser={setUser}
+                                                 verifyUser={verifyUser}
                                                   />} />
         <Route exact path='/cluster-history' element={<ClusterHistory setDrawerButton={setDrawerButton} />}/>
         <Route exact path='/' element={<LandingPage navigate={navigate} setDrawerButton={setDrawerButton} setLoggedin={setLoggedIn} setUser={setUser} checkLoggedIn={checkLoggedIn} />} />

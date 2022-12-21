@@ -71,7 +71,7 @@ const Topics = (props) => {
     //   getData();
     // }, [])
 
-    console.log(chartData.datasets[0]);
+    // console.log(chartData.datasets[0]);
     return (
         <div className="topic-chart font-mono chart-container">
           <p style={{ textAlign: "center", fontSize: "18px"}}>Topics in your cluster</p>

@@ -2,8 +2,10 @@ const User = require('../models/user-model');
 const CloudCluster = require('../models/cloud-cluster-model');
 const { Session } = require('express-session');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const userController = {};
+const topSecret = 'superdupersecret';
 
 userController.verifyUser = async (req, res, next) => {
   const { username, password } = req.body;
@@ -69,8 +71,60 @@ userController.logOut = (req, res, next) => {
   return next();
 }
 
+userController.verifyAuth = async (req, res, next) => {
+  let token = undefined;
+  if (req.headers["x-access-token"] !== null && req.headers["x-access-token"] !== undefined) {
+    token = req.headers["x-access-token"];
+  } else if (req.session.token) {
+    token = req.session.token;
+  }
+  if (!token) {
+    req.session.authenticated = false;
+    return next();
+  } else {
+    jwt.verify(token, topSecret, async (err, decoded) => {
+      if (err) {
+        return next({
+          log: 'userController.verifyAuth: ERROR: token did not verify',
+          message: {
+            err: 'token did not verify',
+          },
+        });
+    } else {
+      req.session.authenticated = true;
+      req.session.userId = decoded.id;
+      try {
+        const user = await User.findById(req.session.userId);
+        req.session.user = user;
+      } catch (error) {
+        return next({
+          log: 'userController.verifyAuth: ERROR: unknown user',
+          message: {
+            err: 'unknown user',
+          },
+        });
+      }
+      return next();
+    }
+  })
+  }
+}
+
+userController.authenticateUser = (req, res, next) => {
+  const user = req.session.user;
+  
+  const id = user.id;
+  const token = jwt.sign({id}, topSecret, {
+    expiresIn: 300,
+  })
+  
+  req.session.token = token;
+  req.session.authenticated = true;
+  return next();
+}
+
 userController.authorizeUser = (req, res, next) => {
-  if (res.locals.user) req.session.user = res.locals.user;
+  req.session.user = res.locals.user;
   req.session.authorized = true;
   req.session.save();
   return next();

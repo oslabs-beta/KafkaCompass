@@ -2,13 +2,12 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import AuthForm from '../components/authForm';
 
-const Auth = ({authMode, setDisplayAuth, navigate, setDrawerButton, setLoggedIn, setUser}) => {
+const Auth = ({authMode, setDisplayAuth, navigate, setDrawerButton, setLoggedIn, setUser, verifyUser}) => {
     const {register, handleSubmit } = useForm();
     // render either log in or sign up form
     const renderLogin = authMode === 'login' ? true : false;
 
     const onSubmit = async data => {
-        console.log('in onSubmit');
         let endPoint = '/api/login';
         let errorMessage = 'Login failed: invalid password or username';
         
@@ -34,9 +33,9 @@ const Auth = ({authMode, setDisplayAuth, navigate, setDrawerButton, setLoggedIn,
             });
             console.log(response);
             if (response.ok) {
+                setLoggedIn(true);
                 setDrawerButton(true);
                 setDisplayAuth('');
-                setLoggedIn(true);
                 setUser(response);
                 return navigate('/dashboard');
             }

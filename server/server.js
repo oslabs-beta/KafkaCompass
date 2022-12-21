@@ -21,10 +21,13 @@ app.use(express.static(path.resolve(__dirname, '../dist')));
 
 app.use(
   session({
-    secret: 'test',
+    secret: 'secret',
     saveUninitialized: true,
-    cookie: { maxAge: 50000 },
     resave: false,
+    cookie: { 
+    maxAge: 50000,
+    httpOnly: true 
+  },
   })
 );
 
@@ -32,18 +35,17 @@ app.use(
   '/api/login',
   userController.verifyUser,
   userController.authorizeUser,
+  userController.authenticateUser,
   (req, res, next) => {
-    // console.log(req.sessionID);
     res.status(200).json(res.locals.user);
   }
 );
 
-app.get('/api/authenticate', userController.authorizeUser, (req, res, next) => {
+app.use('/api/authenticate', userController.verifyAuth, (req, res, next) => {
   res.status(200).json(req.session);
 })
 
-app.get('/api/logout', userController.logOut, (req, res, next) => {
-  console.log('user logged out');
+app.use('/api/logout', userController.logOut, (req, res, next) => {
   res.status(200).json();
 })
 
@@ -52,6 +54,7 @@ app.use(
   '/api/signup',
   userController.createUser,
   userController.authorizeUser,
+  userController.authenticateUser,
   (req, res, next) => {
     res.send(200).json(res.locals.user);
   }
