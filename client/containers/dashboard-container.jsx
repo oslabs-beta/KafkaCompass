@@ -1,55 +1,116 @@
 import React, { useEffect, useState } from "react";
 import AddClusterForm from "../components/add-cluster-form";
-import Topics from "../components/topics";
+import Chart from "../components/chart";
 import TopicButtons from "../components/topic-buttons";
 
-
-const mockData = [
-    {
-      value: 0.0,
-      labels: { kafka_id: "lkc-j33yz8", topic: "new_poems" },
+const mockData = {
+    retained_bytes: {
+        name: "confluent_kafka_server_retained_bytes",
+        description: "The current count of bytes retained by the cluster. The count is sampled every 60 seconds.",
+        totalValue: 81703,
+        metrics: [
+          { value: "57995.0", topic: "orders" },
+          { value: "588.0", topic: "poems" },
+          { value: "23120.0", topic: "stock-trade" }
+        ]
     },
-    {
-      value: 285.0,
-      labels: { kafka_id: "lkc-j33yz8", topic: "poems" },
-    },
-    {
-      value: 288.0,
-      labels: { kafka_id: "lkc-j33yz8", topic: "poems_1" },
-    },
-    {
-      value: 288.0,
-      labels: { kafka_id: "lkc-j33yz8", topic: "poems_4" },
-    },
-    {
-      value: 94.0,
-      labels: { kafka_id: "lkc-j33yz8", topic: "songs" },
-    },
-    {
-      value: 0.0,
-      labels: { kafka_id: "lkc-j33yz8", topic: "texts" },
-    }
-  ]
+    request_bytes: {
+        name: "confluent_kafka_server_request_bytes",
+        description: "The delta count of total request bytes from the specified request types sent over the network. Each sample is the number of bytes sent since the previous data point. The count is sampled every 60 seconds.",
+        totalValue: 7343,
+        metrics: [
+          { value: "63.0", type: "ApiVersions" },
+          { value: "0.0", type: "CreateTopics" },
+          { value: "0.0", type: "DescribeCluster" },
+          { value: "0.0", type: "DescribeClusterLinks" },
+          { value: "0.0", type: "DescribeConfigs" },
+          { value: "0.0", type: "DescribeGroups" },
+          { value: "4606.0", type: "Fetch" },
+          { value: "0.0", type: "FindCoordinator" },
+          { value: "623.0", type: "Heartbeat" },
+          { value: "0.0", type: "JoinGroup" },
+          { value: "0.0", type: "ListGroups" },
+          { value: "0.0", type: "ListMirrors" },
+          { value: "0.0", type: "ListOffsets" },
+          { value: "510.0", type: "Metadata" },
+          { value: "1350.0", type: "OffsetFetch" },
+          { value: "191.0", type: "SyncGroup" }
+    ]},
+    response_bytes: {
+        name: "confluent_kafka_server_response_bytes",
+        description: "The delta count of total response bytes from the specified response types sent over the network. Each sample is the number of bytes sent since the previous data point. The count is sampled every 60 seconds.",
+        totalValue: 20300,
+        metrics: [
+          { value: "684.0", type: "ApiVersions" },
+          { value: "0.0", type: "CreateTopics" },
+          { value: "0.0", type: "DescribeCluster" },
+          { value: "0.0", type: "DescribeClusterLinks" },
+          { value: "0.0", type: "DescribeConfigs" },
+          { value: "0.0", type: "DescribeGroups" },
+          { value: "3268.0", type: "Fetch" },
+          { value: "0.0", type: "FindCoordinator" },
+          { value: "98.0", type: "Heartbeat" },
+          { value: "210.0", type: "JoinGroup" },
+          { value: "0.0", type: "ListGroups" },
+          { value: "0.0", type: "ListMirrors" },
+          { value: "0.0", type: "ListOffsets" },
+          { value: "13708.0", type: "Metadata" },
+          { value: "2268.0", type: "OffsetFetch" },
+          { value: "64.0", type: "SyncGroup" }
+        ]
+      }
+}
 
 
 const DashboardContainer = (props) => {
     // state for Topic chart
     const [chartData, setChartData] = useState({labels: [], datasets: []});
-    const [totalBytes, setTotal] = useState();
 
-    // Mock functionality to render mock data
-    // Comment out when server makes api calls
+    // topic and req-res chart data for the chats
+    const [topicChart, setTopics] = useState({labels: [], datasets: []});
+    const [reqResChart, setReqRes] = useState({labels: [], datasets: []});
+
+
+    const [totalBytes, setTotal] = useState();
+    const [totalRes, setTotalRes] = useState();
+    const [totalReq, setTotalReq] = useState();
+    const [metricSelection, setMetricSelection] = useState({
+        retainedBytes: true,
+        reqResBytes: false
+    });
+
+    // Mock useEffect;
     useEffect(() => {
-        const values =  mockData.map((topic) => topic.value);
-        setTotal(values.reduce((a, b) => a + b));
-        setChartData({labels: mockData.map((topic) => topic.labels.topic), 
-          datasets: [
-            {
-              label: 'bytes',
-              data: values,
-              backgroundColor: 'rgba(64, 180, 179, 0.5)',
-              borderWidth: 1
-            }
+        const retainedValues = mockData.retained_bytes.metrics.map((topic) => topic.value);
+        setTotal(mockData.retained_bytes.totalValue);
+        setTopics({labels: mockData.retained_bytes.metrics.map((topic) => topic.topic), 
+            datasets: [
+                {
+                label: 'bytes',
+                data: retainedValues,
+                backgroundColor: 'rgba(64, 180, 179, 0.5)',
+                borderWidth: 1
+                }
+        ]});
+        
+        const valuesReq =  mockData.request_bytes.metrics.map((topic) => topic.value);
+        const valuesRes = mockData.response_bytes.metrics.map((topic) => topic.value);
+        setTotalReq(mockData.request_bytes.totalValue);
+        setTotalRes(mockData.response_bytes.totalValue);
+        setReqRes({labels: mockData.request_bytes.metrics.map((topic) => topic.type), 
+            datasets: [
+                {
+                label: 'request bytes',
+                data: valuesReq,
+                backgroundColor: 'rgba(64, 180, 179, 0.5)',
+                borderWidth: 1
+                },
+                {
+                label: 'response bytes',
+                data: valuesRes,
+                backgroundColor: 'rgba(250, 73, 112, 0.5)',
+                borderWidth: 1
+                }
           ]});
       }, []);
     
@@ -59,9 +120,9 @@ const DashboardContainer = (props) => {
     //     const response = await fetch('/api/topic');
     //     if (response.ok) {
     //       const data = await response.json();
-    //       const values =  mockData.map((topic) => topic.value);
+    //       const values = data.retained_bytes.metrics.map((topic) => topic.value);
     //       setTotal(values.reduce((a, b) => a + b));
-    //       setChartData({labels: data.map((topic) => topic.labels.topic), 
+    //       setChartData({labels:data.retained_bytes.metrics.map((topic) => topic.topic), 
     //         datasets: [
     //           {
     //             label: 'bytes',
@@ -81,11 +142,6 @@ const DashboardContainer = (props) => {
 
     // dictates the view mode on dashbaord
     const [mode, setMode] = useState('viewCluster');
-    // keeps track of user-selected metrics
-    const [metricSelection, setMetricSelection] = useState({
-        reqResBytes: false,
-        retainedBytes: false
-    });
     
     // mode switching functions
     function changeModeViewCluster () {
@@ -103,15 +159,19 @@ const DashboardContainer = (props) => {
     if (mode === 'viewCluster') {
         dashboardView = (
             <main className="cluster-container">
-                    <Topics chartData={chartData} 
-                            setChartData={setChartData}
-                            totalBytes={totalBytes}
-                            setTotal={setTotal} />
-                    <TopicButtons 
-                            chartData={chartData} 
-                            setChartData={setChartData} 
-                            totalBytes={totalBytes}
-                            setTotal={setTotal} />
+                    {metricSelection.retainedBytes &&
+                    <><Chart chartData={topicChart} 
+                            totalBytes={totalBytes} />
+                      <TopicButtons 
+                            chartData={topicChart} 
+                            setTopics={setTopics}
+                            totalBytes={totalBytes} /></>}
+                    {metricSelection.reqResBytes && 
+                    <Chart chartData={reqResChart} 
+                    totalRes={totalRes}
+                    totalReq={totalReq}
+                     />
+                    }
             </main>
         )
     }
@@ -127,13 +187,14 @@ const DashboardContainer = (props) => {
     }
 
     // update metrics object with desired viewing metrics
-    function changeReqResBytes () {
-        const setting = metricSelection.reqResBytes ? false : true;
-        setMetricSelection((prev) => ({...prev, reqResBytes: setting}));
-    }
-    function changeRetainedBytes () {
-        const setting = metricSelection.RetainedBytes ? false : true;
-        setMetricSelection((prev) => ({...prev, RetainedBytes: setting}));
+    function updateSideDrawer (next) {
+        const metrics = metricSelection;
+        for (let key in metrics) {
+            if (metrics[key] === true) metrics[key] = false;
+
+            if (key === next) metrics[key] = true;
+        }
+        setMetricSelection(metrics);
     }
 
     return (
@@ -157,8 +218,8 @@ const DashboardContainer = (props) => {
             <div class="drawer-side">
                 <label for="my-drawer" class="drawer-overlay"></label>
                 <ul class="menu p-4 w-80 bg-base-100 text-base-content">
-                <li onClick={changeRetainedBytes} class={metricSelection.retainedBytes ? 'bg-secondary' : ''}><a>Retained bytes</a></li>
-                <li onClick={changeReqResBytes} class={metricSelection.reqResBytes ? 'bg-secondary' : ''}><a>Request/Response bytes</a></li>
+                <li onClick={() => updateSideDrawer('retainedBytes')} class={metricSelection.retainedBytes ? 'bg-secondary' : ''}><a>Retained bytes</a></li>
+                <li onClick={() => updateSideDrawer('reqResBytes')} class={metricSelection.reqResBytes ? 'bg-secondary' : ''}><a>Request/Response bytes</a></li>
                 </ul>
             </div>
         </div>
