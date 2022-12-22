@@ -14,6 +14,12 @@ const userSchema = new Schema({
       ref: 'CloudCluster',
     },
   ],
+  metric: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Metric',
+    },
+  ]
 });
 
 module.exports = new model('User', userSchema);
