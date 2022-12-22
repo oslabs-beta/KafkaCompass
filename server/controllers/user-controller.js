@@ -138,4 +138,70 @@ userController.addCloudCluster = async (req, res, next) => {
   return next();
 };
 
+userController.addMetrics = async (req, res, next) => {
+  if (!req.session.user)
+    return next({
+      log: 'userController.addCloudCluster: ERROR: Unauthorized',
+      message: {
+        err: 'Unauthorized',
+      },
+    });
+
+  const { _id } = req.session.user;
+
+  const {
+    API_KEY,
+    API_SECRET,
+    CLOUD_KEY,
+    CLOUD_SECRET,
+    clusterId,
+    RESTendpoint,
+  } = req.body;
+
+  let user;
+
+  try {
+    user = await User.findById(_id);
+  } catch (error) {
+    return next({
+      log: 'userController.addCloudCluster: ERROR: unknown user',
+      message: {
+        err: 'unknown user',
+      },
+    });
+  }
+
+  const clusterInfo = {
+    API_KEY,
+    API_SECRET,
+    CLOUD_KEY,
+    CLOUD_SECRET,
+    clusterId,
+    RESTendpoint,
+  };
+
+  console.log(clusterInfo);
+
+  try {
+    const cluster = await CloudCluster.create(clusterInfo);
+    console.log(cluster);
+    console.log(user);
+    user.cloudCluster.push(cluster);
+    user.save();
+  } catch (error) {
+    return next({
+      log: 'userController.addCloudCluster: ERROR: failed to create cluster',
+      message: {
+        err: 'failed to create cluster',
+      },
+    });
+  }
+
+  return next();
+};
+
+userController.addMetrics = (req, res, next) => {
+  return next();
+}
+
 module.exports = userController;

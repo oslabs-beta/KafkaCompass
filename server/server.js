@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+
 const path = require('path');
 const PORT = 3000;
 
@@ -8,6 +9,7 @@ const MONGO_URI = require('./credentials');
 
 const cloudAuthController = require('./controllers/cloud-auth-controller');
 const userController = require('./controllers/user-controller');
+const metricController = require('./controllers/metric-controller');
 
 const app = express();
 app.use(express.json());
@@ -71,6 +73,9 @@ app.post(
   }
 );
 
+app.get('/api/metric', metricController.decryptKeys, metricController.fetchData, (req, res) => {
+  return res.json(res.locals.metricsData);
+});
 //catch-all that sends index.html file to client-side
 // app.get('/*', (req, res) => {
 //   console.log('here');
