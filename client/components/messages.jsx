@@ -1,8 +1,33 @@
 import React, { useState, useEffect } from 'react';
-// const { getListOfTopics } = require('./../../server/controllers/api-functions');
-// const axios = require('axios');
+// const { Kafka } = require('kafkajs');
 
 const Messages = ({ messages }) => {
+  //declare functions to make topic menu
+  const createTopicMenu = async () => {
+    const topicResponse = await fetch('/api/topic');
+    const topics = await topicResponse.json();
+    console.log('list of topics: ', topics);
+    //create list of topics for dropdown menu
+    const topicMenu = [];
+    for (const topic of topics) {
+      topicMenu.push(
+        <li>
+          <a>{topic}</a>
+        </li>
+      );
+    }
+    return topicMenu;
+  };
+
+  //state for current topic
+  const [currentTopic, selectTopic] = useState('');
+  //get list of topics from user
+  const topicMenu = createTopicMenu();
+
+  // console.log('topic menu: ', topicMenu);
+
+  //create click handler that consumes messages
+
   return (
     <div className='flex flex-row'>
       <div className='dropdown dropdown-end'>
