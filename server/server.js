@@ -10,6 +10,7 @@ const MONGO_URI =
 
 const cloudAuthController = require('./controllers/cloud-auth-controller');
 const userController = require('./controllers/user-controller');
+const apiController = require('./controllers/api-controller');
 const metricController = require('./controllers/metric-controller');
 
 const app = express();
@@ -56,7 +57,7 @@ app.use(
   userController.createUser,
   userController.authorizeUser,
   (req, res, next) => {
-    res.send(200).json(res.locals.user);
+    res.status(200).json(res.locals.user);
   }
 );
 
@@ -71,6 +72,52 @@ app.post(
   userController.addCloudCluster,
   (req, res) => {
     return res.json(res.locals.credentials);
+  }
+);
+
+//endpoints to get and modify various elements of the cluster
+
+//message-related endpoints
+//get all messages in a topic
+app.get('/api/message', apiController.getClusterInfo, (req, res) => {
+  return res.status(200).json(res.locals.messageList);
+});
+//add a message to a topic
+app.post(
+  '/api/message',
+  apiController.getClusterInfo,
+  apiController.addMessage,
+  (req, res) => {
+    return res.status(201).json('message added');
+  }
+);
+
+//topic-related endpoints
+//get all topics in a cluster
+app.get(
+  '/api/topic',
+  apiController.getClusterInfo,
+  apiController.getTopics,
+  (req, res) => {
+    return res.status(200).json(res.locals.topicList);
+  }
+);
+//add a topic to a cluster
+app.post(
+  '/api/topic',
+  apiController.getClusterInfo,
+  apiController.addTopic,
+  (req, res) => {
+    return res.status(201).json('topic added');
+  }
+);
+//remove a topic from a cluster
+app.delete(
+  '/api/topic',
+  apiController.getClusterInfo,
+  apiController.deleteTopic,
+  (req, res) => {
+    return res.status(202).json('topic deleted');
   }
 );
 
