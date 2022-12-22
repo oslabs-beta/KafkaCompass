@@ -113,10 +113,10 @@
   width:45vw
 }
 
-.topic-chart p:last-of-type {
+.chart-total {
   color: rgb(64, 180, 179);
 }
 
-.topic-chart p:last-of-type span {
+.chart-total span {
   font-weight: 800;
 }

@@ -32,7 +32,6 @@ const Auth = ({authMode, setDisplayAuth, navigate, setDrawerButton, setLoggedIn,
                 },
                 body: JSON.stringify(credentials)
             });
-            console.log(response);
             if (response.ok) {
                 setDrawerButton(true);
                 setDisplayAuth('');
