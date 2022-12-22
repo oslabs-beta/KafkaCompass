@@ -62,7 +62,7 @@ userController.createUser = async (req, res, next) => {
     res.locals.user = user;
     return next();
   } catch (error) {
-    return next(error);
+    return next({log: 'error in userController.createrUser'});
   }
 };
 
