@@ -1,31 +1,31 @@
 require('dotenv').config();
 const axios = require('axios');
-
-// cluster key and secret
-const API_KEY = process.env.API_KEY;
-const API_SECRET = process.env.API_SECRET;
-
-// cloud key and secret
-const CLOUD_KEY = process.env.CLOUD_KEY;
-const CLOUD_SECRET = process.env.CLOUD_SECRET;
-
-// get this in your cloud account 
-// OR by typing in CLI 'confluent kafka cluster decribe' OR './bin/confluent kafka cluster describe'
-const clusterId = process.env.CLUSTER;
-// get this in your cloud account 
-// OR by typing in CLI 'confluent kafka cluster decribe' OR './bin/confluent kafka cluster describe'
-const RESTendpoint = process.env.REST;
-
-const token = Buffer.from(`${API_KEY}:${API_SECRET}`, 'utf8').toString('base64');
-const headers = { 'Authorization': 'Basic '+ token };
-
-// same process but for cloud credentials
-const cloudToken = Buffer.from(`${CLOUD_KEY}:${CLOUD_SECRET}`, 'utf8').toString('base64');
-const cloudHeaders = {'Authorization': 'Basic '+ cloudToken };
+const User = require('../models/user-model');
+const CloudCluster = require('../models/cloud-cluster-model');
 
 const apiController = {};
 
+apiController.getClusterInfo = async(req, res, next) => {
+    try {
+      //query to db to get users cluster -> still need to figure out how to do this dynamically with whatever user is currently logged in
+        const user = await User.findOne({username: 'kevin'});
+        const userCluster = user.cloudCluster[0];
+        const cluster = await CloudCluster.findOne({id: userCluster});
+        if (cluster === undefined) return next({log: 'error in getClusterInfo -> did not find cluster in db', message: 'no clusters found in db'})
+        res.locals.cluster = cluster;
+        next();
+    }
+    catch (err) {
+      next({log: 'error in getClusterInfo'})
+    }
+}
+
 apiController.getTopics = async(req, res, next) => {
+    const { cluster } = res.locals;
+    const { RESTendpoint, clusterId, API_KEY, API_SECRET } = cluster;
+    const token = Buffer.from(`${API_KEY}:${API_SECRET}`, 'utf8').toString('base64');
+    const headers = { 'Authorization': 'Basic '+ token };
+
     try {
         const response = await axios({
             url: `${RESTendpoint}/kafka/v3/clusters/${clusterId}/topics`,
@@ -33,7 +33,7 @@ apiController.getTopics = async(req, res, next) => {
         });
         // this will access the array of topics, feel free to read just the response to see all available keys
         const data = response.data.data;
-        console.log('data from getTopics: ', data);
+        // console.log('data from getTopics: ', data);
         let topicList = [];
         data.forEach((el) => topicList.push(el.topic_name));
         res.locals.topicList = topicList;
@@ -48,21 +48,24 @@ apiController.getTopics = async(req, res, next) => {
 // it will also add default number of partitions to the topic - 6
 // use cluster headers here
 apiController.addTopic = async(req, res, next) => {
-    
-    const { cluster_id } = req.params;
+    const { cluster } = res.locals;
+    const { RESTendpoint, clusterId, API_KEY, API_SECRET } = cluster;
+    const token = Buffer.from(`${API_KEY}:${API_SECRET}`, 'utf8').toString('base64');
+    const headers = { 'Authorization': 'Basic '+ token };
+
     const { topic } = req.body;
-    console.log('in add Topic')
+
     try {
         const response = axios({
            method: 'post',
-           url: `${RESTendpoint}/kafka/v3/clusters/${cluster_id}/topics`,
+           url: `${RESTendpoint}/kafka/v3/clusters/${clusterId}/topics`,
            data: {
             "topic_name": `${topic}`
            },
            headers
         });
         const data = await response;
-        console.log(data);
+        // console.log(data);
         next();
     } catch(err) {
         next({log: 'error in addTopic', message: 'could not add topic to cluster'})
@@ -70,11 +73,54 @@ apiController.addTopic = async(req, res, next) => {
 }
 
 apiController.deleteTopic = async(req, res, next) => {
-    const { cluster_id } = req.params;
-    const { topic } = req.body;
-    
+    const { cluster } = res.locals;
+    const { RESTendpoint, clusterId, API_KEY, API_SECRET } = cluster;
+    const token = Buffer.from(`${API_KEY}:${API_SECRET}`, 'utf8').toString('base64');
+    const headers = { 'Authorization': 'Basic '+ token };
+
     // name for the new topic
-    
+    const { topic } = req.body;
+    try {
+        const response = axios({
+           method: 'delete',
+           url: `${RESTendpoint}/kafka/v3/clusters/${clusterId}/topics/${topic}`,
+           headers
+        });
+        const data = await response;
+        // console.log(data);
+        next();
+    } catch(err) {
+        next({log: 'error in deleteTopic', message: 'could not delete topic in cluster'})
+    }
+}
+
+apiController.getMessages = async(req, res, next) => {
+    //general plan for this one would be to make our own consumer which would just give the latest stream of messages from the cluster
+    //thinking we could use kafka.js for this
+}
+
+apiController.addMessage = async(req, res, next) => {
+    const { cluster } = res.locals;
+    const { RESTendpoint, clusterId, API_KEY, API_SECRET } = cluster;
+    const token = Buffer.from(`${API_KEY}:${API_SECRET}`, 'utf8').toString('base64');
+    const headers = { 'Authorization': 'Basic '+ token };
+
+    const { topic, message } = req.body;
+
+    try {
+        const response = await axios({
+            method: 'post',
+            url: `${RESTendpoint}/kafka/v3/clusters/${clusterId}/topics/${topic}/records`,
+            data: {partition_id: null, value: {type: "JSON", data: `${message}`}},
+            headers
+        });
+        const data = response.data;
+        console.log('data in addMessage: ', data);
+        next();
+    }
+    catch (err) {
+        next({log: 'error in addMessage', message: 'could not add message to cluster'})
+    }
 }
 
 module.exports = apiController;

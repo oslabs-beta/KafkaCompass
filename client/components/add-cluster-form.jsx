@@ -10,25 +10,7 @@ const AddClusterForm = () => {
      const [newRESTEndpointInput, setNewRESTEndpointInput] = useState('');
      const [newClusterIdInput, setNewClusterIdInput] = useState('');
 
-    // manage new cluster input fields and submitting new cluster
-    function updateNewAPIKeyInput (e) {
-        setNewAPIKeyInput(e.target.value);
-    }
-    function updateNewAPISecretInput (e) {
-        setNewAPISecretInput(e.target.value);
-    }
-    function updateNewCloudKeyInput (e) {
-        setNewCloudKeyInput(e.target.value);
-    }
-    function updateNewCloudSecretInput (e) {
-        setNewCloudSecretInput(e.target.value);
-    }
-    function updateNewRESTEndpointInput (e) {
-        setNewRESTEndpointInput(e.target.value);
-    }
-    function updateNewClusterIdInput (e) {
-        setNewClusterIdInput(e.target.value);
-    }
+    // submit new cluster
     async function submitNewCluster () {
         // create object to send to db
         try {
@@ -42,7 +24,7 @@ const AddClusterForm = () => {
             }
             console.log('newCluster: ', newCluster);
             // send post request to backend
-            const data = await fetch ('/api/cloudAuth', {
+            const data = await fetch ('/api/cloud-auth', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -82,27 +64,27 @@ const AddClusterForm = () => {
                     <label class="label">
                         <span class="label-text">API Key:</span>
                     </label>
-                    <input type="text" placeholder="API Key" class="input input-bordered w-full max-w-xs" onChange={updateNewAPIKeyInput} value={newAPIKeyInput}/>
+                    <input type="text" placeholder="API Key" class="input input-bordered w-full max-w-xs" onChange={(e) => setNewAPIKeyInput(e.target.value)} value={newAPIKeyInput}/>
                     <label class="label">
                         <span class="label-text">API Secret:</span>
                     </label>
-                    <input type="text" placeholder="API Secret" class="input input-bordered w-full max-w-xs" onChange={updateNewAPISecretInput} value={newAPISecretInput}/>
+                    <input type="text" placeholder="API Secret" class="input input-bordered w-full max-w-xs" onChange={(e) => setNewAPISecretInput(e.target.value)} value={newAPISecretInput}/>
                     <label class="label">
                         <span class="label-text">Cloud Key</span>
                     </label>
-                    <input type="text" placeholder="Cloud Key" class="input input-bordered w-full max-w-xs" onChange={updateNewCloudKeyInput} value={newCloudKeyInput}/>
+                    <input type="text" placeholder="Cloud Key" class="input input-bordered w-full max-w-xs" onChange={(e) => setNewCloudKeyInput(e.target.value)} value={newCloudKeyInput}/>
                     <label class="label">
                         <span class="label-text">Cloud Secret</span>
                     </label>
-                    <input type="text" placeholder="Cloud Secret" class="input input-bordered w-full max-w-xs" onChange={updateNewCloudSecretInput} value={newCloudSecretInput}/>
+                    <input type="text" placeholder="Cloud Secret" class="input input-bordered w-full max-w-xs" onChange={(e) => setNewCloudSecretInput(e.target.value)} value={newCloudSecretInput}/>
                     <label class="label">
                         <span class="label-text">REST Endpoint</span>
                     </label>
-                    <input type="text" placeholder="REST Endpoint" class="input input-bordered w-full max-w-xs" onChange={updateNewRESTEndpointInput} value={newRESTEndpointInput}/>
+                    <input type="text" placeholder="REST Endpoint" class="input input-bordered w-full max-w-xs" onChange={(e) => setNewRESTEndpointInput(e.target.value)} value={newRESTEndpointInput}/>
                     <label class="label">
                         <span class="label-text">Cluster ID:</span>
                     </label>
-                    <input type="text" placeholder="Cluster ID" class="input input-bordered w-full max-w-xs" onChange={updateNewClusterIdInput} value={newClusterIdInput}/>
+                    <input type="text" placeholder="Cluster ID" class="input input-bordered w-full max-w-xs" onChange={(e) => setNewClusterIdInput(e.target.value)} value={newClusterIdInput}/>
                     <div className = 'pt-4'>
                         <button className = 'btn btn-primary' onClick={submitNewCluster}>Submit</button>
                     </div>

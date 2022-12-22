@@ -76,29 +76,25 @@ app.post(
 
 //message-related endpoints
 //get all messages in a topic
-app.get('/api/message/:topicId', (req, res) => {
+app.get('/api/message', apiController.getClusterInfo, (req, res) => {
   return res.status(200).json(res.locals.messageList);
 })
 //add a message to a topic
-app.post('/api/message/:topicId', (req, res) => {
+app.post('/api/message', apiController.getClusterInfo, apiController.addMessage, (req, res) => {
   return res.status(201).json('message added') 
-})
-//delete a message from a topic
-app.delete('/api/message', (req, res) => {
-  return res.status(202).json('message deleted')
 })
 
 //topic-related endpoints
 //get all topics in a cluster
-app.get('/api/topic/:cluster_id', apiController.getTopics, (req, res) => {
+app.get('/api/topic', apiController.getClusterInfo, apiController.getTopics, (req, res) => {
   return res.status(200).json(res.locals.topicList);
 });
 //add a topic to a cluster
-app.post('/api/topic/:cluster_id', apiController.deleteTopic, (req, res) => {
+app.post('/api/topic', apiController.getClusterInfo, apiController.addTopic, (req, res) => {
   return res.status(201).json('topic added')
 })
 //remove a topic from a cluster
-app.delete('/api/topic/:cluster_id', (req, res) => {
+app.delete('/api/topic', apiController.getClusterInfo, apiController.deleteTopic, (req, res) => {
   return res.status(202).json('topic deleted')
 })
 
