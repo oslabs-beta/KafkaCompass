@@ -9,6 +9,7 @@ const AddClusterForm = () => {
      const [newCloudSecretInput, setNewCloudSecretInput] = useState('');
      const [newRESTEndpointInput, setNewRESTEndpointInput] = useState('');
      const [newClusterIdInput, setNewClusterIdInput] = useState('');
+     const [newBootsrapServerInput, setNewBootstrapServerInput] = useState('');
 
     // submit new cluster
     async function submitNewCluster () {
@@ -21,6 +22,7 @@ const AddClusterForm = () => {
                 CLOUD_SECRET: newCloudSecretInput,
                 clusterId: newClusterIdInput,
                 RESTendpoint: newRESTEndpointInput,
+                bootstrapServer: newBootsrapServerInput,
             }
             console.log('newCluster: ', newCluster);
             // send post request to backend
@@ -52,6 +54,7 @@ const AddClusterForm = () => {
         setNewCloudSecretInput('');
         setNewRESTEndpointInput('');
         setNewClusterIdInput('');
+        setNewBootstrapServerInput('');
     }
 
     return (
@@ -86,6 +89,11 @@ const AddClusterForm = () => {
                     </label>
                     <input type="text" placeholder="Cluster ID" class="input input-bordered w-full max-w-xs" onChange={(e) => setNewClusterIdInput(e.target.value)} value={newClusterIdInput}/>
                     <div className = 'pt-4'>
+                    <label class="label">
+                        <span class="label-text">Bootstrap Server:</span>
+                    </label>
+                    <input type="text" placeholder="Bootstrap Server" class="input input-bordered w-full max-w-xs" onChange={(e) => setNewBootstrapServerInput(e.target.value)} value={newBootsrapServerInput}/>
+                    <div className = 'pt-4'></div>
                         <button className = 'btn btn-primary' onClick={submitNewCluster}>Submit</button>
                     </div>
                 </div>

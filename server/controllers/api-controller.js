@@ -2,6 +2,7 @@ require('dotenv').config();
 const axios = require('axios');
 const User = require('../models/user-model');
 const CloudCluster = require('../models/cloud-cluster-model');
+const { decrypt } = require("../encryption");
 
 const apiController = {};
 
@@ -16,7 +17,14 @@ apiController.getClusterInfo = async(req, res, next) => {
 
     try {
       const { cloudCluster } = req.session.user;
-      res.locals.cluster = cloudCluster[0];
+      const cluster = cloudCluster[0];
+      for (const key in cluster) {
+        if (typeof cluster[key] !== 'string') continue;
+        else{
+            cluster[key] = decrypt(cluster[key]);
+        }
+      }
+      res.locals.cluster = cluster;
       next();
     }
     catch {
