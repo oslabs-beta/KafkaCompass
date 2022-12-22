@@ -94,7 +94,8 @@ userController.addCloudCluster = async (req, res, next) => {
     CLOUD_SECRET,
     clusterId,
     RESTendpoint,
-  } = req.body;
+    bootstrapServer
+  } = res.locals.credentials;
 
   let user;
 
@@ -116,14 +117,12 @@ userController.addCloudCluster = async (req, res, next) => {
     CLOUD_SECRET,
     clusterId,
     RESTendpoint,
+    bootstrapServer
   };
-
-  console.log(clusterInfo);
 
   try {
     const cluster = await CloudCluster.create(clusterInfo);
-    console.log(cluster);
-    console.log(user);
+
     user.cloudCluster.push(cluster);
     user.save();
   } catch (error) {
