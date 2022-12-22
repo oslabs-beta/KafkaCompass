@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
 const metricSchema = new Schema({
+  clusterId: String,
   request_bytes: Object,
   response_bytes: Object,
   received_bytes: Object,
@@ -18,4 +19,4 @@ const metricSchema = new Schema({
   cluster_load_percent: Object
 });
 
-module.exports = new model('metric', metricSchema);
+module.exports = new model('Metric', metricSchema);

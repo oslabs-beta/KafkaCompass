@@ -1,5 +1,4 @@
 const User = require('../models/user-model');
-const Metric = require('../models/metric-model');
 const axios = require("axios");
 const parsePrometheusTextFormat = require("parse-prometheus-text-format");
 
@@ -23,7 +22,6 @@ metricController.fetchData = async (req, res, next) => {
   });
 
   const data = parsePrometheusTextFormat(response.data);
-  console.log(data)
   const metricsData = await formatMetrics(data);
 
   res.locals.metricsData = metricsData;
@@ -51,6 +49,8 @@ metricController.decryptKeys = (req, res, next) => {
 
   res.locals.credentials = credentials;
   res.locals.userId = req.session.user.id;
+  res.locals.clusterId = req.session.user.cloudCluster[0].clusterId;
+
   return next();
 };
 
