@@ -184,6 +184,7 @@ const DashboardContainer = (props) => {
             <main className="cluster-container">
                     {metricSelection.retainedBytes &&
                     <><Chart chartData={topicChart} 
+                            retained={true}
                             totalBytes={totalBytes} />
                       <TopicButtons 
                             chartData={topicChart} 
@@ -191,6 +192,7 @@ const DashboardContainer = (props) => {
                             totalBytes={totalBytes} /></>}
                     {metricSelection.reqResBytes && 
                     <Chart chartData={reqResChart} 
+                    reqRes={true}
                     totalRes={totalRes}
                     totalReq={totalReq}
                      />
