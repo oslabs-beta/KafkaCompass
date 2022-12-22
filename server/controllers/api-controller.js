@@ -6,16 +6,20 @@ const CloudCluster = require('../models/cloud-cluster-model');
 const apiController = {};
 
 apiController.getClusterInfo = async(req, res, next) => {
+    if (!req.session.user)
+    return next({
+      log: 'apiController.getClusterInfo: ERROR: Unauthorized',
+      message: {
+        err: 'Unauthorized',
+      },
+    });
+
     try {
-      //query to db to get users cluster -> still need to figure out how to do this dynamically with whatever user is currently logged in
-        const user = await User.findOne({username: 'kevin'});
-        const userCluster = user.cloudCluster[0];
-        const cluster = await CloudCluster.findOne({id: userCluster});
-        if (cluster === undefined) return next({log: 'error in getClusterInfo -> did not find cluster in db', message: 'no clusters found in db'})
-        res.locals.cluster = cluster;
-        next();
+      const { cloudCluster } = req.session.user;
+      res.locals.cluster = cloudCluster[0];
+      next();
     }
-    catch (err) {
+    catch {
       next({log: 'error in getClusterInfo'})
     }
 }
