@@ -3,11 +3,11 @@ const axios = require('axios');
 const User = require('../models/user-model');
 const CloudCluster = require('../models/cloud-cluster-model');
 const { decrypt } = require('../encryption');
+const { Kafka } = require('kafkajs');
 
 const apiController = {};
 
 apiController.getClusterInfo = async (req, res, next) => {
-  console.log('user', req.session.user);
   if (!req.session.user)
     return next({
       log: 'apiController.getClusterInfo: ERROR: Unauthorized',
@@ -18,7 +18,6 @@ apiController.getClusterInfo = async (req, res, next) => {
 
   try {
     const { cloudCluster } = req.session.user;
-    console.log('cloudCuster info : ', cloudCluster);
     const cluster = cloudCluster[0];
     for (const key in cluster) {
       if (typeof cluster[key] !== 'string') continue;
@@ -35,7 +34,7 @@ apiController.getClusterInfo = async (req, res, next) => {
 
 apiController.getTopics = async (req, res, next) => {
   const { cluster } = res.locals;
-  console.log('cluster', cluster);
+  // console.log('cluster', cluster);
   const { RESTendpoint, clusterId, API_KEY, API_SECRET } = cluster;
   const token = Buffer.from(`${API_KEY}:${API_SECRET}`, 'utf8').toString(
     'base64'
@@ -53,7 +52,7 @@ apiController.getTopics = async (req, res, next) => {
     let topicList = [];
     data.forEach((el) => topicList.push(el.topic_name));
     res.locals.topicList = topicList;
-    console.log('topic list is: ', topicList);
+    // console.log('topic list is: ', topicList);
     next();
   } catch (err) {
     next({ log: 'error in getTopics' });
@@ -122,7 +121,54 @@ apiController.deleteTopic = async (req, res, next) => {
 
 apiController.getMessages = async (req, res, next) => {
   //general plan for this one would be to make our own consumer which would just give the latest stream of messages from the cluster
-  //thinking we could use kafka.js for this
+  //thinking we could use kafka.js for
+  const { cluster } = res.locals;
+  const {
+    API_KEY,
+    API_SECRET,
+    CLOUD_KEY,
+    CLOUD_SECRET,
+    clusterId,
+    RESTendpoint,
+    bootstrapServer,
+  } = cluster;
+  const kafka = new Kafka({
+    brokers: ['pkc-n00kk.us-east-1.aws.confluent.cloud:9092'],
+    clientId: 'test-cluster',
+    ssl: true,
+    sasl: {
+      mechanism: 'plain',
+      password:
+        'LbB9cMhT672NTo+cG9kLiLlC1KpiFqXFFvz3GC3xa4FwFF9a/VuH9X/VifVkNDaF',
+      username: 'RZLFSYPVKQLHEHXB',
+    },
+  });
+
+  const consumer = kafka.consumer({ groupId: 'test-group' });
+
+  const receiveMessages = async () => {
+    await consumer.connect();
+    await consumer.subscribe({ topic: 'test_topic', fromBeginning: true });
+    res.locals.messageList = [];
+    await consumer.run({
+      eachMessage: async ({ topic, partition, message }) => {
+        const kafkaMessage = {
+          topic,
+          partition,
+          timestamp: message.timestamp,
+          offset: message.offset,
+          value: message.value.toString(),
+        };
+        console.log('Received message:', kafkaMessage);
+        res.locals.messageList.push(kafkaMessage);
+        setTimeout(() => {
+          consumer.disconnect();
+          next();
+        }, 2000);
+      },
+    });
+  };
+  receiveMessages();
 };
 
 apiController.addMessage = async (req, res, next) => {

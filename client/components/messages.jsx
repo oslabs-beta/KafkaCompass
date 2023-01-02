@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
 // const { Kafka } = require('kafkajs');
+import React, { useState, useEffect } from 'react';
 
 const Messages = ({ messages }) => {
   //create new Kafka instance using kafkajs
@@ -43,6 +43,12 @@ const Messages = ({ messages }) => {
   //     </li>
   //   );
   // })
+
+  const consumeMessages = async () => {
+    const response = await fetch('/api/message');
+    const data = await response.json();
+    console.log(data);
+  };
 
   return (
     <div className='flex flex-col'>
@@ -407,7 +413,7 @@ const Messages = ({ messages }) => {
         </div>
       </div>
       <button
-        className='btn btn-active btn-primary w-min'
+        className='btn btn-active btn-primary w-min self-center'
         onClick={consumeMessages}
       >
         Consume Messages
