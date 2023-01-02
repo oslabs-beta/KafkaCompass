@@ -23,11 +23,13 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.resolve(__dirname, '../dist')));
 
+const min = 60 * 1000;
+const hour = 60 * min;
 app.use(
   session({
     secret: 'test',
     saveUninitialized: true,
-    cookie: { maxAge: 50000 },
+    cookie: { maxAge: hour },
     resave: false,
   })
 );
