@@ -67,7 +67,7 @@ const DashboardContainer = (props) => {
     const [topicChart, setTopics] = useState({labels: [], datasets: []});
     const [reqResChart, setReqRes] = useState({labels: [], datasets: []});
 
-
+    const [topics, setTopicNames] = useState([]);
     const [totalBytes, setTotal] = useState();
     const [totalRes, setTotalRes] = useState();
     const [totalReq, setTotalReq] = useState();
@@ -130,7 +130,7 @@ const DashboardContainer = (props) => {
                         borderWidth: 1
                         }
                 ]});
-        
+
                 const valuesReq =  data.request_bytes.metrics.map((topic) => topic.value);
                 const valuesRes = data.response_bytes.metrics.map((topic) => topic.value);
                 setTotalReq(data.request_bytes.totalValue);
@@ -187,6 +187,7 @@ const DashboardContainer = (props) => {
                             retained={true}
                             totalBytes={totalBytes} />
                       <TopicButtons 
+                            topics={topics}
                             chartData={topicChart} 
                             setTopics={setTopics}
                             totalBytes={totalBytes} /></>}
