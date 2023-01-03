@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema, model } = mongoose;
 
@@ -16,7 +16,8 @@ const metricSchema = new Schema({
   partition_count: Object,
   successful_authentication_count: Object,
   consumer_lag_offsets: Object,
-  cluster_load_percent: Object
+  cluster_load_percent: Object,
+  created_at: { type: Date, default: Date.now() },
 });
 
-module.exports = new model('Metric', metricSchema);
+module.exports = new model("Metric", metricSchema);
