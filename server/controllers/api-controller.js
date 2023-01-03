@@ -92,14 +92,14 @@ apiController.deleteTopic = async(req, res, next) => {
 
     // name for the new topic
     const { topic } = req.body;
+    console.log(req.body)
+    console.log(topic);
     try {
-        const response = axios({
+        const response = await axios({
            method: 'delete',
            url: `${RESTendpoint}/kafka/v3/clusters/${clusterId}/topics/${topic}`,
            headers
-        });
-        const data = await response;
-        // console.log(data);
+        })
         next();
     } catch(err) {
         next({log: 'error in deleteTopic', message: 'could not delete topic in cluster'})
