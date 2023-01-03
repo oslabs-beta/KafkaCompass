@@ -6,32 +6,34 @@ const Navbar = ({setDisplayAuth, navigate, checkLoggedIn, renderDrawerButton, se
     let drawerButton=<></>;
     if (renderDrawerButton) {
         drawerButton = (
-        <div className="flex-1">
+        <>
             <label htmlFor="my-drawer" className="btn drawer-button mr-10 my-7">Select Metrics</label>
             <button onClick={() => {
                     navigate('/cluster-history');
                 }} className="btn btn-outline mr-10 my-7">Cluster History</button>
-            <label htmlFor="my-modal-4" className="btn btn-outline ">Add New Cluster</label>
-        </div>);
+            <label htmlFor="my-modal-4" className="btn btn-outline mr-10 my-7">Add New Cluster</label>
+        </>);
     }
 
     let logButtons=<></>
     if (checkLoggedIn === false) {
-    logButtons = ( <div>
+    logButtons = (
+        <>
         <button onClick={() => {
         setDisplayAuth('signup');
         navigate('/auth');
-      }} 
+        }} 
         className="btn btn-outline mr-10 my-7">Sign Up</button>
         <button onClick={() => {
         setDisplayAuth('login');
         navigate('/auth');
         }} 
         className="btn btn-accent btn-outline mr-10 my-7">Log In </button>
-        </div> 
-        )
+        </>
+    )
     } else {
-    logButtons = (<div>
+    logButtons = (
+        <>
         <button onClick={() => {
             setDrawerButton(false);
             navigate('/');
@@ -45,14 +47,14 @@ const Navbar = ({setDisplayAuth, navigate, checkLoggedIn, renderDrawerButton, se
             navigate('/');
         }}
         className="btn btn-outline mr-10 my-7">Logout</button>
-    </div>
+        </>
     )
     }
 
     return (
         <div className="navbar">
-            {drawerButton}
-            {logButtons}
+            <div className='flex-1 flex-wrap justify-around grow-[2]'>{drawerButton}</div>
+            <div className='flex-1 justify-end overflow-auto flex-wrap'>{logButtons}</div>
         </div>
     )
     
