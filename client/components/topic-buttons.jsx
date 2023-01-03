@@ -1,12 +1,10 @@
 import React from 'react';
 import AddTopic from './add-topic-form';
+import DeleteTopic from './delete-topic-from';
 
-const TopicButtons = ({chartData, setChartData, totalBytes, setTotal, topics}) => {
+const TopicButtons = ({chartData, setChart, total, setTotal}) => {
 
     const handleCreateTopic = async(topic) => {
-        // send topic to the backend
-        // works only when connected to the backend!!
-        // to test it comment out everything besides lines 19 - 23
         try {
             const response = await fetch('/api/topic', {
                 method: 'POST',
@@ -17,41 +15,34 @@ const TopicButtons = ({chartData, setChartData, totalBytes, setTotal, topics}) =
             });
             if (response.ok) {
                 const newChartData = chartData;
-                newChartData.labels.push(topic);
-                newChartData.datasets[0].data.push(0);
-                setChartData(newChartData);
+                newChartData.topics.labels.push(topic);
+                newChartData.topics.datasets[0].data.push(0);
+                setChart(newChartData);
                 return;
+            } else {
+                console.log('Could not add new topic to the cluster');
             }
-            console.log('Could not add new topic to the cluster');
         } catch(err) {
             console.log('Network error occurred');
         }
     }
 
     const handleDeleteTopic = async(topic) => {
-        try {
-            const response = await fetch('/api/topic', {
+        await fetch('/api/topic', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                   },
                 body: JSON.stringify({topic}),
-            });
-            if (response.ok) {
-                const newChartData = chartData;
-                for (let i = 0; i < newChartData.labels.length; i++) {
-                    if (newChartData.labels[i] === topic) {
-                        newChartData.labels = newChartData.labels.slice(0, i).concat(newChartData.labels.slice(i + 1));
-                        newChartData.datasets[0].data = newChartData.datasets[0].data.slice(0, i).concat(newChartData.datasets[0].data.slice(i + 1));
-                        break;
-                    }
-                }
-                setChartData(newChartData);
-                return;
-            }
-        } catch(err) {
-            console.log('Network error');
-        }
+        });
+        const newChartData = chartData;
+        console.log(newChartData);
+        const i = newChartData.topics.labels.findIndex((el) => el === topic);
+        newChartData.topics.labels.splice(i, 1);
+        newChartData.topics.datasets[0].data.splice(i, 1);
+        const totalBytes = newChartData.topics.datasets[0].data.reduce((a, b) => a + b);
+        setChart(newChartData);
+        setTotal(totalBytes);
     }
 
     return (
@@ -62,6 +53,8 @@ const TopicButtons = ({chartData, setChartData, totalBytes, setTotal, topics}) =
                 <button class='btn btn-xs btn-outline btn-accent'>Write a message</button>
             </div>
             <AddTopic onCreate={handleCreateTopic} />
+            <DeleteTopic onDelete={handleDeleteTopic} 
+                         chartData={chartData}  />
         </>
     )
 }

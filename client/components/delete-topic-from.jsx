@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-const DeleteTopic = ({onDelete, topics}) => {
+const DeleteTopic = ({onDelete, chartData}) => {
     const [topic, setTopic] = useState('');
-    console.log(topics);
+    const topicNames = chartData.topics.labels;
 
     return(
         <>
@@ -11,12 +11,17 @@ const DeleteTopic = ({onDelete, topics}) => {
             <label className="modal-box relative" htmlFor="">
                 <h3 className="mb-4 text-lg font-bold">Topic name:</h3>
                 <div className="form-control w-full max-w-xs">
-                <select class="select w-full max-w-xs">
-                    <option onChange={(e) => setTopic(e.target.value)} disabled selected>Choose a topic to delete</option>
-                    {topics.map(t =>  <option>{t}</option>)}
+                <select
+                        onChange={(e) => {
+                            setTopic(e.target.value)
+                        }} 
+                        className="select w-full max-w-xs">
+                            <option disabled selected>Choose a topic to delete</option>
+                    {topicNames.map(t =>  <option>{t}</option>)}
                 </select>
+
                     <div className = 'pt-4 mt-2 modal-action'>
-                        <label htmlFor="topic-delete-modal" className = 'btn btn-accent' onClick={() => onDelete(topic)}>Create topic</label>
+                        <label htmlFor="topic-delete-modal" className = 'btn btn-accent' onClick={() => onDelete(topic)}>Delete topic</label>
                     </div>
                 </div>
             </label>
