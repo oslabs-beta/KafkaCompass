@@ -13,7 +13,7 @@ const Navbar = ({
   let drawerButton = <></>;
   if (renderDrawerButton) {
     drawerButton = (
-      <div className='flex-1'>
+      <>
         <label htmlFor='my-drawer' className='btn drawer-button mr-10 my-7'>
           Select Metrics
         </label>
@@ -25,17 +25,17 @@ const Navbar = ({
         >
           Cluster History
         </button>
-        <label htmlFor='my-modal-4' className='btn btn-outline '>
+        <label htmlFor='my-modal-4' className='btn btn-outline mr-10 my-7'>
           Add New Cluster
         </label>
-      </div>
+      </>
     );
   }
 
   let logButtons = <></>;
   if (checkLoggedIn === false) {
     logButtons = (
-      <div>
+      <>
         <button
           onClick={() => {
             setDisplayAuth('signup');
@@ -54,11 +54,11 @@ const Navbar = ({
         >
           Log In{' '}
         </button>
-      </div>
+      </>
     );
   } else {
     logButtons = (
-      <div>
+      <>
         <button
           onClick={() => {
             setDrawerButton(false);
@@ -80,14 +80,18 @@ const Navbar = ({
         >
           Logout
         </button>
-      </div>
+      </>
     );
   }
 
   return (
     <div className='navbar'>
-      {drawerButton}
-      {logButtons}
+      <div className='flex-1 flex-wrap justify-around grow-[2]'>
+        {drawerButton}
+      </div>
+      <div className='flex-1 justify-end overflow-auto flex-wrap'>
+        {logButtons}
+      </div>
     </div>
   );
 };

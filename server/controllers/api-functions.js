@@ -45,9 +45,14 @@ const getMetricsList = async() => {
     });
     const data = response.data;
     console.log(parsePrometheusTextFormat(data));
+    parsePrometheusTextFormat(data).forEach(obj => {
+        if (obj.name === 'confluent_kafka_server_request_count') {
+            console.log(obj.metrics);
+        }
+    })
 }
 
-// getMetricsList();
+getMetricsList();
 
 
 // Returns a list of configuration parameters for the specified Kafka cluster.

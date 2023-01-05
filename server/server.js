@@ -5,8 +5,7 @@ const path = require('path');
 const PORT = 3000;
 
 const mongodb = require('mongoose');
-const MONGO_URI =
-  'mongodb+srv://jasonkuyper:12345@kafka-compass.1r5raix.mongodb.net/?retryWrites=true&w=majority'; //require("./credentials");
+const MONGO_URI = require('./credentials');
 
 const cloudAuthController = require('./controllers/cloud-auth-controller');
 const userController = require('./controllers/user-controller');
@@ -29,7 +28,7 @@ app.use(
   session({
     secret: 'test',
     saveUninitialized: true,
-    cookie: { maxAge: hour },
+    cookie: { maxAge: 50000000 },
     resave: false,
   })
 );
