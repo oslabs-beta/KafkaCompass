@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AuthForm = ({handleSubmit, register, onSubmit, type, setDrawerButton, setDisplayAuth, navigate}) => {
+const AuthForm = ({handleSubmit, register, onSubmit, type, setRenderDrawerButton, setDisplayAuth, navigate}) => {
     const login = type === 'Log In';
 
     return (
@@ -14,7 +14,7 @@ const AuthForm = ({handleSubmit, register, onSubmit, type, setDrawerButton, setD
                     <input className="btn my-2 btn-outline btn-accent auth-input" value={type} type="submit" />
                 </div>
                 <button onClick={() => {
-                                        setDrawerButton(false);
+                                        setRenderDrawerButton(false);
                                         setDisplayAuth('');
                                         navigate('/');
                                         }} 

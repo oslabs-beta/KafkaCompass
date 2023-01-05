@@ -15,7 +15,7 @@ import './static/styles.css';
 
 function App() {
   const navigate = useNavigate();
-  const [renderDrawerButton, setDrawerButton] = useState(false);
+  const [renderDrawerButton, setRenderDrawerButton] = useState(false);
   const [checkLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [authMode, setDisplayAuth] = useState('');
@@ -65,7 +65,7 @@ function App() {
               setDisplayAuth={setDisplayAuth} 
               checkLoggedIn={checkLoggedIn}
               renderDrawerButton={renderDrawerButton}
-              setDrawerButton={setDrawerButton}
+              setRenderDrawerButton={setRenderDrawerButton}
               setLoggedIn={setLoggedIn}
               logUserOut={logUserOut} 
               />
@@ -73,7 +73,7 @@ function App() {
         <Route path='*' element={<NotFound />} />
 
           <Route exact path='/dashboard' element={checkLoggedIn ? <DashboardContainer  
-          setDrawerButton={setDrawerButton} 
+          setRenderDrawerButton={setRenderDrawerButton} 
           checkLoggedIn={checkLoggedIn}
           user={user}
           /> : <Navigate to='/'/>} />
@@ -82,12 +82,12 @@ function App() {
                                                  authMode={authMode} 
                                                  navigate={navigate}
                                                  setDisplayAuth={setDisplayAuth}
-                                                 setDrawerButton={setDrawerButton}
+                                                 setRenderDrawerButton={setRenderDrawerButton}
                                                  setLoggedIn={setLoggedIn}
                                                  setUser={setUser}
                                                   />} />
-        <Route exact path='/cluster-history' element={<ClusterHistory setDrawerButton={setDrawerButton} />}/>
-        <Route exact path='/' element={<LandingPage navigate={navigate} setDrawerButton={setDrawerButton} setLoggedin={setLoggedIn} setUser={setUser} checkLoggedIn={checkLoggedIn} />} />
+        <Route exact path='/cluster-history' element={<ClusterHistory setRenderDrawerButton={setRenderDrawerButton} />}/>
+        <Route exact path='/' element={<LandingPage navigate={navigate} setRenderDrawerButton={setRenderDrawerButton} setLoggedin={setLoggedIn} setUser={setUser} checkLoggedIn={checkLoggedIn} />} />
       </Routes>
     </div>
   );

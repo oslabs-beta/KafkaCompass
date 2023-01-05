@@ -6,7 +6,7 @@ import ClusterItem from '../components/cluster-item';
 const ClusterHistory = (props) => {
   const navigate = useNavigate();
   useEffect( () => {
-    props.setDrawerButton(true);
+    props.setRenderDrawerButton(true);
   });
 
   const backToDashboard = () => {

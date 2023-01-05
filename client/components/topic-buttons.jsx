@@ -50,7 +50,7 @@ const TopicButtons = ({chartData, setChart, total, setTotal}) => {
             <div className='buttons-container btn-group btn-group-vertical mx-4'>
                 <label htmlFor="topic-create-modal" className='btn btn-xs btn-outline btn-accent'>Create topic</label>
                 <label htmlFor="topic-delete-modal" className='btn btn-xs btn-outline btn-accent'>Delete topic</label>
-                <button class='btn btn-xs btn-outline btn-accent'>Write a message</button>
+                <button className='btn btn-xs btn-outline btn-accent'>Write a message</button>
             </div>
             <AddTopic onCreate={handleCreateTopic} />
             <DeleteTopic onDelete={handleDeleteTopic} 

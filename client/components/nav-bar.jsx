@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { render } from 'react-dom';
 
-const Navbar = ({setDisplayAuth, navigate, checkLoggedIn, renderDrawerButton, setDrawerButton, setLoggedIn, logUserOut}) => {
+const Navbar = ({setDisplayAuth, navigate, checkLoggedIn, renderDrawerButton, setRenderDrawerButton, setLoggedIn, logUserOut}) => {
 
     let drawerButton=<></>;
     if (renderDrawerButton) {
@@ -35,14 +35,14 @@ const Navbar = ({setDisplayAuth, navigate, checkLoggedIn, renderDrawerButton, se
     logButtons = (
         <>
         <button onClick={() => {
-            setDrawerButton(false);
+            setRenderDrawerButton(false);
             navigate('/');
         }}
         className="btn btn-outline mr-10 my-7">Home</button>
 
         <button onClick={() => {
             logUserOut();
-            setDrawerButton(false);
+            setRenderDrawerButton(false);
             setLoggedIn(false);
             navigate('/');
         }}
