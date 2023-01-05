@@ -48,10 +48,13 @@ apiController.getTopics = async (req, res, next) => {
     });
     // this will access the array of topics, feel free to read just the response to see all available keys
     const data = response.data.data;
-    // console.log('data from getTopics: ', data);
-    let topicList = [];
+    console.log('data from getTopics: ', data);
+    const topicList = [];
+    console.log('TOPIC LIST :', topicList);
     data.forEach((el) => topicList.push(el.topic_name));
+    console.log('TOPIC LIST NOW: ', topicList);
     res.locals.topicList = topicList;
+    console.log('HERE!!!');
     // console.log('topic list is: ', topicList);
     next();
   } catch (err) {
@@ -123,6 +126,7 @@ apiController.getMessages = async (req, res, next) => {
   //general plan for this one would be to make our own consumer which would just give the latest stream of messages from the cluster
   //thinking we could use kafka.js for
   const { cluster } = res.locals;
+  console.log(cluster);
   const {
     API_KEY,
     API_SECRET,
@@ -164,7 +168,7 @@ apiController.getMessages = async (req, res, next) => {
         setTimeout(() => {
           consumer.disconnect();
           next();
-        }, 2000);
+        }, 4000);
       },
     });
   };
