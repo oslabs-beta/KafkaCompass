@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import AddClusterForm from '../components/add-cluster-form';
 import Chart from '../components/chart';
 import TopicButtons from '../components/topic-buttons';
 import Messages from '../components/messages';
+import { NavbarContext } from '../NavbarContext';
 
-const DashboardContainer = (props) => {
+const DashboardContainer = () => {
+  const {setRenderDrawerButton} = useContext(NavbarContext).drawerButtonsState;
   const [chartData, setChart] = useState({
     topics: { labels: [], datasets: [] },
     reqRes: { labels: [], datasets: [] },
@@ -85,7 +87,7 @@ const DashboardContainer = (props) => {
   }, []);
 
   useEffect(() => {
-    props.setDrawerButton(true);
+    setRenderDrawerButton(true);
   }, []);
 
   // dictates the view mode on dashbaord

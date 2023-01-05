@@ -1,5 +1,6 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { Route, Routes, useNavigate, Navigate } from 'react-router-dom';
+import { NavbarContext } from './NavbarContext';
 import DashboardContainer from './containers/dashboard-container';
 import LandingPage from './containers/landing-page-container';
 import NotFound from './containers/NotFound';
@@ -14,6 +15,14 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [authMode, setAuthMode] = useState('');
+
+  // shared navigation bar state
+  const providerValue = {
+    drawerButtonsState: useMemo(() => ({renderDrawerButton, setRenderDrawerButton}), [renderDrawerButton, setRenderDrawerButton]),
+    loggedState: useMemo(() => ({loggedIn, setLoggedIn}), [loggedIn, setLoggedIn]),
+    authModeState: useMemo(() => ({authMode, setAuthMode}), [authMode, setAuthMode]),
+    userState: useMemo(() => ({user, setUser}), [user, setUser])
+  };
 
   const checkSession = async () => {
     try {
@@ -51,22 +60,14 @@ function App() {
   };
 
   useEffect(() => {
-    if (!checkLoggedIn) {
+    if (!loggedIn) {
       checkSession();
     }
   });
 
   return (
-    <div>
-      <Navbar
-        navigate={navigate}
-        setDisplayAuth={setDisplayAuth}
-        checkLoggedIn={checkLoggedIn}
-        renderDrawerButton={renderDrawerButton}
-        setDrawerButton={setDrawerButton}
-        setLoggedIn={setLoggedIn}
-        logUserOut={logUserOut}
-      />
+    <NavbarContext.Provider value={providerValue}>
+      <Navbar navigate={navigate} logUserOut={logUserOut} />
       <Routes>
         <Route path='*' element={<NotFound />} />
 
@@ -74,12 +75,8 @@ function App() {
           exact
           path='/dashboard'
           element={
-            checkLoggedIn ? (
-              <DashboardContainer
-                setDrawerButton={setDrawerButton}
-                checkLoggedIn={checkLoggedIn}
-                user={user}
-              />
+            loggedIn ? (
+              <DashboardContainer />
             ) : (
               <Navigate to='/' />
             )
@@ -90,20 +87,13 @@ function App() {
           exact
           path='/auth'
           element={
-            <Auth
-              authMode={authMode}
-              navigate={navigate}
-              setDisplayAuth={setDisplayAuth}
-              setDrawerButton={setDrawerButton}
-              setLoggedIn={setLoggedIn}
-              setUser={setUser}
-            />
+            <Auth navigate={navigate} />
           }
         />
         <Route
           exact
           path='/cluster-history'
-          element={<ClusterHistory setDrawerButton={setDrawerButton} />}
+          element={<ClusterHistory setRenderDrawerButton={setRenderDrawerButton} />}
         />
         <Route
           exact
@@ -111,15 +101,11 @@ function App() {
           element={
             <LandingPage
               navigate={navigate}
-              setDrawerButton={setDrawerButton}
-              setLoggedin={setLoggedIn}
-              setUser={setUser}
-              checkLoggedIn={checkLoggedIn}
             />
           }
         />
       </Routes>
-    </div>
+    </NavbarContext.Provider>
   );
 }
 

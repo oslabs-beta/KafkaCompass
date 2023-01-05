@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { render } from 'react-dom';
+import React, { useContext } from 'react';
+import { NavbarContext } from '../NavbarContext';
+
 
 const Navbar = ({
-  setDisplayAuth,
   navigate,
-  checkLoggedIn,
-  renderDrawerButton,
-  setDrawerButton,
-  setLoggedIn,
   logUserOut,
 }) => {
+  const {renderDrawerButton, setRenderDrawerButton} = useContext(NavbarContext).drawerButtonsState;
+  const {loggedIn, setLoggedIn} = useContext(NavbarContext).loggedState;
+  const {setAuthMode} = useContext(NavbarContext).authModeState;
+  
   let drawerButton = <></>;
   if (renderDrawerButton) {
     drawerButton = (
@@ -33,12 +33,12 @@ const Navbar = ({
   }
 
   let logButtons = <></>;
-  if (checkLoggedIn === false) {
+  if (loggedIn === false) {
     logButtons = (
       <>
         <button
           onClick={() => {
-            setDisplayAuth('signup');
+            setAuthMode('signup');
             navigate('/auth');
           }}
           className='btn btn-outline mr-10 my-7'
@@ -47,7 +47,7 @@ const Navbar = ({
         </button>
         <button
           onClick={() => {
-            setDisplayAuth('login');
+            setAuthMode('login');
             navigate('/auth');
           }}
           className='btn btn-accent btn-outline mr-10 my-7'
@@ -61,7 +61,7 @@ const Navbar = ({
       <>
         <button
           onClick={() => {
-            setDrawerButton(false);
+            setRenderDrawerButton(false);
             navigate('/');
           }}
           className='btn btn-outline mr-10 my-7'

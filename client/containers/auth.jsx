@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import AuthForm from '../components/authForm';
+import { NavbarContext } from '../NavbarContext';
 
-const Auth = ({authMode, setAuthMode, navigate, setRenderDrawerButton, setLoggedIn, setUser}) => {
+const Auth = ({navigate}) => {
+    const {authMode, setAuthMode} = useContext(NavbarContext).authModeState;
+    const {setRenderDrawerButton} = useContext(NavbarContext).drawerButtonsState;
+    const {setLoggedIn} = useContext(NavbarContext).loggedState;
+    const {setUser} = useContext(NavbarContext).userState;
+
     const {register, handleSubmit } = useForm();
     // render either log in or sign up form
     const renderLogin = authMode === 'login' ? true : false;
