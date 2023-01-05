@@ -11,6 +11,7 @@ cloudAuthController.encryptCredentials = (req, res, next) => {
     clusterId,
     RESTendpoint,
     bootstrapServer,
+    cluster_name,
   } = req.body;
 
   const credentials = {
@@ -21,6 +22,7 @@ cloudAuthController.encryptCredentials = (req, res, next) => {
     clusterId,
     RESTendpoint,
     bootstrapServer,
+    cluster_name,
   };
 
   for (const key in credentials) {

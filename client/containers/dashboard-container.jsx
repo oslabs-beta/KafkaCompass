@@ -81,7 +81,7 @@ const DashboardContainer = (props) => {
     setMode('viewCluster');
   }
   function changeModeRealtimeMonitoring() {
-    setMode('realtimeMonitoring');
+    setMode('realTimeMonitoring');
   }
   function changeModeClusterComparison() {
     setMode('clusterComparison');
@@ -156,7 +156,7 @@ const DashboardContainer = (props) => {
               </button>
               <button
                 className={
-                  mode === 'realtimeMonitoring' ? 'btn btn-accent' : 'btn'
+                  mode === 'realTimeMonitoring' ? 'btn btn-accent' : 'btn'
                 }
                 onClick={changeModeRealtimeMonitoring}
               >

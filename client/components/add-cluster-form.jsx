@@ -9,7 +9,7 @@ const AddClusterForm = () => {
   const [newRESTEndpointInput, setNewRESTEndpointInput] = useState('');
   const [newClusterIdInput, setNewClusterIdInput] = useState('');
   const [newBootstrapServerInput, setNewBootstrapServerInput] = useState('');
-  const [newAlias, setNewAlias] = useState('');
+  const [newClusterName, setNewClusterName] = useState('');
 
   // submit new cluster
   async function submitNewCluster() {
@@ -22,7 +22,8 @@ const AddClusterForm = () => {
         CLOUD_SECRET: newCloudSecretInput,
         clusterId: newClusterIdInput,
         RESTendpoint: newRESTEndpointInput,
-        bootstrapServer: newBootsrapServerInput,
+        bootstrapServer: newBootstrapServerInput,
+        cluster_name: newClusterName,
       };
       console.log('newCluster: ', newCluster);
       // send post request to backend
@@ -53,7 +54,7 @@ const AddClusterForm = () => {
     setNewRESTEndpointInput('');
     setNewClusterIdInput('');
     setNewBootstrapServerInput('');
-    setNewAlias('');
+    setNewClusterName('');
   }
 
   return (
@@ -70,8 +71,8 @@ const AddClusterForm = () => {
               type='text'
               placeholder='Cluster Name'
               class='input input-bordered w-full max-w-xs'
-              onChange={(e) => setNewAlias(e.target.value)}
-              value={newAlias}
+              onChange={(e) => setNewClusterName(e.target.value)}
+              value={newClusterName}
             />
             <label class='label'>
               <span class='label-text'>API Key:</span>

@@ -20,7 +20,9 @@ userController.verifyUser = async (req, res, next) => {
   }
 
   try {
-    const user = await User.findOne({ username }).populate("cloudCluster").populate("metric");
+    const user = await User.findOne({ username })
+      .populate('cloudCluster')
+      .populate('metric');
 
     //Using bcrypt to compare password with its hashed version
     if (!(await bcrypt.compare(password, user.password))) throw new Error();
@@ -98,6 +100,7 @@ userController.addCloudCluster = async (req, res, next) => {
     clusterId,
     RESTendpoint,
     bootstrapServer,
+    cluster_name,
   } = res.locals.credentials;
 
   let user;
@@ -121,6 +124,7 @@ userController.addCloudCluster = async (req, res, next) => {
     clusterId,
     RESTendpoint,
     bootstrapServer,
+    cluster_name,
   };
 
   try {
@@ -158,6 +162,7 @@ userController.addMetrics = async (req, res, next) => {
     CLOUD_SECRET,
     clusterId,
     RESTendpoint,
+    cluster_name,
   } = req.body;
 
   let user;
@@ -180,6 +185,7 @@ userController.addMetrics = async (req, res, next) => {
     CLOUD_SECRET,
     clusterId,
     RESTendpoint,
+    cluster_name,
   };
 
   try {
