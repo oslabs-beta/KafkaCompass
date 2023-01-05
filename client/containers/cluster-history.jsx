@@ -5,7 +5,6 @@ import ClusterItem from "../components/cluster-item";
 
 const ClusterHistory = (props) => {
   const navigate = useNavigate();
-  console.log(props)
   const metrics = props.metrics;
 
   useEffect(() => {
@@ -13,14 +12,12 @@ const ClusterHistory = (props) => {
   });
 
   const backToDashboard = () => {
-    console.log("Go Home button clicked");
     navigate("/dashboard");
   };
 
   //get cluster items from db
   // render cluster items
   const clusterItems = metrics.map((metric, idx) => {
-    console.log(metric)
 
     return (
       <ClusterItem

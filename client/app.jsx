@@ -15,7 +15,7 @@ function App() {
   const [user, setUser] = useState({});
   const [authMode, setDisplayAuth] = useState("");
   const [metricIndex, setMetricIndex] = useState(-1);
-  const [metrics, setMetrics] = useState(user.metric);
+  const [metric, setMetric] = useState({});
 
   const checkSession = async () => {
     try {
@@ -30,13 +30,6 @@ function App() {
       // console.log('Network error occurred - User not logged in');
     }
   };
-
-  useEffect(() => {
-    if(user.metric){
-      console.log(user.metric);
-      setMetrics(user.metric);
-    }
-  }, [user])
 
   const logUserOut = async () => {
     try {
@@ -53,6 +46,13 @@ function App() {
       );
     }
   };
+
+  useEffect(() => {
+    if(metric.created_at){
+      user.metric.push(metric)
+      setUser(user);
+    }
+  }, [metric])
 
   return (
     <div>
@@ -77,7 +77,7 @@ function App() {
                 setDrawerButton={setDrawerButton}
                 checkLoggedIn={checkLoggedIn}
                 metrics={user.metric.at(metricIndex)}
-                setMetrics={setMetrics}
+                setMetric={setMetric}
               />
             ) : (
               <Navigate to="/" />

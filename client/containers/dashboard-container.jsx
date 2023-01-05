@@ -8,6 +8,7 @@ const DashboardContainer = (props) => {
     topics: { labels: [], datasets: [] },
     reqRes: { labels: [], datasets: [] },
   });
+
   const [total, setTotal] = useState({
     totalRetainedBytes: 0,
     totalReq: 0,
@@ -19,68 +20,56 @@ const DashboardContainer = (props) => {
     reqResBytes: false,
   });
 
+  const data = props.metrics;
+
   useEffect(() => {
-    console.log("in get Data");
-    const getData = async () => {
-      const response = await fetch("/api/metric");
-      if (response.ok) {
-        const data = await response.json();
-        const retainedBytes = data.retained_bytes.metrics.map(
-          (topic) => topic.value
-        );
-        const topics = data.retained_bytes.metrics.map((topic) => topic.topic);
-        const valuesReq = data.request_bytes.metrics.map(
-          (topic) => topic.value
-        );
-        const valuesRes = data.response_bytes.metrics.map(
-          (topic) => topic.value
-        );
+    const retainedBytes = data.retained_bytes.metrics.map(
+        (topic) => topic.value
+      );
+      const topics = data.retained_bytes.metrics.map((topic) => topic.topic);
+      const valuesReq = data.request_bytes.metrics.map(
+        (topic) => topic.value
+      );
+      const valuesRes = data.response_bytes.metrics.map(
+        (topic) => topic.value
+      );
 
-        setTotal({
-          totalRetainedBytes: data.retained_bytes.totalValue,
-          totalReq: data.request_bytes.totalValue,
-          totalRes: data.response_bytes.totalValue,
-        });
+      setTotal({
+        totalRetainedBytes: data.retained_bytes.totalValue,
+        totalReq: data.request_bytes.totalValue,
+        totalRes: data.response_bytes.totalValue,
+      });
 
-        setChart({
-          topics: {
-            labels: topics,
-            datasets: [
-              {
-                label: "bytes",
-                data: retainedBytes,
-                backgroundColor: "rgba(64, 180, 179, 0.5)",
-                borderWidth: 1,
-              },
-            ],
-          },
-          reqRes: {
-            labels: data.request_bytes.metrics.map((topic) => topic.type),
-            datasets: [
-              {
-                label: "request bytes",
-                data: valuesReq,
-                backgroundColor: "rgba(64, 180, 179, 0.5)",
-                borderWidth: 1,
-              },
-              {
-                label: "response bytes",
-                data: valuesRes,
-                backgroundColor: "rgba(250, 73, 112, 0.5)",
-                borderWidth: 1,
-              },
-            ],
-          },
-        });
-      } else {
-        console.log("Could not get data from the cluster");
-      }
-    };
-    try {
-      getData();
-    } catch (err) {
-      console.log("Network error occurred");
-    }
+      setChart({
+        topics: {
+          labels: topics,
+          datasets: [
+            {
+              label: "bytes",
+              data: retainedBytes,
+              backgroundColor: "rgba(64, 180, 179, 0.5)",
+              borderWidth: 1,
+            },
+          ],
+        },
+        reqRes: {
+          labels: data.request_bytes.metrics.map((topic) => topic.type),
+          datasets: [
+            {
+              label: "request bytes",
+              data: valuesReq,
+              backgroundColor: "rgba(64, 180, 179, 0.5)",
+              borderWidth: 1,
+            },
+            {
+              label: "response bytes",
+              data: valuesRes,
+              backgroundColor: "rgba(250, 73, 112, 0.5)",
+              borderWidth: 1,
+            },
+          ],
+        },
+      });
   }, []);
 
   useEffect(() => {
@@ -113,6 +102,7 @@ const DashboardContainer = (props) => {
               topicChart={true}
               reqResChart={false}
               totalBytes={total.totalRetainedBytes}
+              setMetric={props.setMetric}
             />
             <TopicButtons
               chartData={chartData}
