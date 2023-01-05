@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import AddClusterForm from '../components/add-cluster-form';
-import Chart from '../components/chart';
-import TopicButtons from '../components/topic-buttons';
-import Messages from '../components/messages';
+import React, { useEffect, useState } from "react";
+import AddClusterForm from "../components/add-cluster-form";
+import Chart from "../components/chart";
+import TopicButtons from "../components/topic-buttons";
+import Messages from "../components/messages";
 
 const DashboardContainer = (props) => {
   const [chartData, setChart] = useState({
@@ -25,52 +25,48 @@ const DashboardContainer = (props) => {
 
   useEffect(() => {
     const retainedBytes = data.retained_bytes.metrics.map(
-        (topic) => topic.value
-      );
-      const topics = data.retained_bytes.metrics.map((topic) => topic.topic);
-      const valuesReq = data.request_bytes.metrics.map(
-        (topic) => topic.value
-      );
-      const valuesRes = data.response_bytes.metrics.map(
-        (topic) => topic.value
-      );
+      (topic) => topic.value
+    );
+    const topics = data.retained_bytes.metrics.map((topic) => topic.topic);
+    const valuesReq = data.request_bytes.metrics.map((topic) => topic.value);
+    const valuesRes = data.response_bytes.metrics.map((topic) => topic.value);
 
-      setTotal({
-        totalRetainedBytes: data.retained_bytes.totalValue,
-        totalReq: data.request_bytes.totalValue,
-        totalRes: data.response_bytes.totalValue,
-      });
+    setTotal({
+      totalRetainedBytes: data.retained_bytes.totalValue,
+      totalReq: data.request_bytes.totalValue,
+      totalRes: data.response_bytes.totalValue,
+    });
 
-      setChart({
-        topics: {
-          labels: topics,
-          datasets: [
-            {
-              label: "bytes",
-              data: retainedBytes,
-              backgroundColor: "rgba(64, 180, 179, 0.5)",
-              borderWidth: 1,
-            },
-          ],
-        },
-        reqRes: {
-          labels: data.request_bytes.metrics.map((topic) => topic.type),
-          datasets: [
-            {
-              label: "request bytes",
-              data: valuesReq,
-              backgroundColor: "rgba(64, 180, 179, 0.5)",
-              borderWidth: 1,
-            },
-            {
-              label: "response bytes",
-              data: valuesRes,
-              backgroundColor: "rgba(250, 73, 112, 0.5)",
-              borderWidth: 1,
-            },
-          ],
-        },
-      });
+    setChart({
+      topics: {
+        labels: topics,
+        datasets: [
+          {
+            label: "bytes",
+            data: retainedBytes,
+            backgroundColor: "rgba(64, 180, 179, 0.5)",
+            borderWidth: 1,
+          },
+        ],
+      },
+      reqRes: {
+        labels: data.request_bytes.metrics.map((topic) => topic.type),
+        datasets: [
+          {
+            label: "request bytes",
+            data: valuesReq,
+            backgroundColor: "rgba(64, 180, 179, 0.5)",
+            borderWidth: 1,
+          },
+          {
+            label: "response bytes",
+            data: valuesRes,
+            backgroundColor: "rgba(250, 73, 112, 0.5)",
+            borderWidth: 1,
+          },
+        ],
+      },
+    });
   }, []);
 
   useEffect(() => {
@@ -85,7 +81,7 @@ const DashboardContainer = (props) => {
     setMode("viewCluster");
   }
   function changeModeRealtimeMonitoring() {
-    setMode("realtimeMonitoring");
+    setMode("realTimeMonitoring");
   }
   function changeModeClusterComparison() {
     setMode("clusterComparison");
@@ -125,7 +121,11 @@ const DashboardContainer = (props) => {
       </main>
     );
   } else if (mode === "realTimeMonitoring") {
-    dashboardView = <></>;
+    dashboardView = (
+      <>
+        <Messages />
+      </>
+    );
   } else {
     dashboardView = <></>;
   }
@@ -156,7 +156,7 @@ const DashboardContainer = (props) => {
               </button>
               <button
                 className={
-                  mode === "realtimeMonitoring" ? "btn btn-accent" : "btn"
+                  mode === "realTimeMonitoring" ? "btn btn-accent" : "btn"
                 }
                 onClick={changeModeRealtimeMonitoring}
               >
