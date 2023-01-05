@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import AddClusterForm from "../components/add-cluster-form";
 import Chart from "../components/chart";
 import TopicButtons from "../components/topic-buttons";
+import TableData from "../components/table-data";
 
 const DashboardContainer = (props) => {
     const [chartData, setChart] = useState({topics: {labels: [], datasets: []}, 
                                             reqRes: {labels: [], datasets: []}});
     const [total, setTotal] = useState({totalRetainedBytes: 0, totalReq: 0, totalRes: 0});
+
+    const [tableData, setTableData] = useState({name: [], description: [], values: []})
 
     const [metricSelection, setMetricSelection] = useState({
         retainedBytes: true,
@@ -19,7 +22,9 @@ const DashboardContainer = (props) => {
             const response = await fetch('/api/metric');
             if (response.ok) {
                 const data = await response.json();
+                console.log('this is the data from /api/metric', data);
                 const retainedBytes = data.retained_bytes.metrics.map((topic) => topic.value);
+                console.log('this is what retainedbytes looks like', retainedBytes);
                 const topics = data.retained_bytes.metrics.map((topic) => topic.topic);
                 const valuesReq =  data.request_bytes.metrics.map((topic) => topic.value);
                 const valuesRes = data.response_bytes.metrics.map((topic) => topic.value);
@@ -93,7 +98,7 @@ const DashboardContainer = (props) => {
     let dashboardView = <></>;
     if (mode === 'viewCluster') {
         dashboardView = (
-            <main className="cluster-container">
+            <><main className="cluster-container">
                     {metricSelection.retainedBytes &&
                     <><Chart chartData={chartData} 
                             topicChart={true}
@@ -114,6 +119,7 @@ const DashboardContainer = (props) => {
                      />
                     }
             </main>
+            <TableData tableData={tableData} /> </>
         )
     }
     else if (mode === 'realTimeMonitoring') {
@@ -150,7 +156,7 @@ const DashboardContainer = (props) => {
                         <button className={mode === 'clusterComparison' ? 'btn btn-accent' : 'btn'} onClick={changeModeClusterComparison}>Cluster Comparison</button>
                     </div>
                 </div>
-                <div className="flex justify-around pt-10">
+                <div className="justify-around pt-10">
                     {dashboardView}
                 </div>
                 {/* <!-- Page content here --> */}
