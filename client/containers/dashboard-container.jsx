@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
-import AddClusterForm from "../components/add-cluster-form";
-import Chart from "../components/chart";
-import TopicButtons from "../components/topic-buttons";
+import React, { useEffect, useState } from 'react';
+import AddClusterForm from '../components/add-cluster-form';
+import Chart from '../components/chart';
+import TopicButtons from '../components/topic-buttons';
+import Messages from '../components/messages';
 
 const DashboardContainer = (props) => {
   const [chartData, setChart] = useState({

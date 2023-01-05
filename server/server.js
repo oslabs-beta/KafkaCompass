@@ -1,16 +1,16 @@
-const express = require("express");
-const session = require("express-session");
+const express = require('express');
+const session = require('express-session');
 
-const path = require("path");
+const path = require('path');
 const PORT = 3000;
 
-const mongodb = require("mongoose");
-const MONGO_URI = require("./credentials");
+const mongodb = require('mongoose');
+const MONGO_URI = require('./credentials');
 
 const cloudAuthController = require('./controllers/cloud-auth-controller');
 const userController = require('./controllers/user-controller');
-const apiController = require('./controllers/api-controller')
-const metricController = require("./controllers/metric-controller");
+const apiController = require('./controllers/api-controller');
+const metricController = require('./controllers/metric-controller');
 
 const app = express();
 app.use(express.json());
@@ -20,11 +20,13 @@ mongodb.connect(MONGO_URI);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.resolve(__dirname, "../dist")));
+app.use(express.static(path.resolve(__dirname, '../dist')));
 
+const min = 60 * 1000;
+const hour = 60 * min;
 app.use(
   session({
-    secret: "test",
+    secret: 'test',
     saveUninitialized: true,
     cookie: { maxAge: 50000000 },
     resave: false,
@@ -32,7 +34,7 @@ app.use(
 );
 
 app.use(
-  "/api/login",
+  '/api/login',
   userController.verifyUser,
   userController.authorizeUser,
   (req, res, next) => {
@@ -41,18 +43,18 @@ app.use(
   }
 );
 
-app.get("/api/authenticate", userController.authorizeUser, (req, res, next) => {
+app.get('/api/authenticate', userController.authorizeUser, (req, res, next) => {
   res.status(200).json(req.session);
 });
 
-app.get("/api/logout", userController.logOut, (req, res, next) => {
-  console.log("user logged out");
+app.get('/api/logout', userController.logOut, (req, res, next) => {
+  console.log('user logged out');
   res.status(200).json();
 });
 
 // testing endpoint for sign up
 app.use(
-  "/api/signup",
+  '/api/signup',
   userController.createUser,
   userController.authorizeUser,
   (req, res, next) => {
@@ -66,7 +68,7 @@ app.use(
 // });
 //requests to server go here
 app.post(
-  "/api/cloud-auth",
+  '/api/cloud-auth',
   cloudAuthController.encryptCredentials,
   userController.addCloudCluster,
   (req, res) => {
@@ -78,30 +80,57 @@ app.post(
 
 //message-related endpoints
 //get all messages in a topic
-app.get('/api/message', apiController.getClusterInfo, (req, res) => {
-  return res.status(200).json(res.locals.messageList);
-})
+app.get(
+  '/api/message',
+  apiController.getClusterInfo,
+  apiController.getMessages,
+  async (req, res) => {
+    console.log('HERE');
+    console.log('message list from res: ', res.locals.messageList);
+    return res.status(200).json(res.locals.messageList);
+  }
+);
 //add a message to a topic
-app.post('/api/message', apiController.getClusterInfo, apiController.addMessage, (req, res) => {
-  return res.status(201).json('message added') 
-})
+app.post(
+  '/api/message',
+  apiController.getClusterInfo,
+  apiController.addMessage,
+  (req, res) => {
+    return res.status(201).json('message added');
+  }
+);
 
 //topic-related endpoints
 //get all topics in a cluster
-app.get('/api/topic', apiController.getClusterInfo, apiController.getTopics, (req, res) => {
-  return res.status(200).json(res.locals.topicList);
-});
+app.get(
+  '/api/topic',
+  apiController.getClusterInfo,
+  apiController.getTopics,
+  (req, res) => {
+    return res.status(200).json(res.locals.topicList);
+  }
+);
 //add a topic to a cluster
-app.post('/api/topic', apiController.getClusterInfo, apiController.addTopic, (req, res) => {
-  return res.status(201).json('topic added')
-})
+app.post(
+  '/api/topic',
+  apiController.getClusterInfo,
+  apiController.addTopic,
+  (req, res) => {
+    return res.status(201).json('topic added');
+  }
+);
 //remove a topic from a cluster
-app.delete('/api/topic', apiController.getClusterInfo, apiController.deleteTopic, (req, res) => {
-  return res.status(202).json('topic deleted')
-})
+app.delete(
+  '/api/topic',
+  apiController.getClusterInfo,
+  apiController.deleteTopic,
+  (req, res) => {
+    return res.status(202).json('topic deleted');
+  }
+);
 
 app.get(
-  "/api/metric",
+  '/api/metric',
   metricController.decryptKeys,
   metricController.fetchData,
   userController.addMetrics,
@@ -118,12 +147,12 @@ app.get(
 // global error handler
 app.use((err, req, res, next) => {
   const defaultErr = {
-    log: "Express error handler caught unknown middleware error",
+    log: 'Express error handler caught unknown middleware error',
     status: 400,
-    message: { err: "Unknown error occurred" },
+    message: { err: 'Unknown error occurred' },
   };
   const errorObj = Object.assign(defaultErr, err);
-  console.log("Global error handler caught: ", errorObj.log);
+  console.log('Global error handler caught: ', errorObj.log);
   return res.status(errorObj.status).json(errorObj.message);
 });
 
