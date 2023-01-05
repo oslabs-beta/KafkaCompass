@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import AddClusterForm from '../components/add-cluster-form';
-import Chart from '../components/chart';
-import TopicButtons from '../components/topic-buttons';
-import Messages from '../components/messages';
+import React, { useEffect, useState } from "react";
+import AddClusterForm from "../components/add-cluster-form";
+import Chart from "../components/chart";
+import TopicButtons from "../components/topic-buttons";
+import Messages from "../components/messages";
 
 const DashboardContainer = (props) => {
   const [chartData, setChart] = useState({
     topics: { labels: [], datasets: [] },
-    reqRes: { labels: [], datasets: [] },
+    reqRes: { labels: [], datasets: [] }
   });
 
   const [total, setTotal] = useState({
     totalRetainedBytes: 0,
     totalReq: 0,
-    totalRes: 0,
+    totalRes: 0
   });
 
   const [metricSelection, setMetricSelection] = useState({
     retainedBytes: true,
-    reqResBytes: false,
+    reqResBytes: false
   });
 
   const data = props.metrics;
@@ -34,7 +34,7 @@ const DashboardContainer = (props) => {
     setTotal({
       totalRetainedBytes: data.retained_bytes.totalValue,
       totalReq: data.request_bytes.totalValue,
-      totalRes: data.response_bytes.totalValue,
+      totalRes: data.response_bytes.totalValue
     });
 
     setChart({
@@ -42,30 +42,30 @@ const DashboardContainer = (props) => {
         labels: topics,
         datasets: [
           {
-            label: 'bytes',
+            label: "bytes",
             data: retainedBytes,
-            backgroundColor: 'rgba(64, 180, 179, 0.5)',
-            borderWidth: 1,
-          },
-        ],
+            backgroundColor: "rgba(64, 180, 179, 0.5)",
+            borderWidth: 1
+          }
+        ]
       },
       reqRes: {
         labels: data.request_bytes.metrics.map((topic) => topic.type),
         datasets: [
           {
-            label: 'request bytes',
+            label: "request bytes",
             data: valuesReq,
-            backgroundColor: 'rgba(64, 180, 179, 0.5)',
-            borderWidth: 1,
+            backgroundColor: "rgba(64, 180, 179, 0.5)",
+            borderWidth: 1
           },
           {
-            label: 'response bytes',
+            label: "response bytes",
             data: valuesRes,
-            backgroundColor: 'rgba(250, 73, 112, 0.5)',
-            borderWidth: 1,
-          },
-        ],
-      },
+            backgroundColor: "rgba(250, 73, 112, 0.5)",
+            borderWidth: 1
+          }
+        ]
+      }
     });
   }, []);
 
@@ -74,24 +74,24 @@ const DashboardContainer = (props) => {
   }, []);
 
   // dictates the view mode on dashbaord
-  const [mode, setMode] = useState('viewCluster');
+  const [mode, setMode] = useState("viewCluster");
 
   // mode switching functions
   function changeModeViewCluster() {
-    setMode('viewCluster');
+    setMode("viewCluster");
   }
   function changeModeRealtimeMonitoring() {
-    setMode('realTimeMonitoring');
+    setMode("realTimeMonitoring");
   }
   function changeModeClusterComparison() {
-    setMode('clusterComparison');
+    setMode("clusterComparison");
   }
 
   // sets current dashboard view
   let dashboardView = <></>;
-  if (mode === 'viewCluster') {
+  if (mode === "viewCluster") {
     dashboardView = (
-      <main className='cluster-container'>
+      <main className="cluster-container">
         {metricSelection.retainedBytes && (
           <>
             <Chart
@@ -120,7 +120,7 @@ const DashboardContainer = (props) => {
         )}
       </main>
     );
-  } else if (mode === 'realTimeMonitoring') {
+  } else if (mode === "realTimeMonitoring") {
     dashboardView = (
       <>
         <Messages />
@@ -143,20 +143,20 @@ const DashboardContainer = (props) => {
 
   return (
     <>
-      <div class='drawer'>
-        <input id='my-drawer' type='checkbox' class='drawer-toggle' />
-        <div class='drawer-content border-solid border-2 border-black-500'>
-          <div className='mt-4 flex justify-around'>
-            <div class='btn-group'>
+      <div class="drawer">
+        <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+        <div class="drawer-content border-solid border-2 border-black-500">
+          <div className="mt-4 flex justify-around">
+            <div class="btn-group">
               <button
-                className={mode === 'viewCluster' ? 'btn btn-accent' : 'btn'}
+                className={mode === "viewCluster" ? "btn btn-accent" : "btn"}
                 onClick={changeModeViewCluster}
               >
                 View Cluster
               </button>
               <button
                 className={
-                  mode === 'realTimeMonitoring' ? 'btn btn-accent' : 'btn'
+                  mode === "realTimeMonitoring" ? "btn btn-accent" : "btn"
                 }
                 onClick={changeModeRealtimeMonitoring}
               >
@@ -164,7 +164,7 @@ const DashboardContainer = (props) => {
               </button>
               <button
                 className={
-                  mode === 'clusterComparison' ? 'btn btn-accent' : 'btn'
+                  mode === "clusterComparison" ? "btn btn-accent" : "btn"
                 }
                 onClick={changeModeClusterComparison}
               >
@@ -172,22 +172,22 @@ const DashboardContainer = (props) => {
               </button>
             </div>
           </div>
-          <div className='flex justify-around pt-10'>{dashboardView}</div>
+          <div className="flex justify-around pt-10">{dashboardView}</div>
           {/* <!-- Page content here --> */}
         </div>
         <AddClusterForm />
-        <div class='drawer-side'>
-          <label for='my-drawer' class='drawer-overlay'></label>
-          <ul class='menu p-4 w-80 bg-base-100 text-base-content'>
+        <div class="drawer-side">
+          <label for="my-drawer" class="drawer-overlay"></label>
+          <ul class="menu p-4 w-80 bg-base-100 text-base-content">
             <li
-              onClick={() => updateSideDrawer('retainedBytes')}
-              class={metricSelection.retainedBytes ? 'bg-secondary' : ''}
+              onClick={() => updateSideDrawer("retainedBytes")}
+              class={metricSelection.retainedBytes ? "bg-secondary" : ""}
             >
               <a>Retained bytes</a>
             </li>
             <li
-              onClick={() => updateSideDrawer('reqResBytes')}
-              class={metricSelection.reqResBytes ? 'bg-secondary' : ''}
+              onClick={() => updateSideDrawer("reqResBytes")}
+              class={metricSelection.reqResBytes ? "bg-secondary" : ""}
             >
               <a>Request/Response bytes</a>
             </li>

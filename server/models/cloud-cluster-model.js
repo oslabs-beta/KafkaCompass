@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema, model } = mongoose;
 
@@ -10,7 +10,7 @@ const cloudClusterSchema = new Schema({
   CLOUD_SECRET: { type: String, required: true },
   clusterId: { type: String, required: true },
   RESTendpoint: { type: String, required: true },
-  bootstrapServer: { type: String, required: true },
+  bootstrapServer: { type: String, required: true }
 });
 
-module.exports = new model('CloudCluster', cloudClusterSchema);
+module.exports = new model("CloudCluster", cloudClusterSchema);
