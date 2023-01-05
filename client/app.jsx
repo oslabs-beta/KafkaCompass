@@ -16,9 +16,9 @@ import './static/styles.css';
 function App() {
   const navigate = useNavigate();
   const [renderDrawerButton, setRenderDrawerButton] = useState(false);
-  const [checkLoggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
-  const [authMode, setDisplayAuth] = useState('');
+  const [authMode, setAuthMode] = useState('');
 
   const checkSession = async () => {
         
@@ -62,8 +62,8 @@ function App() {
   return (
     <div>
       <Navbar navigate={navigate} 
-              setDisplayAuth={setDisplayAuth} 
-              checkLoggedIn={checkLoggedIn}
+              setAuthMode={setAuthMode} 
+              loggedIn={loggedIn}
               renderDrawerButton={renderDrawerButton}
               setRenderDrawerButton={setRenderDrawerButton}
               setLoggedIn={setLoggedIn}
@@ -72,22 +72,24 @@ function App() {
       <Routes>
         <Route path='*' element={<NotFound />} />
 
-          <Route exact path='/dashboard' element={checkLoggedIn ? <DashboardContainer  
+          <Route exact path='/dashboard' element={loggedIn ? <DashboardContainer  
           setRenderDrawerButton={setRenderDrawerButton} 
-          checkLoggedIn={checkLoggedIn}
+          loggedIn={loggedIn}
           user={user}
           /> : <Navigate to='/'/>} />
 
         <Route exact path='/auth' element={<Auth 
                                                  authMode={authMode} 
                                                  navigate={navigate}
-                                                 setDisplayAuth={setDisplayAuth}
+                                                 setAuthMode={setAuthMode}
                                                  setRenderDrawerButton={setRenderDrawerButton}
                                                  setLoggedIn={setLoggedIn}
                                                  setUser={setUser}
                                                   />} />
-        <Route exact path='/cluster-history' element={<ClusterHistory setRenderDrawerButton={setRenderDrawerButton} />}/>
-        <Route exact path='/' element={<LandingPage navigate={navigate} setRenderDrawerButton={setRenderDrawerButton} setLoggedin={setLoggedIn} setUser={setUser} checkLoggedIn={checkLoggedIn} />} />
+        <Route exact path='/cluster-history' element={<ClusterHistory 
+                                                      setRenderDrawerButton={setRenderDrawerButton} 
+                                                      />}/>
+        <Route exact path='/' element={<LandingPage navigate={navigate} setRenderDrawerButton={setRenderDrawerButton} setLoggedin={setLoggedIn} setUser={setUser} loggedIn={loggedIn} />} />
       </Routes>
     </div>
   );

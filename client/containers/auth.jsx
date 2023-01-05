@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import AuthForm from '../components/authForm';
 
-const Auth = ({authMode, setDisplayAuth, navigate, setRenderDrawerButton, setLoggedIn, setUser}) => {
+const Auth = ({authMode, setAuthMode, navigate, setRenderDrawerButton, setLoggedIn, setUser}) => {
     const {register, handleSubmit } = useForm();
     // render either log in or sign up form
     const renderLogin = authMode === 'login' ? true : false;
@@ -34,7 +34,7 @@ const Auth = ({authMode, setDisplayAuth, navigate, setRenderDrawerButton, setLog
             });
             if (response.ok) {
                 setRenderDrawerButton(true);
-                setDisplayAuth('');
+                setAuthMode('');
                 setLoggedIn(true);
                 setUser(response);
                 return navigate('/dashboard');
@@ -49,14 +49,14 @@ const Auth = ({authMode, setDisplayAuth, navigate, setRenderDrawerButton, setLog
     return(
     <>
         {renderLogin && <AuthForm navigate={navigate}
-                                  setDisplayAuth={setDisplayAuth}
+                                  setAuthMode={setAuthMode}
                                   setRenderDrawerButton={setRenderDrawerButton}
                                   type={'Log In'}
                                   onSubmit={onSubmit}
                                   handleSubmit={handleSubmit}
                                   register={register}/>}
         {!renderLogin && <AuthForm navigate={navigate}
-                                   setDisplayAuth={setDisplayAuth}
+                                   setAuthMode={setAuthMode}
                                    setRenderDrawerButton={setRenderDrawerButton}
                                    type={'Sign Up'}
                                    onSubmit={onSubmit}

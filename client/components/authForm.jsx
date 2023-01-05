@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AuthForm = ({handleSubmit, register, onSubmit, type, setRenderDrawerButton, setDisplayAuth, navigate}) => {
+const AuthForm = ({handleSubmit, register, onSubmit, type, setRenderDrawerButton, setAuthMode, navigate}) => {
     const login = type === 'Log In';
 
     return (
@@ -15,7 +15,7 @@ const AuthForm = ({handleSubmit, register, onSubmit, type, setRenderDrawerButton
                 </div>
                 <button onClick={() => {
                                         setRenderDrawerButton(false);
-                                        setDisplayAuth('');
+                                        setAuthMode('');
                                         navigate('/');
                                         }} 
                                         className="btn btn-accent">Back to main</button>

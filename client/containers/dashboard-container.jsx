@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import AddClusterForm from "../components/add-cluster-form";
 import Chart from "../components/chart";
 import TopicButtons from "../components/topic-buttons";
+import ClusterHistory from "./cluster-history";
 
 const DashboardContainer = (props) => {
     const [chartData, setChart] = useState({topics: {labels: [], datasets: []}, 
@@ -14,7 +15,6 @@ const DashboardContainer = (props) => {
     });
 
     useEffect( () => {
-        console.log('in get Data')
         const getData = async() => {
             const response = await fetch('/api/metric');
             if (response.ok) {
@@ -123,7 +123,7 @@ const DashboardContainer = (props) => {
     }
     else {
         dashboardView = (
-            <></>
+            <ClusterHistory />
         )
     }
 
