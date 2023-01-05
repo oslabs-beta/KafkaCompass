@@ -17,7 +17,14 @@ apiController.getClusterInfo = async(req, res, next) => {
 
     try {
       const { cloudCluster } = req.session.user;
-      const cluster = cloudCluster[0];
+      const rawCluster = cloudCluster[0];
+
+      //creating a deep copy of the cluster in the session to avoid mutating the session cluster
+      const cluster = {};
+      for (const key in rawCluster) {
+        cluster[key] = rawCluster[key];
+      }
+
       for (const key in cluster) {
         if (typeof cluster[key] !== 'string') continue;
         else{
@@ -92,8 +99,7 @@ apiController.deleteTopic = async(req, res, next) => {
 
     // name for the new topic
     const { topic } = req.body;
-    console.log(req.body)
-    console.log(topic);
+   
     try {
         const response = await axios({
            method: 'delete',
