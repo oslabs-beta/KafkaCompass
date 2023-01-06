@@ -27,7 +27,6 @@ const ClusterHistory = (props) => {
         key={metric._id}
         date={metric.created_at}
         clusterId={metric.clusterId}
-        setMetricIndex={props.setMetricIndex}
         navigate={navigate}
       />
     );

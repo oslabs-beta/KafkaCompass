@@ -4,6 +4,7 @@ import { NavbarContext } from "../NavbarContext";
 const ClusterItem = (props) => {
   const { index, date, clusterId, navigate } = props;
   const { setMetricIndex } = useContext(NavbarContext).metricIndexState;
+  console.log(setMetricIndex);
 
   function handleClick() {
     setMetricIndex(index);
