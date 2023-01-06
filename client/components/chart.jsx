@@ -1,21 +1,32 @@
 import React from "react";
 import "chart.js/auto";
 import { Bar } from "react-chartjs-2";
+import SwitchCluster from "./switch-cluster-form";
 
 const Chart = (props) => {
   const data = props.topicChart
     ? props.chartData.topics
     : props.chartData.reqRes;
-  
-  async function updateMetrics(){
-      const response = await fetch('/api/metric');
-      const metric = await response.json();
-      props.setMetric(metric);
+
+  async function updateMetrics() {
+    const response = await fetch("/api/metric");
+    const metric = await response.json();
+    props.setMetric(metric);
   }
-  
+
   return (
     <div className="topic-chart font-mono chart-container">
-      <button onClick={updateMetrics} className="mb-5 btn btn-accent">Update Metrics</button>
+      <div className="flex">
+        <button onClick={updateMetrics} className="mb-5 btn btn-accent">
+          Update Metrics
+        </button>
+        <div>
+          <label htmlFor="switch-cluster-modal" className="mb-5 btn btn-accent">
+            Switch Cluster
+          </label>
+        </div>
+        <SwitchCluster />
+      </div>
 
       {props.topicChart && (
         <p style={{ fontSize: "18px" }}>Topics in your cluster</p>
@@ -29,7 +40,7 @@ const Chart = (props) => {
         type={"bar"}
         data={data}
         options={{
-          maintainAspectRatio: false,
+          maintainAspectRatio: false
         }}
       />
       <br />

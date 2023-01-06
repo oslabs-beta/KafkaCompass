@@ -18,7 +18,6 @@ const ClusterHistory = (props) => {
   //get cluster items from db
   // render cluster items
   const clusterItems = metrics.map((metric, idx) => {
-
     return (
       <ClusterItem
         index={idx}
@@ -28,7 +27,7 @@ const ClusterHistory = (props) => {
         setMetricIndex={props.setMetricIndex}
         navigate={navigate}
       />
-    )
+    );
   });
 
   return (
