@@ -3,6 +3,7 @@ import AddClusterForm from "../components/add-cluster-form";
 import Chart from "../components/chart";
 import TopicButtons from "../components/topic-buttons";
 import Messages from "../components/messages";
+import TableData from "../components/table-data";
 
 const DashboardContainer = (props) => {
   const [chartData, setChart] = useState({
@@ -21,9 +22,27 @@ const DashboardContainer = (props) => {
     reqResBytes: false
   });
 
+  const [tableData, setTableData] = useState({name: [], description: [], values: []})
+
   const data = props.metrics;
 
   useEffect(() => {
+    const names = [];
+    const descript = [];
+    const values = [];
+
+    //table values
+    names.push(data.partition_count.name);
+    names.push(data.active_connection_count.name);
+    names.push(data.successful_authentication_count.name);
+    descript.push(data.partition_count.description);
+    descript.push(data.active_connection_count.description);
+    descript.push(data.successful_authentication_count.description);
+    values.push(data.partition_count.totalValue);
+    values.push(data.active_connection_count.totalValue);
+    values.push(data.successful_authentication_count.totalValue);
+    setTableData({name: names, description: descript, values: values});
+
     //if no clusters in user info, no charts will load
     try {
       const retainedBytes = data.retained_bytes.metrics.map(
@@ -96,7 +115,7 @@ const DashboardContainer = (props) => {
   let dashboardView = <></>;
   if (mode === "viewCluster") {
     dashboardView = (
-      <main className="cluster-container">
+      <><main className="cluster-container">
         {metricSelection.retainedBytes && (
           <>
             <Chart
@@ -118,10 +137,12 @@ const DashboardContainer = (props) => {
           />
         )}
       </main>
+        <TableData tableData={tableData} /> </>
     );
   } else if (mode === "realTimeMonitoring") {
     dashboardView = (
       <>
+      <div className="flex justify-center pt-10">
         <Messages />
         <TopicButtons
           chartData={chartData}
@@ -129,6 +150,7 @@ const DashboardContainer = (props) => {
           totalBytes={total}
           setTotal={setTotal}
         />
+        </div>
       </>
     );
   } else {
@@ -177,7 +199,7 @@ const DashboardContainer = (props) => {
               </button>
             </div>
           </div>
-          <div className="flex justify-center pt-10">{dashboardView}</div>
+          <div className="justify-center pt-10">{dashboardView}</div>
           {/* <!-- Page content here --> */}
         </div>
         <AddClusterForm />
