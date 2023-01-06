@@ -3,6 +3,7 @@ import AddClusterForm from "../components/add-cluster-form";
 import Chart from "../components/chart";
 import TopicButtons from "../components/topic-buttons";
 import Messages from "../components/messages";
+import TableData from "../components/table-data";
 
 const DashboardContainer = (props) => {
   const [chartData, setChart] = useState({
@@ -21,15 +22,33 @@ const DashboardContainer = (props) => {
     reqResBytes: false
   });
 
+  const [tableData, setTableData] = useState({name: [], description: [], values: []})
+
   const data = props.metrics;
 
   useEffect(() => {
+    const names = [];
+    const descript = [];
+    const values = [];
+
     const retainedBytes = data.retained_bytes.metrics.map(
       (topic) => topic.value
     );
     const topics = data.retained_bytes.metrics.map((topic) => topic.topic);
     const valuesReq = data.request_bytes.metrics.map((topic) => topic.value);
     const valuesRes = data.response_bytes.metrics.map((topic) => topic.value);
+
+    //table values
+    names.push(data.partition_count.name);
+    names.push(data.active_connection_count.name);
+    names.push(data.successful_authentication_count.name);
+    descript.push(data.partition_count.description);
+    descript.push(data.active_connection_count.description);
+    descript.push(data.successful_authentication_count.description);
+    values.push(data.partition_count.totalValue);
+    values.push(data.active_connection_count.totalValue);
+    values.push(data.successful_authentication_count.totalValue);
+    setTableData({name: names, description: descript, values: values});
 
     setTotal({
       totalRetainedBytes: data.retained_bytes.totalValue,
@@ -91,7 +110,7 @@ const DashboardContainer = (props) => {
   let dashboardView = <></>;
   if (mode === "viewCluster") {
     dashboardView = (
-      <main className="cluster-container">
+      <><main className="cluster-container">
         {metricSelection.retainedBytes && (
           <>
             <Chart
@@ -113,6 +132,7 @@ const DashboardContainer = (props) => {
           />
         )}
       </main>
+       <TableData tableData={tableData} /> </>
     );
   } else if (mode === "realTimeMonitoring") {
     dashboardView = (
@@ -172,7 +192,7 @@ const DashboardContainer = (props) => {
               </button>
             </div>
           </div>
-          <div className="flex justify-center pt-10">{dashboardView}</div>
+          <div className="justify-center pt-10">{dashboardView}</div>
           {/* <!-- Page content here --> */}
         </div>
         <AddClusterForm />
