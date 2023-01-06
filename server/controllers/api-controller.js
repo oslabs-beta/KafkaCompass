@@ -174,14 +174,13 @@ apiController.getMessages = async (req, res, next) => {
     bootstrapServer
   } = cluster;
   const kafka = new Kafka({
-    brokers: ["pkc-n00kk.us-east-1.aws.confluent.cloud:9092"],
-    clientId: "test-cluster",
+    brokers: [bootstrapServer],
+    clientId: clusterId,
     ssl: true,
     sasl: {
       mechanism: "plain",
-      password:
-        "LbB9cMhT672NTo+cG9kLiLlC1KpiFqXFFvz3GC3xa4FwFF9a/VuH9X/VifVkNDaF",
-      username: "RZLFSYPVKQLHEHXB"
+      password: API_SECRET,
+      username: API_KEY
     }
   });
 
