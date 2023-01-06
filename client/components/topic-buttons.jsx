@@ -1,4 +1,5 @@
 import React from "react";
+import AddMessage from "./add-message-form";
 import AddTopic from "./add-topic-form";
 import DeleteTopic from "./delete-topic-from";
 
@@ -61,12 +62,16 @@ const TopicButtons = ({ chartData, setChart, total, setTotal }) => {
         >
           Delete topic
         </label>
-        <button class="btn btn-xs btn-outline btn-accent">
+        <label
+          htmlFor="message-add-modal"
+          className="btn btn-xs btn-outline btn-accent"
+        >
           Write a message
-        </button>
+        </label>
       </div>
       <AddTopic onCreate={handleCreateTopic} />
       <DeleteTopic onDelete={handleDeleteTopic} chartData={chartData} />
+      <AddMessage chartData={chartData} />
     </>
   );
 };
