@@ -2,21 +2,27 @@ import React, { useContext } from "react";
 import { NavbarContext } from "../NavbarContext";
 
 const Navbar = ({ navigate, logUserOut }) => {
+  // getting state from the Context for navigation bar
   const { renderDrawerButton, setRenderDrawerButton } =
     useContext(NavbarContext).drawerButtonsState;
   const { loggedIn, setLoggedIn } = useContext(NavbarContext).loggedState;
   const { setAuthMode } = useContext(NavbarContext).authModeState;
+  const { setDashboardMode } = useContext(NavbarContext).dashboardState;
 
   let drawerButton = <></>;
   if (renderDrawerButton) {
     drawerButton = (
       <>
-        <label htmlFor="my-drawer" className="btn drawer-button mr-10 my-7">
+        <label
+          onClick={() => setDashboardMode("viewCLuster")}
+          htmlFor="my-drawer"
+          className="btn drawer-button mr-10 my-7"
+        >
           Select Metrics
         </label>
         <button
           onClick={() => {
-            navigate("/cluster-history");
+            setDashboardMode("clusterHistory");
           }}
           className="btn btn-outline mr-10 my-7"
         >

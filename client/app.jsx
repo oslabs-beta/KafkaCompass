@@ -6,7 +6,6 @@ import LandingPage from "./containers/landing-page-container";
 import NotFound from "./containers/NotFound";
 import Navbar from "./components/nav-bar";
 import Auth from "./containers/auth";
-import ClusterHistory from "./containers/cluster-history";
 import "./static/styles.css";
 
 function App() {
@@ -15,6 +14,8 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [authMode, setAuthMode] = useState("");
+  const [sideBarMode, setSideBarMode] = useState("current");
+  const [dashboardMode, setDashboardMode] = useState("viewCluster");
 
   // shared navigation bar state
   const providerValue = {
@@ -30,7 +31,12 @@ function App() {
       () => ({ authMode, setAuthMode }),
       [authMode, setAuthMode]
     ),
-    userState: useMemo(() => ({ user, setUser }), [user, setUser])
+    userState: useMemo(() => ({ user, setUser }), [user, setUser]),
+    dashboardState: useMemo(
+      () => ({ dashboardMode, setDashboardMode }),
+      [dashboardMode, setDashboardMode]
+    ),
+    sideBarState: useMemo(() => ({sideBarMode, setSideBarMode}), [sideBarMode, setSideBarMode]);
   };
   const [metricIndex, setMetricIndex] = useState(-1);
   const [metric, setMetric] = useState({});
@@ -86,6 +92,7 @@ function App() {
               <DashboardContainer
                 metrics={user.metric.at(metricIndex)}
                 setMetric={setMetric}
+                setMetricIndex={setMetricIndex}
               />
             ) : (
               <Navigate to="/" />
@@ -94,11 +101,6 @@ function App() {
         />
 
         <Route exact path="/auth" element={<Auth navigate={navigate} />} />
-        <Route
-          exact
-          path="/cluster-history"
-          element={<ClusterHistory setMetricIndex={setMetricIndex} />}
-        />
         <Route exact path="/" element={<LandingPage navigate={navigate} />} />
       </Routes>
     </NavbarContext.Provider>

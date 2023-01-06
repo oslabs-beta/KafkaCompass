@@ -3,6 +3,7 @@ import AddClusterForm from "../components/add-cluster-form";
 import Chart from "../components/chart";
 import TopicButtons from "../components/topic-buttons";
 import Messages from "../components/messages";
+import ClusterHistory from "./cluster-history";
 import { NavbarContext } from "../NavbarContext";
 
 const DashboardContainer = (props) => {
@@ -77,22 +78,23 @@ const DashboardContainer = (props) => {
   }, []);
 
   // dictates the view mode on dashbaord
-  const [mode, setMode] = useState("viewCluster");
+  const { dashboardMode, setDashboardMode } =
+    useContext(NavbarContext).dashboardState;
 
   // mode switching functions
   function changeModeViewCluster() {
-    setMode("viewCluster");
+    setDashboardMode("viewCluster");
   }
   function changeModeRealtimeMonitoring() {
-    setMode("realTimeMonitoring");
+    setDashboardMode("realTimeMonitoring");
   }
   function changeModeClusterComparison() {
-    setMode("clusterComparison");
+    setDashboardMode("clusterComparison");
   }
 
   // sets current dashboard view
   let dashboardView = <></>;
-  if (mode === "viewCluster") {
+  if (dashboardMode === "viewCluster") {
     dashboardView = (
       <main className="cluster-container">
         {metricSelection.retainedBytes && (
@@ -123,14 +125,10 @@ const DashboardContainer = (props) => {
         )}
       </main>
     );
-  } else if (mode === "realTimeMonitoring") {
-    dashboardView = (
-      <>
-        <Messages />
-      </>
-    );
-  } else {
-    dashboardView = <></>;
+  } else if (dashboardMode === "realTimeMonitoring") {
+    dashboardView = <Messages />;
+  } else if (dashboardMode === "clusterHistory") {
+    dashboardView = <ClusterHistory setMetricIndex={props.setMetricIndex} />;
   }
 
   // update metrics object with desired viewing metrics
@@ -152,14 +150,18 @@ const DashboardContainer = (props) => {
           <div className="mt-4 flex justify-around">
             <div className="btn-group">
               <button
-                className={mode === "viewCluster" ? "btn btn-accent" : "btn"}
+                className={
+                  dashboardMode === "viewCluster" ? "btn btn-accent" : "btn"
+                }
                 onClick={changeModeViewCluster}
               >
                 View Cluster
               </button>
               <button
                 className={
-                  mode === "realTimeMonitoring" ? "btn btn-accent" : "btn"
+                  dashboardMode === "realTimeMonitoring"
+                    ? "btn btn-accent"
+                    : "btn"
                 }
                 onClick={changeModeRealtimeMonitoring}
               >
@@ -167,7 +169,9 @@ const DashboardContainer = (props) => {
               </button>
               <button
                 className={
-                  mode === "clusterComparison" ? "btn btn-accent" : "btn"
+                  dashboardMode === "clusterComparison"
+                    ? "btn btn-accent"
+                    : "btn"
                 }
                 onClick={changeModeClusterComparison}
               >
