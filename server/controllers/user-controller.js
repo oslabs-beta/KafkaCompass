@@ -99,7 +99,8 @@ userController.addCloudCluster = async (req, res, next) => {
     CLOUD_SECRET,
     clusterId,
     RESTendpoint,
-    bootstrapServer
+    bootstrapServer,
+    cluster_name
   } = res.locals.credentials;
 
   let user;
@@ -122,7 +123,8 @@ userController.addCloudCluster = async (req, res, next) => {
     CLOUD_SECRET,
     clusterId,
     RESTendpoint,
-    bootstrapServer
+    bootstrapServer,
+    cluster_name
   };
 
   try {
@@ -159,7 +161,8 @@ userController.addMetrics = async (req, res, next) => {
     CLOUD_KEY,
     CLOUD_SECRET,
     clusterId,
-    RESTendpoint
+    RESTendpoint,
+    cluster_name
   } = req.body;
 
   let user;
@@ -181,7 +184,8 @@ userController.addMetrics = async (req, res, next) => {
     CLOUD_KEY,
     CLOUD_SECRET,
     clusterId,
-    RESTendpoint
+    RESTendpoint,
+    cluster_name
   };
 
   try {
