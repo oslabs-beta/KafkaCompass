@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import dog from '../resources/images/404-dog.jpg';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import dog from "../resources/images/404-dog.jpg";
 
 const NotFound = () => {
   const navigate = useNavigate();
 
   const goHome = () => {
-    console.log('Go Home button clicked');
-    navigate('/');
+    console.log("Go Home button clicked");
+    navigate("/");
   };
 
   return (

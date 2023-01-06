@@ -1,19 +1,19 @@
-require('dotenv').config();
-const axios = require('axios');
-const User = require('../models/user-model');
-const CloudCluster = require('../models/cloud-cluster-model');
-const { decrypt } = require('../encryption');
-const { Kafka } = require('kafkajs');
+require("dotenv").config();
+const axios = require("axios");
+const User = require("../models/user-model");
+const CloudCluster = require("../models/cloud-cluster-model");
+const { decrypt } = require("../encryption");
+const { Kafka } = require("kafkajs");
 
 const apiController = {};
 
 apiController.getClusterInfo = async (req, res, next) => {
   if (!req.session.user)
     return next({
-      log: 'apiController.getClusterInfo: ERROR: Unauthorized',
+      log: "apiController.getClusterInfo: ERROR: Unauthorized",
       message: {
-        err: 'Unauthorized',
-      },
+        err: "Unauthorized"
+      }
     });
 
   try {
@@ -27,7 +27,7 @@ apiController.getClusterInfo = async (req, res, next) => {
     }
 
     for (const key in cluster) {
-      if (typeof cluster[key] !== 'string') continue;
+      if (typeof cluster[key] !== "string") continue;
       else {
         cluster[key] = decrypt(cluster[key]);
       }
@@ -35,7 +35,7 @@ apiController.getClusterInfo = async (req, res, next) => {
     res.locals.cluster = cluster;
     next();
   } catch {
-    next({ log: 'error in getClusterInfo' });
+    next({ log: "error in getClusterInfo" });
   }
 };
 
@@ -43,29 +43,29 @@ apiController.getTopics = async (req, res, next) => {
   const { cluster } = res.locals;
   // console.log('cluster', cluster);
   const { RESTendpoint, clusterId, API_KEY, API_SECRET } = cluster;
-  const token = Buffer.from(`${API_KEY}:${API_SECRET}`, 'utf8').toString(
-    'base64'
+  const token = Buffer.from(`${API_KEY}:${API_SECRET}`, "utf8").toString(
+    "base64"
   );
-  const headers = { Authorization: 'Basic ' + token };
+  const headers = { Authorization: "Basic " + token };
 
   try {
     const response = await axios({
       url: `${RESTendpoint}/kafka/v3/clusters/${clusterId}/topics`,
-      headers,
+      headers
     });
     // this will access the array of topics, feel free to read just the response to see all available keys
     const data = response.data.data;
-    console.log('data from getTopics: ', data);
+    console.log("data from getTopics: ", data);
     const topicList = [];
-    console.log('TOPIC LIST :', topicList);
+    console.log("TOPIC LIST :", topicList);
     data.forEach((el) => topicList.push(el.topic_name));
-    console.log('TOPIC LIST NOW: ', topicList);
+    console.log("TOPIC LIST NOW: ", topicList);
     res.locals.topicList = topicList;
-    console.log('HERE!!!');
+    console.log("HERE!!!");
     // console.log('topic list is: ', topicList);
     next();
   } catch (err) {
-    next({ log: 'error in getTopics' });
+    next({ log: "error in getTopics" });
   }
 };
 
@@ -75,29 +75,29 @@ apiController.getTopics = async (req, res, next) => {
 apiController.addTopic = async (req, res, next) => {
   const { cluster } = res.locals;
   const { RESTendpoint, clusterId, API_KEY, API_SECRET } = cluster;
-  const token = Buffer.from(`${API_KEY}:${API_SECRET}`, 'utf8').toString(
-    'base64'
+  const token = Buffer.from(`${API_KEY}:${API_SECRET}`, "utf8").toString(
+    "base64"
   );
-  const headers = { Authorization: 'Basic ' + token };
+  const headers = { Authorization: "Basic " + token };
 
   const { topic } = req.body;
 
   try {
     const response = axios({
-      method: 'post',
+      method: "post",
       url: `${RESTendpoint}/kafka/v3/clusters/${clusterId}/topics`,
       data: {
-        topic_name: `${topic}`,
+        topic_name: `${topic}`
       },
-      headers,
+      headers
     });
     const data = await response;
     // console.log(data);
     next();
   } catch (err) {
     next({
-      log: 'error in addTopic',
-      message: 'could not add topic to cluster',
+      log: "error in addTopic",
+      message: "could not add topic to cluster"
     });
   }
 };
@@ -105,25 +105,25 @@ apiController.addTopic = async (req, res, next) => {
 apiController.deleteTopic = async (req, res, next) => {
   const { cluster } = res.locals;
   const { RESTendpoint, clusterId, API_KEY, API_SECRET } = cluster;
-  const token = Buffer.from(`${API_KEY}:${API_SECRET}`, 'utf8').toString(
-    'base64'
+  const token = Buffer.from(`${API_KEY}:${API_SECRET}`, "utf8").toString(
+    "base64"
   );
-  const headers = { Authorization: 'Basic ' + token };
+  const headers = { Authorization: "Basic " + token };
 
   // name for the new topic
   const { topic } = req.body;
 
   try {
     const response = await axios({
-      method: 'delete',
+      method: "delete",
       url: `${RESTendpoint}/kafka/v3/clusters/${clusterId}/topics/${topic}`,
-      headers,
+      headers
     });
     next();
   } catch (err) {
     next({
-      log: 'error in deleteTopic',
-      message: 'could not delete topic in cluster',
+      log: "error in deleteTopic",
+      message: "could not delete topic in cluster"
     });
   }
 };
@@ -140,25 +140,25 @@ apiController.getMessages = async (req, res, next) => {
     CLOUD_SECRET,
     clusterId,
     RESTendpoint,
-    bootstrapServer,
+    bootstrapServer
   } = cluster;
   const kafka = new Kafka({
-    brokers: ['pkc-n00kk.us-east-1.aws.confluent.cloud:9092'],
-    clientId: 'test-cluster',
+    brokers: ["pkc-n00kk.us-east-1.aws.confluent.cloud:9092"],
+    clientId: "test-cluster",
     ssl: true,
     sasl: {
-      mechanism: 'plain',
+      mechanism: "plain",
       password:
-        'LbB9cMhT672NTo+cG9kLiLlC1KpiFqXFFvz3GC3xa4FwFF9a/VuH9X/VifVkNDaF',
-      username: 'RZLFSYPVKQLHEHXB',
-    },
+        "LbB9cMhT672NTo+cG9kLiLlC1KpiFqXFFvz3GC3xa4FwFF9a/VuH9X/VifVkNDaF",
+      username: "RZLFSYPVKQLHEHXB"
+    }
   });
 
-  const consumer = kafka.consumer({ groupId: 'test-group' });
+  const consumer = kafka.consumer({ groupId: "test-group" });
 
   const receiveMessages = async () => {
     await consumer.connect();
-    await consumer.subscribe({ topic: 'test_topic', fromBeginning: true });
+    await consumer.subscribe({ topic: "test_topic", fromBeginning: true });
     res.locals.messageList = [];
     await consumer.run({
       eachMessage: async ({ topic, partition, message }) => {
@@ -167,15 +167,15 @@ apiController.getMessages = async (req, res, next) => {
           partition,
           timestamp: message.timestamp,
           offset: message.offset,
-          value: message.value.toString(),
+          value: message.value.toString()
         };
-        console.log('Received message:', kafkaMessage);
+        console.log("Received message:", kafkaMessage);
         res.locals.messageList.push(kafkaMessage);
         setTimeout(() => {
           consumer.disconnect();
           next();
         }, 4000);
-      },
+      }
     });
   };
   receiveMessages();
@@ -184,27 +184,27 @@ apiController.getMessages = async (req, res, next) => {
 apiController.addMessage = async (req, res, next) => {
   const { cluster } = res.locals;
   const { RESTendpoint, clusterId, API_KEY, API_SECRET } = cluster;
-  const token = Buffer.from(`${API_KEY}:${API_SECRET}`, 'utf8').toString(
-    'base64'
+  const token = Buffer.from(`${API_KEY}:${API_SECRET}`, "utf8").toString(
+    "base64"
   );
-  const headers = { Authorization: 'Basic ' + token };
+  const headers = { Authorization: "Basic " + token };
 
   const { topic, message } = req.body;
 
   try {
     const response = await axios({
-      method: 'post',
+      method: "post",
       url: `${RESTendpoint}/kafka/v3/clusters/${clusterId}/topics/${topic}/records`,
-      data: { partition_id: null, value: { type: 'JSON', data: `${message}` } },
-      headers,
+      data: { partition_id: null, value: { type: "JSON", data: `${message}` } },
+      headers
     });
     const data = response.data;
-    console.log('data in addMessage: ', data);
+    console.log("data in addMessage: ", data);
     next();
   } catch (err) {
     next({
-      log: 'error in addMessage',
-      message: 'could not add message to cluster',
+      log: "error in addMessage",
+      message: "could not add message to cluster"
     });
   }
 };
