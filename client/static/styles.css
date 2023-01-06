@@ -105,7 +105,6 @@
 
 .chart-container {
   grid-column-start: 3;
-  grid-row-end: 2;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -132,11 +132,12 @@ const DashboardContainer = (props) => {
           />
         )}
       </main>
-       <TableData tableData={tableData} /> </>
+        <TableData tableData={tableData} /> </>
     );
   } else if (mode === "realTimeMonitoring") {
     dashboardView = (
       <>
+      <div className="flex justify-center pt-10">
         <Messages />
         <TopicButtons
           chartData={chartData}
@@ -144,6 +145,7 @@ const DashboardContainer = (props) => {
           totalBytes={total}
           setTotal={setTotal}
         />
+        </div>
       </>
     );
   } else {
