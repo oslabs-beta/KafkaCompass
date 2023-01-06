@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { NavbarContext } from "../NavbarContext";
 
 const ClusterItem = (props) => {
-  const { index, date, clusterId, setMetricIndex, navigate } = props;
+  const { index, date, clusterId, navigate } = props;
+  const { setMetricIndex } = useContext(NavbarContext).metricIndexState;
 
   function handleClick() {
     setMetricIndex(index);

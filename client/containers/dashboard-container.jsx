@@ -28,7 +28,9 @@ const DashboardContainer = (props) => {
     reqResBytes: false
   });
 
-  const data = useContext(NavbarContext).metricState.user.metric.at();
+  const data =
+    useContext(NavbarContext).metricState.user.metric.at(metricIndex);
+  console.log(data);
 
   useEffect(() => {
     const retainedBytes = data.retained_bytes.metrics.map(
@@ -107,7 +109,6 @@ const DashboardContainer = (props) => {
               topicChart={true}
               reqResChart={false}
               totalBytes={total.totalRetainedBytes}
-              setMetric={props.setMetric}
             />
             <TopicButtons
               chartData={chartData}
@@ -131,7 +132,7 @@ const DashboardContainer = (props) => {
   } else if (dashboardMode === "realTimeMonitoring") {
     dashboardView = <Messages />;
   } else if (dashboardMode === "clusterHistory") {
-    dashboardView = <ClusterHistory setMetricIndex={props.setMetricIndex} />;
+    dashboardView = <ClusterHistory />;
   }
 
   // update metrics object with desired viewing metrics
