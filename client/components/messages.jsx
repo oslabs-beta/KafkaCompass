@@ -6,6 +6,7 @@ const Messages = ({ messages }) => {
   // const kafka = new Kafka()
 
   //state for current topic
+  const [topic, setTopic] = useState("");
   const [topicList, setTopicList] = useState([]);
   const [messageList, setMessageList] = useState([]);
 
@@ -21,12 +22,18 @@ const Messages = ({ messages }) => {
       });
   }, []);
 
+  const selectTopic = (e) => {
+    setTopic(e.target.text);
+  };
+
   // console.log('topicList is :', topicList);
   const topicMenu = [];
   for (const topic of topicList) {
     topicMenu.push(
       <li>
-        <a className="justify-end">{topic}</a>
+        <a className="justify-end" onClick={selectTopic}>
+          {topic}
+        </a>
       </li>
     );
   }
@@ -46,10 +53,14 @@ const Messages = ({ messages }) => {
   // })
 
   const consumeMessages = async () => {
-    const response = await fetch("/api/message");
-    const data = await response.json();
-    console.log(data);
-    setMessageList(data);
+    try {
+      const response = await fetch(`/api/message/${topic}`);
+      const data = await response.json();
+      console.log(data);
+      setMessageList(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const messageTable = [];
@@ -92,10 +103,13 @@ const Messages = ({ messages }) => {
 
   return (
     <div className="flex flex-col">
+      <h2 className="flex justify-center font-mono text-3xl mb-5">
+        {topic !== "" && topic}
+      </h2>
       <div className="flex flex-row">
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn m-1">
-            Click
+            Select Topic
           </label>
           <ul
             tabIndex={0}
