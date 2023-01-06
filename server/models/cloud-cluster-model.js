@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema, model } = mongoose;
 
@@ -12,4 +12,4 @@ const cloudClusterSchema = new Schema({
   bootstrapServer: { type: String, required: true }
 });
 
-module.exports = new model('CloudCluster', cloudClusterSchema);
+module.exports = new model("CloudCluster", cloudClusterSchema);

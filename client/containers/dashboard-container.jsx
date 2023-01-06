@@ -5,7 +5,7 @@ import TopicButtons from "../components/topic-buttons";
 import Messages from "../components/messages";
 import { NavbarContext } from "../NavbarContext";
 
-const DashboardContainer = () => {
+const DashboardContainer = (props) => {
   const { setRenderDrawerButton } =
     useContext(NavbarContext).drawerButtonsState;
   const [chartData, setChart] = useState({
@@ -146,11 +146,11 @@ const DashboardContainer = () => {
 
   return (
     <>
-      <div class="drawer">
-        <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-        <div class="drawer-content border-solid border-2 border-black-500">
+      <div className="drawer">
+        <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+        <div className="drawer-content border-solid border-2 border-black-500">
           <div className="mt-4 flex justify-around">
-            <div class="btn-group">
+            <div className="btn-group">
               <button
                 className={mode === "viewCluster" ? "btn btn-accent" : "btn"}
                 onClick={changeModeViewCluster}
@@ -179,18 +179,18 @@ const DashboardContainer = () => {
           {/* <!-- Page content here --> */}
         </div>
         <AddClusterForm />
-        <div class="drawer-side">
-          <label for="my-drawer" class="drawer-overlay"></label>
-          <ul class="menu p-4 w-80 bg-base-100 text-base-content">
+        <div className="drawer-side">
+          <label htmlFor="my-drawer" className="drawer-overlay"></label>
+          <ul className="menu p-4 w-80 bg-base-100 text-base-content">
             <li
               onClick={() => updateSideDrawer("retainedBytes")}
-              class={metricSelection.retainedBytes ? "bg-secondary" : ""}
+              className={metricSelection.retainedBytes ? "bg-secondary" : ""}
             >
               <a>Retained bytes</a>
             </li>
             <li
               onClick={() => updateSideDrawer("reqResBytes")}
-              class={metricSelection.reqResBytes ? "bg-secondary" : ""}
+              className={metricSelection.reqResBytes ? "bg-secondary" : ""}
             >
               <a>Request/Response bytes</a>
             </li>

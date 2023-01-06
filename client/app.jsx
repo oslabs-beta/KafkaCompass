@@ -82,7 +82,7 @@ function App() {
           exact
           path="/dashboard"
           element={
-            checkLoggedIn ? (
+            loggedIn ? (
               <DashboardContainer
                 metrics={user.metric.at(metricIndex)}
                 setMetric={setMetric}
@@ -97,13 +97,7 @@ function App() {
         <Route
           exact
           path="/cluster-history"
-          element={
-            <ClusterHistory
-              setDrawerButton={setDrawerButton}
-              metrics={user.metric}
-              setMetricIndex={setMetricIndex}
-            />
-          }
+          element={<ClusterHistory setMetricIndex={setMetricIndex} />}
         />
         <Route exact path="/" element={<LandingPage navigate={navigate} />} />
       </Routes>
