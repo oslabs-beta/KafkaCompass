@@ -38,7 +38,6 @@ app.use(
   userController.verifyUser,
   userController.authorizeUser,
   userController.setUserAuth,
-  userController.checkUserAuth,
   (req, res, next) => {
     // console.log(req.sessionID);
     res.status(200).json(res.locals.user);

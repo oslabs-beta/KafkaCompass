@@ -28,9 +28,10 @@ function App() {
         });
         if (response.ok) {
             let session = await response.json();
-            setUser(session.user);
-        }
-        console.log(errorMessage);
+            console.log('this is a session user in the response', session.user);
+          }
+        setUser(session.user);
+        console.log('this is session.user', session.user);
       } catch(err) {
         // console.log('Network error occurred - User not logged in');
       }
@@ -51,6 +52,7 @@ function App() {
   }
 
   useEffect(() => {
+      console.log(user);
       checkSession();
      }, [user]);
 

@@ -71,6 +71,7 @@ userController.createUser = async (req, res, next) => {
 
 userController.logOut = (req, res, next) => {
   req.session.destroy();
+  res.clearCookie('token');
   return next();
 };
 
@@ -89,8 +90,10 @@ userController.setUserAuth = (req, res, next) => {
 }
 
 userController.checkUserAuth = (req, res, next) => {
-  res.locals.token = req.cookies.token;
-  return next();
+  const token = req.cookies.token;
+  const user = jwt.verify(token, superSecret);
+  if (user.user._id === req.session.user.id) return next();
+  else res.sendStatus(403);
 }
 
 userController.addCloudCluster = async (req, res, next) => {
