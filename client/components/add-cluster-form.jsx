@@ -8,7 +8,8 @@ const AddClusterForm = () => {
   const [newCloudSecretInput, setNewCloudSecretInput] = useState("");
   const [newRESTEndpointInput, setNewRESTEndpointInput] = useState("");
   const [newClusterIdInput, setNewClusterIdInput] = useState("");
-  const [newBootsrapServerInput, setNewBootstrapServerInput] = useState("");
+  const [newBootstrapServerInput, setNewBootstrapServerInput] = useState("");
+  const [newClusterName, setNewClusterName] = useState("");
 
   // submit new cluster
   async function submitNewCluster() {
@@ -21,7 +22,8 @@ const AddClusterForm = () => {
         CLOUD_SECRET: newCloudSecretInput,
         clusterId: newClusterIdInput,
         RESTendpoint: newRESTEndpointInput,
-        bootstrapServer: newBootsrapServerInput
+        bootstrapServer: newBootstrapServerInput,
+        cluster_name: newClusterName
       };
       console.log("newCluster: ", newCluster);
       // send post request to backend
@@ -52,85 +54,96 @@ const AddClusterForm = () => {
     setNewRESTEndpointInput("");
     setNewClusterIdInput("");
     setNewBootstrapServerInput("");
+    setNewClusterName("");
   }
 
   return (
     <>
-      <input type="checkbox" id="my-modal-4" className="modal-toggle" />
-      <label htmlFor="my-modal-4" className="modal cursor-pointer">
-        <label className="modal-box relative" htmlFor="">
-          <h3 className="text-lg font-bold">Input Cluster Details:</h3>
-          <div className="form-control w-full max-w-xs">
-            <label className="label">
-              <span className="label-text">API Key:</span>
+      <input type="checkbox" id="my-modal-4" class="modal-toggle" />
+      <label for="my-modal-4" class="modal cursor-pointer">
+        <label class="modal-box relative" for="">
+          <h3 class="text-lg font-bold">Input Cluster Details:</h3>
+          <div class="form-control w-full max-w-xs">
+            <label class="label">
+              <span class="label-text">Cluster Name:</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Cluster Name"
+              class="input input-bordered w-full max-w-xs"
+              onChange={(e) => setNewClusterName(e.target.value)}
+              value={newClusterName}
+            />
+            <label class="label">
+              <span class="label-text">API Key:</span>
             </label>
             <input
               type="text"
               placeholder="API Key"
-              className="input input-bordered w-full max-w-xs"
+              class="input input-bordered w-full max-w-xs"
               onChange={(e) => setNewAPIKeyInput(e.target.value)}
               value={newAPIKeyInput}
             />
-            <label className="label">
-              <span className="label-text">API Secret:</span>
+            <label class="label">
+              <span class="label-text">API Secret:</span>
             </label>
             <input
               type="text"
               placeholder="API Secret"
-              className="input input-bordered w-full max-w-xs"
+              class="input input-bordered w-full max-w-xs"
               onChange={(e) => setNewAPISecretInput(e.target.value)}
               value={newAPISecretInput}
             />
-            <label className="label">
-              <span className="label-text">Cloud Key</span>
+            <label class="label">
+              <span class="label-text">Cloud Key</span>
             </label>
             <input
               type="text"
               placeholder="Cloud Key"
-              className="input input-bordered w-full max-w-xs"
+              class="input input-bordered w-full max-w-xs"
               onChange={(e) => setNewCloudKeyInput(e.target.value)}
               value={newCloudKeyInput}
             />
-            <label className="label">
-              <span className="label-text">Cloud Secret</span>
+            <label class="label">
+              <span class="label-text">Cloud Secret</span>
             </label>
             <input
               type="text"
               placeholder="Cloud Secret"
-              className="input input-bordered w-full max-w-xs"
+              class="input input-bordered w-full max-w-xs"
               onChange={(e) => setNewCloudSecretInput(e.target.value)}
               value={newCloudSecretInput}
             />
-            <label className="label">
-              <span className="label-text">REST Endpoint</span>
+            <label class="label">
+              <span class="label-text">REST Endpoint</span>
             </label>
             <input
               type="text"
               placeholder="REST Endpoint"
-              className="input input-bordered w-full max-w-xs"
+              class="input input-bordered w-full max-w-xs"
               onChange={(e) => setNewRESTEndpointInput(e.target.value)}
               value={newRESTEndpointInput}
             />
-            <label className="label">
-              <span className="label-text">Cluster ID:</span>
+            <label class="label">
+              <span class="label-text">Cluster ID:</span>
             </label>
             <input
               type="text"
               placeholder="Cluster ID"
-              className="input input-bordered w-full max-w-xs"
+              class="input input-bordered w-full max-w-xs"
               onChange={(e) => setNewClusterIdInput(e.target.value)}
               value={newClusterIdInput}
             />
             <div className="pt-4">
-              <label className="label">
-                <span className="label-text">Bootstrap Server:</span>
+              <label class="label">
+                <span class="label-text">Bootstrap Server:</span>
               </label>
               <input
                 type="text"
                 placeholder="Bootstrap Server"
-                className="input input-bordered w-full max-w-xs"
+                class="input input-bordered w-full max-w-xs"
                 onChange={(e) => setNewBootstrapServerInput(e.target.value)}
-                value={newBootsrapServerInput}
+                value={newBootstrapServerInput}
               />
               <div className="pt-4"></div>
               <button className="btn btn-primary" onClick={submitNewCluster}>

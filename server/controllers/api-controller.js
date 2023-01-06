@@ -18,7 +18,9 @@ apiController.getClusterInfo = async (req, res, next) => {
 
   try {
     const { cloudCluster } = req.session.user;
-    const rawCluster = cloudCluster[0];
+    let rawCluster;
+    if (!req.session.currentCluster) rawCluster = cloudCluster[0];
+    else rawCluster = cloudCluster[req.session.currentCluster];
 
     //creating a deep copy of the cluster in the session to avoid mutating the session cluster
     const cluster = {};
@@ -36,6 +38,32 @@ apiController.getClusterInfo = async (req, res, next) => {
     next();
   } catch {
     next({ log: "error in getClusterInfo" });
+  }
+};
+
+apiController.getClusterList = (req, res, next) => {
+  if (!req.session.user)
+    return next({
+      log: "apiController.getClusterList: ERROR: Unauthorized",
+      message: {
+        err: "Unauthorized"
+      }
+    });
+
+  const { cloudCluster } = req.session.user;
+
+  try {
+    const clusterList = [];
+    for (let i = 0; i < cloudCluster.length; i++) {
+      clusterList[i] = decrypt(cloudCluster[i].clusterId);
+    }
+    res.locals.clusterList = clusterList;
+    next();
+  } catch {
+    next({
+      log: "apiController.getClusterList: ERROR: Could not create clusterList",
+      message: { err: "Could not create cluster list" }
+    });
   }
 };
 
@@ -81,13 +109,19 @@ apiController.addTopic = async (req, res, next) => {
   const headers = { Authorization: "Basic " + token };
 
   const { topic } = req.body;
+  console.log("session current cluster: ", req.session.currentCluster);
+  console.log("cluster in add topic: ", cluster);
+  console.log("topic to be added: ", topic);
+  //format topic to remove any spaces in the name with an underscore
+  const formattedTopic = topic.replace(/ /g, "_");
+  console.log("formattedTopic: ", formattedTopic);
 
   try {
     const response = axios({
       method: "post",
       url: `${RESTendpoint}/kafka/v3/clusters/${clusterId}/topics`,
       data: {
-        topic_name: `${topic}`
+        topic_name: `${formattedTopic}`
       },
       headers
     });
@@ -143,14 +177,13 @@ apiController.getMessages = async (req, res, next) => {
     bootstrapServer
   } = cluster;
   const kafka = new Kafka({
-    brokers: ["pkc-n00kk.us-east-1.aws.confluent.cloud:9092"],
-    clientId: "test-cluster",
+    brokers: [bootstrapServer],
+    clientId: clusterId,
     ssl: true,
     sasl: {
       mechanism: "plain",
-      password:
-        "LbB9cMhT672NTo+cG9kLiLlC1KpiFqXFFvz3GC3xa4FwFF9a/VuH9X/VifVkNDaF",
-      username: "RZLFSYPVKQLHEHXB"
+      password: API_SECRET,
+      username: API_KEY
     }
   });
 

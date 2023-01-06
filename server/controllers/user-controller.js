@@ -222,4 +222,18 @@ userController.addMetrics = async (req, res, next) => {
   return next();
 };
 
+userController.switchCluster = async (req, res, next) => {
+  const { cluster } = req.body;
+  console.log("in switchCluster with cluster: ", cluster);
+  try {
+    req.session.currentCluster = cluster;
+    next();
+  } catch {
+    next({
+      log: "userController.switchCluster: ERROR: failed to switch cluster",
+      message: { err: "could not switch cluster" }
+    });
+  }
+};
+
 module.exports = userController;

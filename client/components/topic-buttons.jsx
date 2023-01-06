@@ -61,7 +61,7 @@ const TopicButtons = ({ chartData, setChart, total, setTotal }) => {
         >
           Delete topic
         </label>
-        <button className="btn btn-xs btn-outline btn-accent">
+        <button class="btn btn-xs btn-outline btn-accent">
           Write a message
         </button>
       </div>

@@ -1,30 +1,26 @@
-import React, { useContext } from "react";
-import { NavbarContext } from "../NavbarContext";
+import React, { useState } from "react";
+import { render } from "react-dom";
 
-const Navbar = ({ navigate, logUserOut }) => {
-  // getting state from the Context for navigation bar
-  const { renderDrawerButton, setRenderDrawerButton } =
-    useContext(NavbarContext).drawerButtonsState;
-  const { loggedIn, setLoggedIn } = useContext(NavbarContext).loggedState;
-  const { setAuthMode } = useContext(NavbarContext).authModeState;
-  const { setDashboardMode } = useContext(NavbarContext).dashboardState;
-  const { sideBarMode } = useContext(NavbarContext).sideBarState;
-
+const Navbar = ({
+  setDisplayAuth,
+  navigate,
+  checkLoggedIn,
+  renderDrawerButton,
+  setDrawerButton,
+  setLoggedIn,
+  logUserOut
+}) => {
   let drawerButton = <></>;
   const select = sideBarMode === "current" ? "Select Metrics" : "Select Topic";
   if (renderDrawerButton) {
     drawerButton = (
       <>
-        <label
-          onClick={() => setDashboardMode("viewCLuster")}
-          htmlFor="my-drawer"
-          className="btn drawer-button mr-10 my-7"
-        >
-          {select}
+        <label htmlFor="my-drawer" className="btn drawer-button mr-10 my-7">
+          Select Metrics
         </label>
         <button
           onClick={() => {
-            setDashboardMode("clusterHistory");
+            navigate("/cluster-history");
           }}
           className="btn btn-outline mr-10 my-7"
         >
@@ -43,7 +39,7 @@ const Navbar = ({ navigate, logUserOut }) => {
       <>
         <button
           onClick={() => {
-            setAuthMode("signup");
+            setDisplayAuth("signup");
             navigate("/auth");
           }}
           className="btn btn-outline mr-10 my-7"
@@ -52,7 +48,7 @@ const Navbar = ({ navigate, logUserOut }) => {
         </button>
         <button
           onClick={() => {
-            setAuthMode("login");
+            setDisplayAuth("login");
             navigate("/auth");
           }}
           className="btn btn-accent btn-outline mr-10 my-7"
@@ -66,7 +62,7 @@ const Navbar = ({ navigate, logUserOut }) => {
       <>
         <button
           onClick={() => {
-            setRenderDrawerButton(false);
+            setDrawerButton(false);
             navigate("/");
           }}
           className="btn btn-outline mr-10 my-7"

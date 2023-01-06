@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { NavbarContext } from "../NavbarContext";
 import "chart.js/auto";
 import { Bar } from "react-chartjs-2";
+import SwitchCluster from "./switch-cluster-form";
 
 const Chart = (props) => {
   const data = props.topicChart
@@ -19,9 +20,17 @@ const Chart = (props) => {
 
   return (
     <div className="topic-chart font-mono chart-container">
-      <button onClick={updateMetrics} className="mb-5 btn btn-accent">
-        Update Metrics
-      </button>
+      <div className="flex">
+        <button onClick={updateMetrics} className="mb-5 btn btn-accent">
+          Update Metrics
+        </button>
+        <div>
+          <label htmlFor="switch-cluster-modal" className="mb-5 btn btn-accent">
+            Switch Cluster
+          </label>
+        </div>
+        <SwitchCluster />
+      </div>
 
       {props.topicChart && (
         <p style={{ fontSize: "18px" }}>Topics in your cluster</p>

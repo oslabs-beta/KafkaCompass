@@ -14,35 +14,37 @@ const DashboardContainer = (props) => {
   const { sideBarMode } = useContext(NavbarContext).sideBarState;
   const [chartData, setChart] = useState({
     topics: { labels: [], datasets: [] },
-    reqRes: { labels: [], datasets: [] }
+    reqRes: { labels: [], datasets: [] },
   });
 
   const [total, setTotal] = useState({
     totalRetainedBytes: 0,
     totalReq: 0,
-    totalRes: 0
+    totalRes: 0,
   });
 
   const [metricSelection, setMetricSelection] = useState({
     retainedBytes: true,
-    reqResBytes: false
+    reqResBytes: false,
   });
 
   const { metricIndex } = useContext(NavbarContext).metricIndexState;
   const data = useContext(NavbarContext).userState.user.metric.at(metricIndex);
 
   useEffect(() => {
-    const retainedBytes = data.retained_bytes.metrics.map(
-      (topic) => topic.value
-    );
-    const topics = data.retained_bytes.metrics.map((topic) => topic.topic);
-    const valuesReq = data.request_bytes.metrics.map((topic) => topic.value);
-    const valuesRes = data.response_bytes.metrics.map((topic) => topic.value);
+    //if no clusters in user info, no charts will load
+    try {
+      const retainedBytes = data.retained_bytes.metrics.map(
+        (topic) => topic.value
+      );
+      const topics = data.retained_bytes.metrics.map((topic) => topic.topic);
+      const valuesReq = data.request_bytes.metrics.map((topic) => topic.value);
+      const valuesRes = data.response_bytes.metrics.map((topic) => topic.value);
 
     setTotal({
       totalRetainedBytes: data.retained_bytes.totalValue,
       totalReq: data.request_bytes.totalValue,
-      totalRes: data.response_bytes.totalValue
+      totalRes: data.response_bytes.totalValue,
     });
 
     setChart({
@@ -53,9 +55,9 @@ const DashboardContainer = (props) => {
             label: "bytes",
             data: retainedBytes,
             backgroundColor: "rgba(64, 180, 179, 0.5)",
-            borderWidth: 1
-          }
-        ]
+            borderWidth: 1,
+          },
+        ],
       },
       reqRes: {
         labels: data.request_bytes.metrics.map((topic) => topic.type),
@@ -64,16 +66,16 @@ const DashboardContainer = (props) => {
             label: "request bytes",
             data: valuesReq,
             backgroundColor: "rgba(64, 180, 179, 0.5)",
-            borderWidth: 1
+            borderWidth: 1,
           },
           {
             label: "response bytes",
             data: valuesRes,
             backgroundColor: "rgba(250, 73, 112, 0.5)",
-            borderWidth: 1
-          }
-        ]
-      }
+            borderWidth: 1,
+          },
+        ],
+      },
     });
   }, []);
 
@@ -109,12 +111,6 @@ const DashboardContainer = (props) => {
               reqResChart={false}
               totalBytes={total.totalRetainedBytes}
             />
-            <TopicButtons
-              chartData={chartData}
-              setChart={setChart}
-              totalBytes={total}
-              setTotal={setTotal}
-            />
           </>
         )}
         {metricSelection.reqResBytes && (
@@ -128,10 +124,14 @@ const DashboardContainer = (props) => {
         )}
       </main>
     );
-  } else if (dashboardMode === "realTimeMonitoring") {
-    dashboardView = <Messages />;
-  } else if (dashboardMode === "clusterHistory") {
-    dashboardView = <ClusterHistory />;
+  } else if (mode === "realTimeMonitoring") {
+    dashboardView = (
+      <>
+        <Messages />
+      </>
+    );
+  } else {
+    dashboardView = <></>;
   }
 
   // update metrics object with desired viewing metrics
@@ -147,43 +147,35 @@ const DashboardContainer = (props) => {
 
   return (
     <>
-      <div className="drawer">
-        <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content border-solid border-2 border-black-500">
-          {sideBarMode === "current" && (
-            <div className="mt-4 flex justify-around">
-              <div className="btn-group">
-                <button
-                  className={
-                    dashboardMode === "viewCluster" ? "btn btn-accent" : "btn"
-                  }
-                  onClick={changeModeViewCluster}
-                >
-                  View Cluster
-                </button>
-                <button
-                  className={
-                    dashboardMode === "realTimeMonitoring"
-                      ? "btn btn-accent"
-                      : "btn"
-                  }
-                  onClick={changeModeRealtimeMonitoring}
-                >
-                  Realtime Monitoring
-                </button>
-                <button
-                  className={
-                    dashboardMode === "clusterComparison"
-                      ? "btn btn-accent"
-                      : "btn"
-                  }
-                  onClick={changeModeClusterComparison}
-                >
-                  Cluster Comparison
-                </button>
-              </div>
+      <div class="drawer">
+        <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+        <div class="drawer-content border-solid border-2 border-black-500">
+          <div className="mt-4 flex justify-around">
+            <div class="btn-group">
+              <button
+                className={mode === "viewCluster" ? "btn btn-accent" : "btn"}
+                onClick={changeModeViewCluster}
+              >
+                View Cluster
+              </button>
+              <button
+                className={
+                  mode === "realTimeMonitoring" ? "btn btn-accent" : "btn"
+                }
+                onClick={changeModeRealtimeMonitoring}
+              >
+                Realtime Monitoring
+              </button>
+              <button
+                className={
+                  mode === "clusterComparison" ? "btn btn-accent" : "btn"
+                }
+                onClick={changeModeClusterComparison}
+              >
+                Cluster Comparison
+              </button>
             </div>
-          )}
+          </div>
           <div className="flex justify-around pt-10">{dashboardView}</div>
           {/* <!-- Page content here --> */}
         </div>

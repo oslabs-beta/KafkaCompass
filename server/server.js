@@ -76,6 +76,15 @@ app.post(
   }
 );
 
+//endpoint to switch current cluster in session
+app.get("/api/getClusterList", apiController.getClusterList, (req, res) => {
+  return res.status(201).json(res.locals.clusterList);
+});
+
+app.post("/api/switchCluster", userController.switchCluster, (req, res) => {
+  return res.status(201).json("cluster switched");
+});
+
 //endpoints to get and modify various elements of the cluster
 
 //message-related endpoints
