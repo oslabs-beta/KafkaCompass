@@ -55,7 +55,7 @@ apiController.getClusterList = (req, res, next) => {
   try {
     const clusterList = [];
     for (let i = 0; i < cloudCluster.length; i++) {
-      clusterList[i] = cloudCluster[i].clusterId;
+      clusterList[i] = decrypt(cloudCluster[i].clusterId);
     }
     res.locals.clusterList = clusterList;
     next();
@@ -112,13 +112,16 @@ apiController.addTopic = async (req, res, next) => {
   console.log("session current cluster: ", req.session.currentCluster);
   console.log("cluster in add topic: ", cluster);
   console.log("topic to be added: ", topic);
+  //format topic to remove any spaces in the name with an underscore
+  const formattedTopic = topic.replace(/ /g, "_");
+  console.log("formattedTopic: ", formattedTopic);
 
   try {
     const response = axios({
       method: "post",
       url: `${RESTendpoint}/kafka/v3/clusters/${clusterId}/topics`,
       data: {
-        topic_name: `${topic}`
+        topic_name: `${formattedTopic}`
       },
       headers
     });
