@@ -16,6 +16,8 @@ function App() {
   const [authMode, setAuthMode] = useState("");
   const [sideBarMode, setSideBarMode] = useState("current");
   const [dashboardMode, setDashboardMode] = useState("viewCluster");
+  const [metricIndex, setMetricIndex] = useState(-1);
+  const [metric, setMetric] = useState({});
 
   // shared navigation bar state
   const providerValue = {
@@ -39,10 +41,13 @@ function App() {
     sideBarState: useMemo(
       () => ({ sideBarMode, setSideBarMode }),
       [sideBarMode, setSideBarMode]
+    ),
+    metricState: useMemo(() => ({ metric, setMetric }), [metric, setMetric]),
+    metricIndexState: useMemo(
+      () => ({ metricIndex, setMetricIndex }),
+      [metricIndex, setMetricIndex]
     )
   };
-  const [metricIndex, setMetricIndex] = useState(-1);
-  const [metric, setMetric] = useState({});
 
   const checkSession = async () => {
     try {
@@ -90,19 +95,8 @@ function App() {
         <Route
           exact
           path="/dashboard"
-          element={
-            loggedIn ? (
-              <DashboardContainer
-                metrics={user.metric.at(metricIndex)}
-                setMetric={setMetric}
-                setMetricIndex={setMetricIndex}
-              />
-            ) : (
-              <Navigate to="/" />
-            )
-          }
+          element={loggedIn ? <DashboardContainer /> : <Navigate to="/" />}
         />
-
         <Route exact path="/auth" element={<Auth navigate={navigate} />} />
         <Route exact path="/" element={<LandingPage navigate={navigate} />} />
       </Routes>
