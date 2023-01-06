@@ -31,13 +31,6 @@ const DashboardContainer = (props) => {
     const descript = [];
     const values = [];
 
-    const retainedBytes = data.retained_bytes.metrics.map(
-      (topic) => topic.value
-    );
-    const topics = data.retained_bytes.metrics.map((topic) => topic.topic);
-    const valuesReq = data.request_bytes.metrics.map((topic) => topic.value);
-    const valuesRes = data.response_bytes.metrics.map((topic) => topic.value);
-
     //table values
     names.push(data.partition_count.name);
     names.push(data.active_connection_count.name);
@@ -50,42 +43,54 @@ const DashboardContainer = (props) => {
     values.push(data.successful_authentication_count.totalValue);
     setTableData({name: names, description: descript, values: values});
 
-    setTotal({
-      totalRetainedBytes: data.retained_bytes.totalValue,
-      totalReq: data.request_bytes.totalValue,
-      totalRes: data.response_bytes.totalValue
-    });
+    //if no clusters in user info, no charts will load
+    try {
+      const retainedBytes = data.retained_bytes.metrics.map(
+        (topic) => topic.value
+      );
+      const topics = data.retained_bytes.metrics.map((topic) => topic.topic);
+      const valuesReq = data.request_bytes.metrics.map((topic) => topic.value);
+      const valuesRes = data.response_bytes.metrics.map((topic) => topic.value);
 
-    setChart({
-      topics: {
-        labels: topics,
-        datasets: [
-          {
-            label: "bytes",
-            data: retainedBytes,
-            backgroundColor: "rgba(64, 180, 179, 0.5)",
-            borderWidth: 1
-          }
-        ]
-      },
-      reqRes: {
-        labels: data.request_bytes.metrics.map((topic) => topic.type),
-        datasets: [
-          {
-            label: "request bytes",
-            data: valuesReq,
-            backgroundColor: "rgba(64, 180, 179, 0.5)",
-            borderWidth: 1
-          },
-          {
-            label: "response bytes",
-            data: valuesRes,
-            backgroundColor: "rgba(250, 73, 112, 0.5)",
-            borderWidth: 1
-          }
-        ]
-      }
-    });
+      setTotal({
+        totalRetainedBytes: data.retained_bytes.totalValue,
+        totalReq: data.request_bytes.totalValue,
+        totalRes: data.response_bytes.totalValue
+      });
+
+      setChart({
+        topics: {
+          labels: topics,
+          datasets: [
+            {
+              label: "bytes",
+              data: retainedBytes,
+              backgroundColor: "rgba(64, 180, 179, 0.5)",
+              borderWidth: 1
+            }
+          ]
+        },
+        reqRes: {
+          labels: data.request_bytes.metrics.map((topic) => topic.type),
+          datasets: [
+            {
+              label: "request bytes",
+              data: valuesReq,
+              backgroundColor: "rgba(64, 180, 179, 0.5)",
+              borderWidth: 1
+            },
+            {
+              label: "response bytes",
+              data: valuesRes,
+              backgroundColor: "rgba(250, 73, 112, 0.5)",
+              borderWidth: 1
+            }
+          ]
+        }
+      });
+    } catch {
+      console.log("No clusters in user data");
+    }
   }, []);
 
   useEffect(() => {
