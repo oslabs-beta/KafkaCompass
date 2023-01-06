@@ -8,7 +8,7 @@ const ClusterItem = (props) => {
 
   function handleClick() {
     setMetricIndex(index);
-    navigate("/dashboard");
+    console.log(index);
   }
 
   return (
