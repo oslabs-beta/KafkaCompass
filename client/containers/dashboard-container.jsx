@@ -28,9 +28,8 @@ const DashboardContainer = (props) => {
     reqResBytes: false
   });
 
-  const data =
-    useContext(NavbarContext).metricState.user.metric.at(metricIndex);
-  console.log(data);
+  const { metricIndex } = useContext(NavbarContext).metricIndexState;
+  const data = useContext(NavbarContext).userState.user.metric.at(metricIndex);
 
   useEffect(() => {
     const retainedBytes = data.retained_bytes.metrics.map(
