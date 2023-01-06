@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema, model } = mongoose;
 
@@ -11,15 +11,15 @@ const userSchema = new Schema({
   cloudCluster: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'CloudCluster',
-    },
+      ref: "CloudCluster"
+    }
   ],
   metric: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Metric',
-    },
+      ref: "Metric"
+    }
   ]
 });
 
-module.exports = new model('User', userSchema);
+module.exports = new model("User", userSchema);

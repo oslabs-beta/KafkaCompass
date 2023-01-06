@@ -1,4 +1,4 @@
-const User = require('../models/user-model');
+const User = require("../models/user-model");
 const axios = require("axios");
 const parsePrometheusTextFormat = require("parse-prometheus-text-format");
 
@@ -18,7 +18,7 @@ metricController.fetchData = async (req, res, next) => {
 
   const response = await axios({
     url,
-    headers: cloudHeaders,
+    headers: cloudHeaders
   });
 
   const data = parsePrometheusTextFormat(response.data);
@@ -33,8 +33,8 @@ metricController.decryptKeys = (req, res, next) => {
     return next({
       log: "metricController.decrpytKeys: ERROR: Unauthorized",
       message: {
-        err: "Unauthorized",
-      },
+        err: "Unauthorized"
+      }
     });
   }
 
@@ -43,7 +43,7 @@ metricController.decryptKeys = (req, res, next) => {
 
   const credentials = { CLOUD_KEY, CLOUD_SECRET, clusterId };
 
-  for(let key in credentials){
+  for (let key in credentials) {
     credentials[key] = decrypt(credentials[key]);
   }
 
@@ -71,7 +71,7 @@ const createMetricsObject = (dataset, nameMap) => {
     "sent_bytes",
     "received_records",
     "sent_records",
-    "retained_bytes",
+    "retained_bytes"
   ];
 
   for (let name in nameMap) {
@@ -119,9 +119,8 @@ function createConsumerLagObj(value, labels) {
   return {
     value,
     consumer_group_id: labels.consumer_group_id,
-    topic: labels.topic,
+    topic: labels.topic
   };
 }
-
 
 module.exports = metricController;

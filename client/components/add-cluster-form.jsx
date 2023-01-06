@@ -8,7 +8,8 @@ const AddClusterForm = () => {
   const [newCloudSecretInput, setNewCloudSecretInput] = useState("");
   const [newRESTEndpointInput, setNewRESTEndpointInput] = useState("");
   const [newClusterIdInput, setNewClusterIdInput] = useState("");
-  const [newBootsrapServerInput, setNewBootstrapServerInput] = useState("");
+  const [newBootstrapServerInput, setNewBootstrapServerInput] = useState("");
+  const [newClusterName, setNewClusterName] = useState("");
 
   // submit new cluster
   async function submitNewCluster() {
@@ -21,7 +22,8 @@ const AddClusterForm = () => {
         CLOUD_SECRET: newCloudSecretInput,
         clusterId: newClusterIdInput,
         RESTendpoint: newRESTEndpointInput,
-        bootstrapServer: newBootsrapServerInput
+        bootstrapServer: newBootstrapServerInput,
+        cluster_name: newClusterName
       };
       console.log("newCluster: ", newCluster);
       // send post request to backend
@@ -52,6 +54,7 @@ const AddClusterForm = () => {
     setNewRESTEndpointInput("");
     setNewClusterIdInput("");
     setNewBootstrapServerInput("");
+    setNewClusterName("");
   }
 
   return (
@@ -61,6 +64,16 @@ const AddClusterForm = () => {
         <label class="modal-box relative" for="">
           <h3 class="text-lg font-bold">Input Cluster Details:</h3>
           <div class="form-control w-full max-w-xs">
+            <label class="label">
+              <span class="label-text">Cluster Name:</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Cluster Name"
+              class="input input-bordered w-full max-w-xs"
+              onChange={(e) => setNewClusterName(e.target.value)}
+              value={newClusterName}
+            />
             <label class="label">
               <span class="label-text">API Key:</span>
             </label>
@@ -130,7 +143,7 @@ const AddClusterForm = () => {
                 placeholder="Bootstrap Server"
                 class="input input-bordered w-full max-w-xs"
                 onChange={(e) => setNewBootstrapServerInput(e.target.value)}
-                value={newBootsrapServerInput}
+                value={newBootstrapServerInput}
               />
               <div className="pt-4"></div>
               <button className="btn btn-primary" onClick={submitNewCluster}>
