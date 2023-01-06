@@ -4,8 +4,10 @@ const Metric = require("../models/metric-model");
 const { Session } = require("express-session");
 const bcrypt = require("bcrypt");
 const { decrypt } = require("../encryption");
+const jwt = require('jsonwebtoken');
 
 const userController = {};
+const superSecret = 'thisIsAHolderForAMoreSecureSecret';
 
 userController.verifyUser = async (req, res, next) => {
   const { username, password } = req.body;
@@ -26,6 +28,7 @@ userController.verifyUser = async (req, res, next) => {
     if (!(await bcrypt.compare(password, user.password))) throw new Error();
 
     res.locals.user = user;
+
     return next();
   } catch (error) {
     return next({
@@ -77,6 +80,18 @@ userController.authorizeUser = (req, res, next) => {
   req.session.save();
   return next();
 };
+
+userController.setUserAuth = (req, res, next) => {
+  const user = res.locals.user;
+  const token = jwt.sign({user}, superSecret, { expiresIn: 60 * 60 * 2 });
+  res.cookie('token', token, { httpOnly: true });
+  return next();
+}
+
+userController.checkUserAuth = (req, res, next) => {
+  res.locals.token = req.cookies.token;
+  return next();
+}
 
 userController.addCloudCluster = async (req, res, next) => {
   if (!req.session.user)

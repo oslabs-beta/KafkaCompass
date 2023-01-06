@@ -1,5 +1,6 @@
 const express = require("express");
 const session = require("express-session");
+const cookieParser = require("cookie-parser");
 
 const path = require("path");
 const PORT = 3000;
@@ -14,6 +15,7 @@ const metricController = require("./controllers/metric-controller");
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 
 mongodb.connect(MONGO_URI);
 // to parse incoming json objects
@@ -35,6 +37,8 @@ app.use(
   "/api/login",
   userController.verifyUser,
   userController.authorizeUser,
+  userController.setUserAuth,
+  userController.checkUserAuth,
   (req, res, next) => {
     // console.log(req.sessionID);
     res.status(200).json(res.locals.user);
