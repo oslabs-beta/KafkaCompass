@@ -8,8 +8,10 @@ const Navbar = ({ navigate, logUserOut }) => {
   const { loggedIn, setLoggedIn } = useContext(NavbarContext).loggedState;
   const { setAuthMode } = useContext(NavbarContext).authModeState;
   const { setDashboardMode } = useContext(NavbarContext).dashboardState;
+  const { sideBarMode } = useContext(NavbarContext).sideBarState;
 
   let drawerButton = <></>;
+  const select = sideBarMode === "current" ? "Select Metrics" : "Select Topic";
   if (renderDrawerButton) {
     drawerButton = (
       <>
@@ -18,7 +20,7 @@ const Navbar = ({ navigate, logUserOut }) => {
           htmlFor="my-drawer"
           className="btn drawer-button mr-10 my-7"
         >
-          Select Metrics
+          {select}
         </label>
         <button
           onClick={() => {

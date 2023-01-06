@@ -36,7 +36,10 @@ function App() {
       () => ({ dashboardMode, setDashboardMode }),
       [dashboardMode, setDashboardMode]
     ),
-    sideBarState: useMemo(() => ({sideBarMode, setSideBarMode}), [sideBarMode, setSideBarMode]);
+    sideBarState: useMemo(
+      () => ({ sideBarMode, setSideBarMode }),
+      [sideBarMode, setSideBarMode]
+    )
   };
   const [metricIndex, setMetricIndex] = useState(-1);
   const [metric, setMetric] = useState({});

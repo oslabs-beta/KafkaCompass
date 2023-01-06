@@ -7,8 +7,11 @@ import ClusterHistory from "./cluster-history";
 import { NavbarContext } from "../NavbarContext";
 
 const DashboardContainer = (props) => {
+  // getting sharable state from the useContex
   const { setRenderDrawerButton } =
     useContext(NavbarContext).drawerButtonsState;
+  const { sideBarMode, setSideBarMode } =
+    useContext(NavbarContext).sideBarState;
   const [chartData, setChart] = useState({
     topics: { labels: [], datasets: [] },
     reqRes: { labels: [], datasets: [] }
