@@ -11,7 +11,7 @@ const Auth = ({navigate}) => {
 
     const {register, handleSubmit } = useForm();
     // render either log in or sign up form
-    const renderLogin = authMode === 'login' ? true : false;
+    const renderLogin = authMode === 'login';
 
     const onSubmit = async data => {
         console.log('in onSubmit');
@@ -39,10 +39,11 @@ const Auth = ({navigate}) => {
                 body: JSON.stringify(credentials)
             });
             if (response.ok) {
+                const user = await response.json();
                 setRenderDrawerButton(true);
                 setAuthMode('');
                 setLoggedIn(true);
-                setUser(response);
+                setUser(user);
                 return navigate('/dashboard');
             }
             console.log(errorMessage);

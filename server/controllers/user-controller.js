@@ -20,7 +20,7 @@ userController.verifyUser = async (req, res, next) => {
   }
 
   try {
-    const user = await User.findOne({ username }).populate('cloudCluster');
+    const user = await User.findOne({ username }).populate("cloudCluster").populate("metric");
 
     //Using bcrypt to compare password with its hashed version
     if (!(await bcrypt.compare(password, user.password))) throw new Error();
