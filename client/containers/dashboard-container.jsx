@@ -3,29 +3,39 @@ import AddClusterForm from "../components/add-cluster-form";
 import Chart from "../components/chart";
 import TopicButtons from "../components/topic-buttons";
 import Messages from "../components/messages";
-
+import { NavbarContext } from "../NavbarContext";
+import TableData from "../components/table-data";
+import DrawerSide from "../components/drawer-side";
 const DashboardContainer = (props) => {
   // getting sharable state from the useContex
   const { setRenderDrawerButton } =
     useContext(NavbarContext).drawerButtonsState;
   const { sideBarMode } = useContext(NavbarContext).sideBarState;
+
   const [chartData, setChart] = useState({
     topics: { labels: [], datasets: [] },
-    reqRes: { labels: [], datasets: [] },
+    reqRes: { labels: [], datasets: [] }
   });
 
   const [total, setTotal] = useState({
     totalRetainedBytes: 0,
     totalReq: 0,
-    totalRes: 0,
+    totalRes: 0
   });
 
   const [metricSelection, setMetricSelection] = useState({
     retainedBytes: true,
-    reqResBytes: false,
+    reqResBytes: false
   });
 
-  const data = props.metrics;
+  const [tableData, setTableData] = useState({
+    name: [],
+    description: [],
+    values: []
+  });
+
+  const { metricIndex } = useContext(NavbarContext).metricIndexState;
+  const data = useContext(NavbarContext).userState.user.metric.at(metricIndex);
 
   useEffect(() => {
     const names = [];
@@ -42,7 +52,7 @@ const DashboardContainer = (props) => {
     values.push(data.partition_count.totalValue);
     values.push(data.active_connection_count.totalValue);
     values.push(data.successful_authentication_count.totalValue);
-    setTableData({name: names, description: descript, values: values});
+    setTableData({ name: names, description: descript, values: values });
 
     //if no clusters in user info, no charts will load
     try {
@@ -53,42 +63,45 @@ const DashboardContainer = (props) => {
       const valuesReq = data.request_bytes.metrics.map((topic) => topic.value);
       const valuesRes = data.response_bytes.metrics.map((topic) => topic.value);
 
-    setTotal({
-      totalRetainedBytes: data.retained_bytes.totalValue,
-      totalReq: data.request_bytes.totalValue,
-      totalRes: data.response_bytes.totalValue,
-    });
+      setTotal({
+        totalRetainedBytes: data.retained_bytes.totalValue,
+        totalReq: data.request_bytes.totalValue,
+        totalRes: data.response_bytes.totalValue
+      });
 
-    setChart({
-      topics: {
-        labels: topics,
-        datasets: [
-          {
-            label: "bytes",
-            data: retainedBytes,
-            backgroundColor: "rgba(64, 180, 179, 0.5)",
-            borderWidth: 1,
-          },
-        ],
-      },
-      reqRes: {
-        labels: data.request_bytes.metrics.map((topic) => topic.type),
-        datasets: [
-          {
-            label: "request bytes",
-            data: valuesReq,
-            backgroundColor: "rgba(64, 180, 179, 0.5)",
-            borderWidth: 1,
-          },
-          {
-            label: "response bytes",
-            data: valuesRes,
-            backgroundColor: "rgba(250, 73, 112, 0.5)",
-            borderWidth: 1,
-          },
-        ],
-      },
-    });
+      setChart({
+        topics: {
+          labels: topics,
+          datasets: [
+            {
+              label: "bytes",
+              data: retainedBytes,
+              backgroundColor: "rgba(64, 180, 179, 0.5)",
+              borderWidth: 1
+            }
+          ]
+        },
+        reqRes: {
+          labels: data.request_bytes.metrics.map((topic) => topic.type),
+          datasets: [
+            {
+              label: "request bytes",
+              data: valuesReq,
+              backgroundColor: "rgba(64, 180, 179, 0.5)",
+              borderWidth: 1
+            },
+            {
+              label: "response bytes",
+              data: valuesRes,
+              backgroundColor: "rgba(250, 73, 112, 0.5)",
+              borderWidth: 1
+            }
+          ]
+        }
+      });
+    } catch {
+      console.log("No clusters in user data");
+    }
   }, []);
 
   useEffect(() => {
@@ -114,40 +127,43 @@ const DashboardContainer = (props) => {
   let dashboardView = <></>;
   if (dashboardMode === "viewCluster") {
     dashboardView = (
-      <><main className="cluster-container">
-        {metricSelection.retainedBytes && (
-          <>
+      <>
+        <main className="cluster-container">
+          {metricSelection.retainedBytes && (
+            <>
+              <Chart
+                chartData={chartData}
+                topicChart={true}
+                reqResChart={false}
+                totalBytes={total.totalRetainedBytes}
+              />
+            </>
+          )}
+          {metricSelection.reqResBytes && (
             <Chart
               chartData={chartData}
-              topicChart={true}
-              reqResChart={false}
-              totalBytes={total.totalRetainedBytes}
+              topicChart={false}
+              reqResChart={true}
+              totalRes={total.totalRes}
+              totalReq={total.totalReq}
             />
-          </>
-        )}
-        {metricSelection.reqResBytes && (
-          <Chart
-            chartData={chartData}
-            topicChart={false}
-            reqResChart={true}
-            totalRes={total.totalRes}
-            totalReq={total.totalReq}
-          />
-        )}
-      </main>
-        <TableData tableData={tableData} /> </>
+          )}
+        </main>
+        <TableData tableData={tableData} />
+      </>
     );
-  } else if (mode === "realTimeMonitoring") {
+  } else if (dashboardMode === "realTimeMonitoring") {
     dashboardView = (
       <>
-      <div className="flex justify-center pt-10">
-        <Messages />
-        <TopicButtons
-          chartData={chartData}
-          setChart={setChart}
-          totalBytes={total}
-          setTotal={setTotal}
-        />
+        <div className="flex justify-center pt-10">
+          <Messages />
+          <TopicButtons
+            chartData={chartData}
+            setChart={setChart}
+            totalBytes={total}
+            setTotal={setTotal}
+          />
+        </div>
       </>
     );
   } else {
@@ -173,14 +189,18 @@ const DashboardContainer = (props) => {
           <div className="mt-4 flex justify-around">
             <div class="btn-group">
               <button
-                className={mode === "viewCluster" ? "btn btn-accent" : "btn"}
+                className={
+                  dashboardMode === "viewCluster" ? "btn btn-accent" : "btn"
+                }
                 onClick={changeModeViewCluster}
               >
                 View Cluster
               </button>
               <button
                 className={
-                  mode === "realTimeMonitoring" ? "btn btn-accent" : "btn"
+                  dashboardMode === "realTimeMonitoring"
+                    ? "btn btn-accent"
+                    : "btn"
                 }
                 onClick={changeModeRealtimeMonitoring}
               >
@@ -188,7 +208,9 @@ const DashboardContainer = (props) => {
               </button>
               <button
                 className={
-                  mode === "clusterComparison" ? "btn btn-accent" : "btn"
+                  dashboardMode === "clusterComparison"
+                    ? "btn btn-accent"
+                    : "btn"
                 }
                 onClick={changeModeClusterComparison}
               >
@@ -196,7 +218,7 @@ const DashboardContainer = (props) => {
               </button>
             </div>
           </div>
-          <div className="flex justify-center pt-10">{dashboardView}</div>
+          <div className="justify-center pt-10">{dashboardView}</div>
           {/* <!-- Page content here --> */}
         </div>
         <AddClusterForm />
