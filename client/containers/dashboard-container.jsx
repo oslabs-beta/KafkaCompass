@@ -101,12 +101,6 @@ const DashboardContainer = (props) => {
               totalBytes={total.totalRetainedBytes}
               setMetric={props.setMetric}
             />
-            <TopicButtons
-              chartData={chartData}
-              setChart={setChart}
-              totalBytes={total}
-              setTotal={setTotal}
-            />
           </>
         )}
         {metricSelection.reqResBytes && (
@@ -124,6 +118,12 @@ const DashboardContainer = (props) => {
     dashboardView = (
       <>
         <Messages />
+        <TopicButtons
+          chartData={chartData}
+          setChart={setChart}
+          totalBytes={total}
+          setTotal={setTotal}
+        />
       </>
     );
   } else {
@@ -172,7 +172,7 @@ const DashboardContainer = (props) => {
               </button>
             </div>
           </div>
-          <div className="flex justify-around pt-10">{dashboardView}</div>
+          <div className="flex justify-center pt-10">{dashboardView}</div>
           {/* <!-- Page content here --> */}
         </div>
         <AddClusterForm />
