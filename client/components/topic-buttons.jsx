@@ -47,6 +47,29 @@ const TopicButtons = ({ chartData, setChart, total, setTotal }) => {
     setTotal(totalBytes);
   };
 
+  //to submit message to topic
+  const handleAddMessage = async (topic, message) => {
+    console.log("topic: ", topic, "message: ", message);
+    try {
+      const response = await fetch("/api/message", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ topic, message })
+      });
+      console.log("response: ", response);
+      if (response.ok) {
+        console.log("message added to cluster");
+        return;
+      } else {
+        console.log("Could not add new message to the cluster");
+      }
+    } catch (err) {
+      console.log("Network error occured");
+    }
+  };
+
   return (
     <>
       <div className="buttons-container btn-group btn-group-vertical mx-4">
@@ -71,7 +94,7 @@ const TopicButtons = ({ chartData, setChart, total, setTotal }) => {
       </div>
       <AddTopic onCreate={handleCreateTopic} />
       <DeleteTopic onDelete={handleDeleteTopic} chartData={chartData} />
-      <AddMessage chartData={chartData} />
+      <AddMessage onCreate={handleAddMessage} />
     </>
   );
 };
