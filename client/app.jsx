@@ -20,7 +20,7 @@ function App() {
   const checkSession = async () => {
     try {
       const response = await fetch("/api/authenticate", {
-        method: "GET",
+        method: "GET"
       });
       if (response.ok) {
         let session = await response.json();
@@ -34,7 +34,7 @@ function App() {
   const logUserOut = async () => {
     try {
       const response = await fetch("/api/logout", {
-        method: "GET",
+        method: "GET"
       });
       if (response.ok) {
         setUser({});
@@ -48,11 +48,11 @@ function App() {
   };
 
   useEffect(() => {
-    if(metric.created_at){
-      user.metric.push(metric)
+    if (metric.created_at) {
+      user.metric.push(metric);
       setUser(user);
     }
-  }, [metric])
+  }, [metric]);
 
   return (
     <div>
@@ -102,7 +102,13 @@ function App() {
         <Route
           exact
           path="/cluster-history"
-          element={<ClusterHistory setDrawerButton={setDrawerButton} metrics={user.metric} setMetricIndex={setMetricIndex}/>}
+          element={
+            <ClusterHistory
+              setDrawerButton={setDrawerButton}
+              metrics={user.metric}
+              setMetricIndex={setMetricIndex}
+            />
+          }
         />
         <Route
           exact

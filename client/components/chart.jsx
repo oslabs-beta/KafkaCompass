@@ -6,16 +6,18 @@ const Chart = (props) => {
   const data = props.topicChart
     ? props.chartData.topics
     : props.chartData.reqRes;
-  
-  async function updateMetrics(){
-      const response = await fetch('/api/metric');
-      const metric = await response.json();
-      props.setMetric(metric);
+
+  async function updateMetrics() {
+    const response = await fetch("/api/metric");
+    const metric = await response.json();
+    props.setMetric(metric);
   }
-  
+
   return (
     <div className="topic-chart font-mono chart-container">
-      <button onClick={updateMetrics} className="mb-5 btn btn-accent">Update Metrics</button>
+      <button onClick={updateMetrics} className="mb-5 btn btn-accent">
+        Update Metrics
+      </button>
 
       {props.topicChart && (
         <p style={{ fontSize: "18px" }}>Topics in your cluster</p>
@@ -29,7 +31,7 @@ const Chart = (props) => {
         type={"bar"}
         data={data}
         options={{
-          maintainAspectRatio: false,
+          maintainAspectRatio: false
         }}
       />
       <br />

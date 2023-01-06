@@ -1,8 +1,9 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema, model } = mongoose;
 
 const cloudClusterSchema = new Schema({
+  cluster_name: { type: String, required: true },
   API_KEY: { type: String, required: true },
   API_SECRET: { type: String, required: true },
   CLOUD_KEY: { type: String, required: true },
@@ -12,4 +13,4 @@ const cloudClusterSchema = new Schema({
   bootstrapServer: { type: String, required: true }
 });
 
-module.exports = new model('CloudCluster', cloudClusterSchema);
+module.exports = new model("CloudCluster", cloudClusterSchema);

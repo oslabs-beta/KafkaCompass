@@ -7,18 +7,18 @@ import Messages from "../components/messages";
 const DashboardContainer = (props) => {
   const [chartData, setChart] = useState({
     topics: { labels: [], datasets: [] },
-    reqRes: { labels: [], datasets: [] },
+    reqRes: { labels: [], datasets: [] }
   });
 
   const [total, setTotal] = useState({
     totalRetainedBytes: 0,
     totalReq: 0,
-    totalRes: 0,
+    totalRes: 0
   });
 
   const [metricSelection, setMetricSelection] = useState({
     retainedBytes: true,
-    reqResBytes: false,
+    reqResBytes: false
   });
 
   const data = props.metrics;
@@ -34,7 +34,7 @@ const DashboardContainer = (props) => {
     setTotal({
       totalRetainedBytes: data.retained_bytes.totalValue,
       totalReq: data.request_bytes.totalValue,
-      totalRes: data.response_bytes.totalValue,
+      totalRes: data.response_bytes.totalValue
     });
 
     setChart({
@@ -45,9 +45,9 @@ const DashboardContainer = (props) => {
             label: "bytes",
             data: retainedBytes,
             backgroundColor: "rgba(64, 180, 179, 0.5)",
-            borderWidth: 1,
-          },
-        ],
+            borderWidth: 1
+          }
+        ]
       },
       reqRes: {
         labels: data.request_bytes.metrics.map((topic) => topic.type),
@@ -56,16 +56,16 @@ const DashboardContainer = (props) => {
             label: "request bytes",
             data: valuesReq,
             backgroundColor: "rgba(64, 180, 179, 0.5)",
-            borderWidth: 1,
+            borderWidth: 1
           },
           {
             label: "response bytes",
             data: valuesRes,
             backgroundColor: "rgba(250, 73, 112, 0.5)",
-            borderWidth: 1,
-          },
-        ],
-      },
+            borderWidth: 1
+          }
+        ]
+      }
     });
   }, []);
 
