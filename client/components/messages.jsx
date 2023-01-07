@@ -13,7 +13,7 @@ const Messages = ({ topic, setTopic }) => {
   const messageTable =
     messageList.length === 0
       ? [
-          <td colSpan={6} className="text-center p-4 w-4">
+          <td colSpan={4} className="text-center p-4 w-4">
             No messages
           </td>
         ]
@@ -90,13 +90,13 @@ const Messages = ({ topic, setTopic }) => {
             </label>
           </div>
         </td> */}
-        <th
+        <td
           scope="row"
-          className="py-4 px-6 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          className="max-w-min py-4 px-6 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white overflow-scroll"
         >
           {message.value}
-        </th>
-        <td className="py-4 px-6 text-center">{message.partition}</td>
+        </td>
+        <td className="py-4 px-6 text-center ">{message.partition}</td>
         <td className="py-4 px-6 text-center">{message.offset}</td>
         <td className="py-4 px-6 text-center">{message.timestamp}</td>
         {/* More Details column: might be implemented in a later feature */}
@@ -128,12 +128,21 @@ const Messages = ({ topic, setTopic }) => {
           </ul>
         </div>
         <div className="flex flex-col align-center w-full">
+          <h2 className="text-center font-mono text-3xl mb-5">
+            {topic !== "" && topic}
+          </h2>
           <div className="overflow-y-auto relative shadow-md sm:rounded-lg w-full">
-            <h2 className="text-center font-mono text-3xl mb-5">
-              {topic !== "" && topic}
-            </h2>
-            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <table className="w-full text-sm text-gray-500 rounded dark:text-gray-400 table-fixed">
+              <colgroup>
+                <col span={"1"} style={{ maxWidth: "33%" }}></col>
+                <col></col>
+                <col></col>
+                <col></col>
+              </colgroup>
+              {/* <col className="w-" />
+              <col className="w-" />
+              <col className="w-" /> */}
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 table-header-group">
                 <tr>
                   {/* TABLE COLUMN HEADERS */}
                   {/* Checkbox column: might be added in a later version */}
@@ -149,7 +158,7 @@ const Messages = ({ topic, setTopic }) => {
                     </label>
                   </div>
                 </th> */}
-                  <th scope="col" className="py-3 px-6 text-center">
+                  <th scope="col" className="py-3 px-6 text-center w-64">
                     Value
                   </th>
                   <th scope="col" className="py-3 px-6 text-center">

@@ -182,10 +182,14 @@ apiController.getMessages = async (req, res, next) => {
       username: API_KEY
     }
   });
-
-  const consumer = kafka.consumer({ groupId: "test-group" });
+  const groupId = "kafka-group";
+  const consumer = kafka.consumer({ groupId });
+  const admin = kafka.admin();
 
   const receiveMessages = async () => {
+    await admin.connect();
+    await admin.resetOffsets({ groupId, topic });
+    await admin.disconnect();
     await consumer.connect();
     await consumer.subscribe({ topic: topic, fromBeginning: true });
     res.locals.messageList = [];
