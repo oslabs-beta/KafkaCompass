@@ -10,6 +10,17 @@ const Messages = ({ messages }) => {
   const [topicList, setTopicList] = useState([]);
   const [messageList, setMessageList] = useState([]);
 
+  const messageTable =
+    messageList.length === 0
+      ? [
+          <td colSpan={6} className="text-center p-4 w-4">
+            No messages
+          </td>
+        ]
+      : [];
+
+  console.log("messageList initialized to: ", messageList);
+
   useEffect(() => {
     fetch("/api/topic")
       .then((res) => res.json())
@@ -63,11 +74,11 @@ const Messages = ({ messages }) => {
     }
   };
 
-  const messageTable = [];
   for (const message of messageList) {
     messageTable.push(
       <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-        <td className="p-4 w-4">
+        {/* Checkbox column: might be added in a later version */}
+        {/* <td className="p-4 w-4">
           <div className="flex items-center">
             <input
               id="checkbox-table-search-1"
@@ -78,7 +89,7 @@ const Messages = ({ messages }) => {
               checkbox
             </label>
           </div>
-        </td>
+        </td> */}
         <th
           scope="row"
           className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -88,25 +99,26 @@ const Messages = ({ messages }) => {
         <td className="py-4 px-6">{message.partition}</td>
         <td className="py-4 px-6">{message.offset}</td>
         <td className="py-4 px-6">{message.timestamp}</td>
-        <td className="flex items-center py-4 px-6 space-x-3">
+        {/* More Details column: might be implemented in a later feature */}
+        {/* <td className="flex items-center py-4 px-6 space-x-3">
           <a
             href="#"
             className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
           >
             More Details
           </a>
-        </td>
+        </td> */}
       </tr>
     );
   }
   console.log("messageList is: ", messageList);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex justify-center flex-col w-3/4">
       <h2 className="flex justify-center font-mono text-3xl mb-5">
         {topic !== "" && topic}
       </h2>
-      <div className="flex flex-row">
+      <div className="flex flex-row w-full">
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn m-1">
             Select Topic
@@ -119,12 +131,13 @@ const Messages = ({ messages }) => {
           </ul>
         </div>
 
-        <div className="overflow-y-auto relative shadow-md sm:rounded-lg">
+        <div className="overflow-y-auto relative shadow-md sm:rounded-lg w-full">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 {/* TABLE COLUMN HEADERS */}
-                <th scope="col" className="p-4">
+                {/* Checkbox column: might be added in a later version */}
+                {/* <th scope="col" className="p-4">
                   <div className="flex items-center">
                     <input
                       id="checkbox-all-search"
@@ -135,7 +148,7 @@ const Messages = ({ messages }) => {
                       checkbox
                     </label>
                   </div>
-                </th>
+                </th> */}
                 <th scope="col" className="py-3 px-6">
                   Value
                 </th>
@@ -148,7 +161,8 @@ const Messages = ({ messages }) => {
                 <th scope="col" className="py-3 px-6">
                   Timestamp
                 </th>
-                <th scope="col" className="py-3 px-6"></th>
+                {/* More Details column: might be implemented in a later feature */}
+                {/* <th scope="col" className="py-3 px-6"></th> */}
               </tr>
             </thead>
             <tbody>{messageTable}</tbody>
