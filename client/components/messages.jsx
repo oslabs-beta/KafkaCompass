@@ -92,15 +92,15 @@ const Messages = ({ messages }) => {
         </td> */}
         <th
           scope="row"
-          className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          className="py-4 px-6 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white"
         >
           {message.value}
         </th>
-        <td className="py-4 px-6">{message.partition}</td>
-        <td className="py-4 px-6">{message.offset}</td>
-        <td className="py-4 px-6">{message.timestamp}</td>
+        <td className="py-4 px-6 text-center">{message.partition}</td>
+        <td className="py-4 px-6 text-center">{message.offset}</td>
+        <td className="py-4 px-6 text-center">{message.timestamp}</td>
         {/* More Details column: might be implemented in a later feature */}
-        {/* <td className="flex items-center py-4 px-6 space-x-3">
+        {/* <td className="flex items-center py-4 px-6 text-center space-x-3">
           <a
             href="#"
             className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
@@ -149,16 +149,16 @@ const Messages = ({ messages }) => {
                     </label>
                   </div>
                 </th> */}
-                <th scope="col" className="py-3 px-6">
+                <th scope="col" className="py-3 px-6 text-center">
                   Value
                 </th>
-                <th scope="col" className="py-3 px-6">
+                <th scope="col" className="py-3 px-6 text-center">
                   Partition
                 </th>
-                <th scope="col" className="py-3 px-6">
+                <th scope="col" className="py-3 px-6 text-center">
                   Offset
                 </th>
-                <th scope="col" className="py-3 px-6">
+                <th scope="col" className="py-3 px-6 text-center">
                   Timestamp
                 </th>
                 {/* More Details column: might be implemented in a later feature */}
