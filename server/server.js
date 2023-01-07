@@ -91,13 +91,10 @@ app.post("/api/switchCluster", userController.checkUserAuth, userController.swit
 //message-related endpoints
 //get all messages in a topic
 app.get(
-  "/api/message",
-  userController.checkUserAuth,
+  "/api/message/:topic",
   apiController.getClusterInfo,
   apiController.getMessages,
   async (req, res) => {
-    console.log("HERE");
-    console.log("message list from res: ", res.locals.messageList);
     return res.status(200).json(res.locals.messageList);
   }
 );

@@ -7,6 +7,9 @@ import { NavbarContext } from "../NavbarContext";
 import TableData from "../components/table-data";
 import DrawerSide from "../components/drawer-side";
 const DashboardContainer = (props) => {
+  //state of current topic for Real-Time Monitoring mode
+  const [topic, setTopic] = useState("Select a topic");
+
   // getting sharable state from the useContex
   const { setRenderDrawerButton } =
     useContext(NavbarContext).drawerButtonsState;
@@ -28,31 +31,29 @@ const DashboardContainer = (props) => {
     reqResBytes: false
   });
 
-  const [tableData, setTableData] = useState({
-    name: [],
-    description: [],
-    values: []
-  });
+  const [tableData, setTableData] = useState([]);
 
   const { metricIndex } = useContext(NavbarContext).metricIndexState;
   const data = useContext(NavbarContext).userState.user.metric.at(metricIndex);
 
   useEffect(() => {
-    const names = [];
-    const descript = [];
-    const values = [];
+    const dataForTable = [
+      "partition_count",
+      "active_connection_count",
+      "successful_authentication_count",
+      "cluster_load_percent"
+    ].map((td) => {
+      const name = td.replace(/_/g, " ");
+      const description = data[td].description;
+      const value = data[td].totalValue;
+      return {
+        name,
+        description,
+        value
+      };
+    });
 
-    //table values
-    names.push(data.partition_count.name);
-    names.push(data.active_connection_count.name);
-    names.push(data.successful_authentication_count.name);
-    descript.push(data.partition_count.description);
-    descript.push(data.active_connection_count.description);
-    descript.push(data.successful_authentication_count.description);
-    values.push(data.partition_count.totalValue);
-    values.push(data.active_connection_count.totalValue);
-    values.push(data.successful_authentication_count.totalValue);
-    setTableData({ name: names, description: descript, values: values });
+    setTableData(dataForTable);
 
     //if no clusters in user info, no charts will load
     try {
@@ -154,17 +155,17 @@ const DashboardContainer = (props) => {
     );
   } else if (dashboardMode === "realTimeMonitoring") {
     dashboardView = (
-      <>
-        <div className="flex justify-center pt-10">
-          <Messages />
-          <TopicButtons
-            chartData={chartData}
-            setChart={setChart}
-            totalBytes={total}
-            setTotal={setTotal}
-          />
-        </div>
-      </>
+      <div className="flex justify-center pt-10 items-start">
+        <Messages setTopic={setTopic} topic={topic} />
+        <TopicButtons
+          topic={topic}
+          setTopic={setTopic}
+          chartData={chartData}
+          setChart={setChart}
+          totalBytes={total}
+          setTotal={setTotal}
+        />
+      </div>
     );
   } else {
     dashboardView = <></>;

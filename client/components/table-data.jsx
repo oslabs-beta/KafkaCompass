@@ -3,15 +3,14 @@ import React, { useEffect } from "react";
 const TableData = (props) => {
   let tableRows = [];
   let oneRow = <></>;
-  for (let i = 0; i < props.tableData.name.length; i++) {
+  for (let row of props.tableData) {
     oneRow = (
       <tr>
-        <th>{i}</th>
-        <td>{props.tableData.name[i]}</td>
+        <td>{row.name}</td>
         <td>
-          <div class="scrollable">{props.tableData.description[i]}</div>
+          <div class="scrollable">{row.description}</div>
         </td>
-        <td>{props.tableData.values[i]}</td>
+        <td>{row.value}</td>
       </tr>
     );
     tableRows.push(oneRow);
@@ -26,7 +25,6 @@ const TableData = (props) => {
           {/* <!-- head --> */}
           <thead>
             <tr>
-              <th></th>
               <th>Name</th>
               <th>Description</th>
               <th>Metrics</th>
