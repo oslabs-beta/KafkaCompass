@@ -1,30 +1,22 @@
-import React, { useState } from "react";
-import { render } from "react-dom";
+import React, { useContext } from "react";
+import { NavbarContext } from "../NavbarContext";
 
-const Navbar = ({
-  setDisplayAuth,
-  navigate,
-  checkLoggedIn,
-  renderDrawerButton,
-  setDrawerButton,
-  setLoggedIn,
-  logUserOut
-}) => {
+const Navbar = ({ navigate, logUserOut }) => {
+  const { setAuthMode } = useContext(NavbarContext).authModeState;
+  const { sideBarMode } = useContext(NavbarContext).sideBarState;
+  const { renderDrawerButton, setRenderDrawerButton } =
+    useContext(NavbarContext).drawerButtonsState;
+  const { loggedIn, setLoggedIn } = useContext(NavbarContext).loggedState;
+
   let drawerButton = <></>;
+  const select = sideBarMode === "current" ? "Select Metrics" : "Select Topic";
+
   if (renderDrawerButton) {
     drawerButton = (
       <>
         <label htmlFor="my-drawer" className="btn drawer-button mr-10 my-7">
-          Select Metrics
+          {select}
         </label>
-        <button
-          onClick={() => {
-            navigate("/cluster-history");
-          }}
-          className="btn btn-outline mr-10 my-7"
-        >
-          Cluster History
-        </button>
         <label htmlFor="my-modal-4" className="btn btn-outline mr-10 my-7">
           Add New Cluster
         </label>
@@ -33,12 +25,12 @@ const Navbar = ({
   }
 
   let logButtons = <></>;
-  if (checkLoggedIn === false) {
+  if (loggedIn === false) {
     logButtons = (
       <>
         <button
           onClick={() => {
-            setDisplayAuth("signup");
+            setAuthMode("signup");
             navigate("/auth");
           }}
           className="btn btn-outline mr-10 my-7"
@@ -47,7 +39,7 @@ const Navbar = ({
         </button>
         <button
           onClick={() => {
-            setDisplayAuth("login");
+            setAuthMode("login");
             navigate("/auth");
           }}
           className="btn btn-accent btn-outline mr-10 my-7"
@@ -61,7 +53,7 @@ const Navbar = ({
       <>
         <button
           onClick={() => {
-            setDrawerButton(false);
+            setRenderDrawerButton(false);
             navigate("/");
           }}
           className="btn btn-outline mr-10 my-7"
@@ -72,7 +64,7 @@ const Navbar = ({
         <button
           onClick={() => {
             logUserOut();
-            setDrawerButton(false);
+            setRenderDrawerButton(false);
             setLoggedIn(false);
             navigate("/");
           }}

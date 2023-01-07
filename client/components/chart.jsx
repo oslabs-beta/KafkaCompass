@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { NavbarContext } from "../NavbarContext";
 import "chart.js/auto";
 import { Bar } from "react-chartjs-2";
 import SwitchCluster from "./switch-cluster-form";
@@ -8,10 +9,13 @@ const Chart = (props) => {
     ? props.chartData.topics
     : props.chartData.reqRes;
 
+  const { setMetric } = useContext(NavbarContext).metricState;
+
   async function updateMetrics() {
     const response = await fetch("/api/metric");
     const metric = await response.json();
-    props.setMetric(metric);
+
+    setMetric(metric);
   }
 
   return (

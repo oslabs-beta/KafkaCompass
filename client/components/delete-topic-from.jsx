@@ -21,7 +21,7 @@ const DeleteTopic = ({ onDelete, chartData }) => {
                 Choose a topic to delete
               </option>
               {topicNames.map((t) => (
-                <option>{t}</option>
+                <option key={t}>{t}</option>
               ))}
             </select>
 

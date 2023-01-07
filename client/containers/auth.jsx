@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import AuthForm from "../components/authForm";
+import { NavbarContext } from "../NavbarContext";
 
-const Auth = ({
-  authMode,
-  setDisplayAuth,
-  navigate,
-  setDrawerButton,
-  setLoggedIn,
-  setUser
-}) => {
+const Auth = ({ navigate }) => {
+  const { authMode, setAuthMode } = useContext(NavbarContext).authModeState;
+  const { setRenderDrawerButton } =
+    useContext(NavbarContext).drawerButtonsState;
+  const { setLoggedIn } = useContext(NavbarContext).loggedState;
+  const { setUser } = useContext(NavbarContext).userState;
+
   const { register, handleSubmit } = useForm();
   // render either log in or sign up form
   const renderLogin = authMode === "login";
@@ -40,8 +40,8 @@ const Auth = ({
       });
       if (response.ok) {
         const user = await response.json();
-        setDrawerButton(true);
-        setDisplayAuth("");
+        setRenderDrawerButton(true);
+        setAuthMode("");
         setLoggedIn(true);
         setUser(user);
         return navigate("/dashboard");
@@ -57,8 +57,8 @@ const Auth = ({
       {renderLogin && (
         <AuthForm
           navigate={navigate}
-          setDisplayAuth={setDisplayAuth}
-          setDrawerButton={setDrawerButton}
+          setAuthMode={setAuthMode}
+          setRenderDrawerButton={setRenderDrawerButton}
           type={"Log In"}
           onSubmit={onSubmit}
           handleSubmit={handleSubmit}
@@ -68,8 +68,8 @@ const Auth = ({
       {!renderLogin && (
         <AuthForm
           navigate={navigate}
-          setDisplayAuth={setDisplayAuth}
-          setDrawerButton={setDrawerButton}
+          setAuthMode={setAuthMode}
+          setRenderDrawerButton={setRenderDrawerButton}
           type={"Sign Up"}
           onSubmit={onSubmit}
           handleSubmit={handleSubmit}
