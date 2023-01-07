@@ -1,13 +1,25 @@
 // const { Kafka } = require('kafkajs');
 import React, { useState, useEffect } from "react";
 
-const Messages = ({ messages }) => {
+const Messages = ({ topic, setTopic }) => {
   //create new Kafka instance using kafkajs
   // const kafka = new Kafka()
 
   //state for current topic
+  // const [topic, setTopic] = useState("Select a topic");
   const [topicList, setTopicList] = useState([]);
   const [messageList, setMessageList] = useState([]);
+
+  const messageTable =
+    messageList.length === 0
+      ? [
+          <td colSpan={4} className="text-center p-4 w-4">
+            No messages
+          </td>
+        ]
+      : [];
+
+  console.log("messageList initialized to: ", messageList);
 
   useEffect(() => {
     fetch("/api/topic")
@@ -21,12 +33,18 @@ const Messages = ({ messages }) => {
       });
   }, []);
 
+  const selectTopic = (e) => {
+    setTopic(e.target.text);
+  };
+
   // console.log('topicList is :', topicList);
   const topicMenu = [];
   for (const topic of topicList) {
     topicMenu.push(
       <li>
-        <a className="justify-end">{topic}</a>
+        <a className="justify-end" onClick={selectTopic}>
+          {topic}
+        </a>
       </li>
     );
   }
@@ -46,17 +64,43 @@ const Messages = ({ messages }) => {
   // })
 
   const consumeMessages = async () => {
-    const response = await fetch("/api/message");
-    const data = await response.json();
-    console.log(data);
-    setMessageList(data);
+    try {
+      const response = await fetch(`/api/message/${topic}`);
+      const data = await response.json();
+      console.log(data);
+      setMessageList(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const messageTable = [];
+  const date = new Intl.DateTimeFormat("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    timeZoneName: "short"
+  });
+
+  //check if messageList contains messages
+  if (messageList.length > 1) {
+    console.log("date is : ", date.format(messageList[0].timestamp));
+    messageList.sort((a, b) => b.timestamp - a.timestamp);
+  }
+
+  messageList.forEach((el) => {
+    el.timestamp = date.format(new Date(Number(el.timestamp)));
+    // console.log(el);
+  });
+
   for (const message of messageList) {
     messageTable.push(
       <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-        <td className="p-4 w-4">
+        {/* Checkbox column: might be added in a later version */}
+        {/* <td className="p-4 w-4">
           <div className="flex items-center">
             <input
               id="checkbox-table-search-1"
@@ -67,35 +111,37 @@ const Messages = ({ messages }) => {
               checkbox
             </label>
           </div>
-        </td>
-        <th
+        </td> */}
+        <td
           scope="row"
-          className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          className="max-w-min py-4 px-6 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white overflow-scroll"
         >
           {message.value}
-        </th>
-        <td className="py-4 px-6">{message.partition}</td>
-        <td className="py-4 px-6">{message.offset}</td>
-        <td className="py-4 px-6">{message.timestamp}</td>
-        <td className="flex items-center py-4 px-6 space-x-3">
+        </td>
+        <td className="py-4 px-6 text-center ">{message.partition}</td>
+        <td className="py-4 px-6 text-center">{message.offset}</td>
+        <td className="py-4 px-6 text-center">{message.timestamp}</td>
+        {/* More Details column: might be implemented in a later feature */}
+        {/* <td className="flex items-center py-4 px-6 text-center space-x-3">
           <a
             href="#"
             className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
           >
             More Details
           </a>
-        </td>
+        </td> */}
       </tr>
     );
   }
+
   console.log("messageList is: ", messageList);
 
   return (
-    <div className="flex flex-col">
-      <div className="flex flex-row">
+    <div className="flex justify-center flex-col" style={{ width: "73%" }}>
+      <div className="flex flex-row w-full">
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn m-1">
-            Click
+            Select Topic
           </label>
           <ul
             tabIndex={0}
@@ -104,13 +150,29 @@ const Messages = ({ messages }) => {
             {topicMenu}
           </ul>
         </div>
-
-        <div className="overflow-y-auto relative shadow-md sm:rounded-lg">
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                {/* TABLE COLUMN HEADERS */}
-                <th scope="col" className="p-4">
+        <div className="flex flex-col align-center w-full">
+          <h2 className="text-center font-mono text-3xl mb-5 w-full">
+            {topic !== "" && topic}
+          </h2>
+          <div
+            style={{ maxHeight: "36rem" }}
+            className="overflow-y-auto relative shadow-md sm:rounded-lg w-full mb-2"
+          >
+            <table className="w-full text-sm text-gray-500 rounded dark:text-gray-400 table-fixed">
+              <colgroup>
+                <col span={"1"} style={{ maxWidth: "33%" }}></col>
+                <col></col>
+                <col></col>
+                <col></col>
+              </colgroup>
+              {/* <col className="w-" />
+              <col className="w-" />
+              <col className="w-" /> */}
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 table-header-group">
+                <tr>
+                  {/* TABLE COLUMN HEADERS */}
+                  {/* Checkbox column: might be added in a later version */}
+                  {/* <th scope="col" className="p-4">
                   <div className="flex items-center">
                     <input
                       id="checkbox-all-search"
@@ -121,32 +183,34 @@ const Messages = ({ messages }) => {
                       checkbox
                     </label>
                   </div>
-                </th>
-                <th scope="col" className="py-3 px-6">
-                  Value
-                </th>
-                <th scope="col" className="py-3 px-6">
-                  Partition
-                </th>
-                <th scope="col" className="py-3 px-6">
-                  Offset
-                </th>
-                <th scope="col" className="py-3 px-6">
-                  Timestamp
-                </th>
-                <th scope="col" className="py-3 px-6"></th>
-              </tr>
-            </thead>
-            <tbody>{messageTable}</tbody>
-          </table>
+                </th> */}
+                  <th scope="col" className="py-3 px-6 text-center w-64">
+                    Value
+                  </th>
+                  <th scope="col" className="py-3 px-6 text-center">
+                    Partition
+                  </th>
+                  <th scope="col" className="py-3 px-6 text-center">
+                    Offset
+                  </th>
+                  <th scope="col" className="py-3 px-6 text-center">
+                    Time Sent
+                  </th>
+                  {/* More Details column: might be implemented in a later feature */}
+                  {/* <th scope="col" className="py-3 px-6"></th> */}
+                </tr>
+              </thead>
+              <tbody>{messageTable}</tbody>
+            </table>
+          </div>
+          <button
+            className="btn btn-active btn-primary btn-accent w-min self-center"
+            onClick={consumeMessages}
+          >
+            Consume Messages
+          </button>
         </div>
       </div>
-      <button
-        className="btn btn-active btn-primary w-min self-center"
-        onClick={consumeMessages}
-      >
-        Consume Messages
-      </button>
     </div>
   );
 };

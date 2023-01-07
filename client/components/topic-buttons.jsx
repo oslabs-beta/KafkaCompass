@@ -3,7 +3,14 @@ import AddMessage from "./add-message-form";
 import AddTopic from "./add-topic-form";
 import DeleteTopic from "./delete-topic-from";
 
-const TopicButtons = ({ chartData, setChart, total, setTotal }) => {
+const TopicButtons = ({
+  chartData,
+  setChart,
+  total,
+  setTotal,
+  topic,
+  setTopic
+}) => {
   const handleCreateTopic = async (topic) => {
     try {
       const response = await fetch("/api/topic", {
@@ -94,7 +101,11 @@ const TopicButtons = ({ chartData, setChart, total, setTotal }) => {
       </div>
       <AddTopic onCreate={handleCreateTopic} />
       <DeleteTopic onDelete={handleDeleteTopic} chartData={chartData} />
-      <AddMessage onCreate={handleAddMessage} />
+      <AddMessage
+        onCreate={handleAddMessage}
+        topic={topic}
+        setTopic={setTopic}
+      />
     </>
   );
 };

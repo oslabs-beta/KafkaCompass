@@ -7,6 +7,9 @@ import { NavbarContext } from "../NavbarContext";
 import TableData from "../components/table-data";
 import DrawerSide from "../components/drawer-side";
 const DashboardContainer = (props) => {
+  //state of current topic for Real-Time Monitoring mode
+  const [topic, setTopic] = useState("Select a topic");
+
   // getting sharable state from the useContex
   const { setRenderDrawerButton } =
     useContext(NavbarContext).drawerButtonsState;
@@ -152,17 +155,17 @@ const DashboardContainer = (props) => {
     );
   } else if (dashboardMode === "realTimeMonitoring") {
     dashboardView = (
-      <>
-        <div className="flex justify-center pt-10">
-          <Messages />
-          <TopicButtons
-            chartData={chartData}
-            setChart={setChart}
-            totalBytes={total}
-            setTotal={setTotal}
-          />
-        </div>
-      </>
+      <div className="flex justify-center pt-10 items-start">
+        <Messages setTopic={setTopic} topic={topic} />
+        <TopicButtons
+          topic={topic}
+          setTopic={setTopic}
+          chartData={chartData}
+          setChart={setChart}
+          totalBytes={total}
+          setTotal={setTotal}
+        />
+      </div>
     );
   } else {
     dashboardView = <></>;
