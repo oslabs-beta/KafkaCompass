@@ -119,7 +119,7 @@ const DashboardContainer = (props) => {
     );
   } else if (mode === "realTimeMonitoring") {
     dashboardView = (
-      <>
+      <div className="flex justify-center pt-10 items-start">
         <Messages setTopic={setTopic} topic={topic} />
         <TopicButtons
           topic={topic}
@@ -129,7 +129,7 @@ const DashboardContainer = (props) => {
           totalBytes={total}
           setTotal={setTotal}
         />
-      </>
+      </div>
     );
   } else {
     dashboardView = <></>;
@@ -177,9 +177,7 @@ const DashboardContainer = (props) => {
               </button>
             </div>
           </div>
-          <div className="flex justify-center pt-10 items-start">
-            {dashboardView}
-          </div>
+          <div className="flex justify-center pt-10">{dashboardView}</div>
           {/* <!-- Page content here --> */}
         </div>
         <AddClusterForm />
