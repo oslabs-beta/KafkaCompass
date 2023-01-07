@@ -177,7 +177,9 @@ const DashboardContainer = (props) => {
               </button>
             </div>
           </div>
-          <div className="flex justify-center pt-10">{dashboardView}</div>
+          <div className="flex justify-center pt-10 items-start">
+            {dashboardView}
+          </div>
           {/* <!-- Page content here --> */}
         </div>
         <AddClusterForm />

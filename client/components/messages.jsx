@@ -74,6 +74,28 @@ const Messages = ({ topic, setTopic }) => {
     }
   };
 
+  const date = new Intl.DateTimeFormat("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    timeZoneName: "short"
+  });
+
+  //check if messageList contains messages
+  if (messageList.length > 1) {
+    console.log("date is : ", date.format(messageList[0].timestamp));
+    messageList.sort((a, b) => b.timestamp - a.timestamp);
+  }
+
+  messageList.forEach((el) => {
+    el.timestamp = date.format(new Date(Number(el.timestamp)));
+    // console.log(el);
+  });
+
   for (const message of messageList) {
     messageTable.push(
       <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -111,10 +133,11 @@ const Messages = ({ topic, setTopic }) => {
       </tr>
     );
   }
+
   console.log("messageList is: ", messageList);
 
   return (
-    <div className="flex justify-center flex-col w-3/4">
+    <div className="flex justify-center flex-col" style={{ width: "73%" }}>
       <div className="flex flex-row w-full">
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn m-1">
@@ -128,10 +151,13 @@ const Messages = ({ topic, setTopic }) => {
           </ul>
         </div>
         <div className="flex flex-col align-center w-full">
-          <h2 className="text-center font-mono text-3xl mb-5">
+          <h2 className="text-center font-mono text-3xl mb-5 w-full">
             {topic !== "" && topic}
           </h2>
-          <div className="overflow-y-auto relative shadow-md sm:rounded-lg w-full">
+          <div
+            style={{ maxHeight: "36rem" }}
+            className="overflow-y-auto relative shadow-md sm:rounded-lg w-full mb-2"
+          >
             <table className="w-full text-sm text-gray-500 rounded dark:text-gray-400 table-fixed">
               <colgroup>
                 <col span={"1"} style={{ maxWidth: "33%" }}></col>
@@ -168,7 +194,7 @@ const Messages = ({ topic, setTopic }) => {
                     Offset
                   </th>
                   <th scope="col" className="py-3 px-6 text-center">
-                    Timestamp
+                    Time Sent
                   </th>
                   {/* More Details column: might be implemented in a later feature */}
                   {/* <th scope="col" className="py-3 px-6"></th> */}
