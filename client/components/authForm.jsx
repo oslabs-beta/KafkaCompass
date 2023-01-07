@@ -5,8 +5,8 @@ const AuthForm = ({
   register,
   onSubmit,
   type,
-  setDrawerButton,
-  setDisplayAuth,
+  setRenderDrawerButton,
+  setAuthMode,
   navigate
 }) => {
   const login = type === "Log In";
@@ -63,8 +63,8 @@ const AuthForm = ({
       </div>
       <button
         onClick={() => {
-          setDrawerButton(false);
-          setDisplayAuth("");
+          setRenderDrawerButton(false);
+          setAuthMode("");
           navigate("/");
         }}
         className="btn btn-accent"

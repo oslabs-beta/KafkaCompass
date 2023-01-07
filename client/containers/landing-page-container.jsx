@@ -1,11 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
-import { redirect } from "react-router";
-import { useNavigate } from "react-router-dom";
-import Navbar from "../components/nav-bar";
-import Auth from "./auth";
+import React, { useContext } from "react";
+import { NavbarContext } from "../NavbarContext";
 import "../static/styles.css";
 
-const LandingPage = ({ navigate, checkLoggedIn }) => {
+const LandingPage = ({ navigate }) => {
+  const { loggedIn } = useContext(NavbarContext).loggedState;
+
   return (
     <main className="landing-container">
       <article className="font-mono">
@@ -23,7 +22,7 @@ const LandingPage = ({ navigate, checkLoggedIn }) => {
       <button
         className="btn"
         onClick={() => {
-          if (checkLoggedIn) navigate("/dashboard");
+          if (loggedIn) navigate("/dashboard");
           else navigate("/auth");
         }}
       >

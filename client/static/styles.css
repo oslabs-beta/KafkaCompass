@@ -27,7 +27,6 @@
 
 .view-container { grid-area: view-container; } */
 
-
 .navbar {
   border-bottom: 1 px solid lightgray;
   display: flex;
@@ -97,7 +96,8 @@
   align-items: center;
 }
 
-.buttons-container button, .buttons-container label {
+.buttons-container button,
+.buttons-container label {
   width: 120px;
   height: 35px;
   font-size: 12px;
@@ -109,8 +109,8 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  height:40vh; 
-  width:45vw
+  height: 40vh;
+  width: 45vw;
 }
 
 .chart-total {

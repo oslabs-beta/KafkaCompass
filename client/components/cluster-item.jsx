@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
+import { NavbarContext } from "../NavbarContext";
 
 const ClusterItem = (props) => {
-  const { index, date, clusterId, setMetricIndex, navigate } = props;
+  const { index, date, clusterId, navigate } = props;
+  const { setMetricIndex } = useContext(NavbarContext).metricIndexState;
+  console.log(setMetricIndex);
 
   function handleClick() {
     setMetricIndex(index);
-    navigate("/dashboard");
+    console.log(index);
   }
 
   return (
