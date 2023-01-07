@@ -6,7 +6,7 @@ const Messages = ({ messages }) => {
   // const kafka = new Kafka()
 
   //state for current topic
-  const [topic, setTopic] = useState("");
+  const [topic, setTopic] = useState("Select a topic");
   const [topicList, setTopicList] = useState([]);
   const [messageList, setMessageList] = useState([]);
 
@@ -115,9 +115,6 @@ const Messages = ({ messages }) => {
 
   return (
     <div className="flex justify-center flex-col w-3/4">
-      <h2 className="flex justify-center font-mono text-3xl mb-5">
-        {topic !== "" && topic}
-      </h2>
       <div className="flex flex-row w-full">
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn m-1">
@@ -131,7 +128,10 @@ const Messages = ({ messages }) => {
           </ul>
         </div>
 
-        <div className="overflow-y-auto relative shadow-md sm:rounded-lg w-full">
+        <div className="flex flex-col align-center overflow-y-auto relative shadow-md sm:rounded-lg w-full">
+          <h2 className="text-center font-mono text-3xl mb-5">
+            {topic !== "" && topic}
+          </h2>
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
@@ -167,14 +167,14 @@ const Messages = ({ messages }) => {
             </thead>
             <tbody>{messageTable}</tbody>
           </table>
+          <button
+            className="btn btn-active btn-primary btn-accent w-min self-center"
+            onClick={consumeMessages}
+          >
+            Consume Messages
+          </button>
         </div>
       </div>
-      <button
-        className="btn btn-active btn-primary w-min self-center"
-        onClick={consumeMessages}
-      >
-        Consume Messages
-      </button>
     </div>
   );
 };
