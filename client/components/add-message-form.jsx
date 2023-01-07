@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-const AddMessage = ({ onCreate }) => {
-  const [topic, setTopic] = useState("");
+const AddMessage = ({ onCreate, topic }) => {
+  // const [topic, setTopic] = useState("");
   const [message, setMessage] = useState("");
   const [topicList, setTopicList] = useState([]);
 
@@ -25,7 +25,8 @@ const AddMessage = ({ onCreate }) => {
         <label className="modal-box relative" htmlFor="">
           <h3 className="mb-4 text-lg font-bold">Write a message:</h3>
           <div className="form-control w-full max-w-xs">
-            <select
+            <p className="mb-5">{"Current topic: " + topic}</p>
+            {/* <select
               onChange={(e) => {
                 setTopic(e.target.value);
               }}
@@ -34,10 +35,8 @@ const AddMessage = ({ onCreate }) => {
               <option disabled selected>
                 Choose a topic to insert message:
               </option>
-              {topicList.map((t) => (
-                <option>{t}</option>
-              ))}
-            </select>
+              {topic}
+            </select> */}
             <input
               type="text"
               placeholder="New message"

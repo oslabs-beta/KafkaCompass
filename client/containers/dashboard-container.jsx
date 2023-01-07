@@ -5,6 +5,9 @@ import TopicButtons from "../components/topic-buttons";
 import Messages from "../components/messages";
 
 const DashboardContainer = (props) => {
+  //state of current topic for Real-Time Monitoring mode
+  const [topic, setTopic] = useState("Select a topic");
+
   const [chartData, setChart] = useState({
     topics: { labels: [], datasets: [] },
     reqRes: { labels: [], datasets: [] }
@@ -117,8 +120,10 @@ const DashboardContainer = (props) => {
   } else if (mode === "realTimeMonitoring") {
     dashboardView = (
       <>
-        <Messages />
+        <Messages setTopic={setTopic} topic={topic} />
         <TopicButtons
+          topic={topic}
+          setTopic={setTopic}
           chartData={chartData}
           setChart={setChart}
           totalBytes={total}

@@ -1,12 +1,12 @@
 // const { Kafka } = require('kafkajs');
 import React, { useState, useEffect } from "react";
 
-const Messages = ({ messages }) => {
+const Messages = ({ topic, setTopic }) => {
   //create new Kafka instance using kafkajs
   // const kafka = new Kafka()
 
   //state for current topic
-  const [topic, setTopic] = useState("Select a topic");
+  // const [topic, setTopic] = useState("Select a topic");
   const [topicList, setTopicList] = useState([]);
   const [messageList, setMessageList] = useState([]);
 
@@ -127,17 +127,17 @@ const Messages = ({ messages }) => {
             {topicMenu}
           </ul>
         </div>
-
-        <div className="flex flex-col align-center overflow-y-auto relative shadow-md sm:rounded-lg w-full">
-          <h2 className="text-center font-mono text-3xl mb-5">
-            {topic !== "" && topic}
-          </h2>
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                {/* TABLE COLUMN HEADERS */}
-                {/* Checkbox column: might be added in a later version */}
-                {/* <th scope="col" className="p-4">
+        <div className="flex flex-col align-center w-full">
+          <div className="overflow-y-auto relative shadow-md sm:rounded-lg w-full">
+            <h2 className="text-center font-mono text-3xl mb-5">
+              {topic !== "" && topic}
+            </h2>
+            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  {/* TABLE COLUMN HEADERS */}
+                  {/* Checkbox column: might be added in a later version */}
+                  {/* <th scope="col" className="p-4">
                   <div className="flex items-center">
                     <input
                       id="checkbox-all-search"
@@ -149,24 +149,25 @@ const Messages = ({ messages }) => {
                     </label>
                   </div>
                 </th> */}
-                <th scope="col" className="py-3 px-6 text-center">
-                  Value
-                </th>
-                <th scope="col" className="py-3 px-6 text-center">
-                  Partition
-                </th>
-                <th scope="col" className="py-3 px-6 text-center">
-                  Offset
-                </th>
-                <th scope="col" className="py-3 px-6 text-center">
-                  Timestamp
-                </th>
-                {/* More Details column: might be implemented in a later feature */}
-                {/* <th scope="col" className="py-3 px-6"></th> */}
-              </tr>
-            </thead>
-            <tbody>{messageTable}</tbody>
-          </table>
+                  <th scope="col" className="py-3 px-6 text-center">
+                    Value
+                  </th>
+                  <th scope="col" className="py-3 px-6 text-center">
+                    Partition
+                  </th>
+                  <th scope="col" className="py-3 px-6 text-center">
+                    Offset
+                  </th>
+                  <th scope="col" className="py-3 px-6 text-center">
+                    Timestamp
+                  </th>
+                  {/* More Details column: might be implemented in a later feature */}
+                  {/* <th scope="col" className="py-3 px-6"></th> */}
+                </tr>
+              </thead>
+              <tbody>{messageTable}</tbody>
+            </table>
+          </div>
           <button
             className="btn btn-active btn-primary btn-accent w-min self-center"
             onClick={consumeMessages}
