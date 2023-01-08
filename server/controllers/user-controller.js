@@ -4,8 +4,10 @@ const Metric = require("../models/metric-model");
 const { Session } = require("express-session");
 const bcrypt = require("bcrypt");
 const { decrypt } = require("../encryption");
+const jwt = require('jsonwebtoken');
 
 const userController = {};
+const superSecret = 'thisIsAHolderForAMoreSecureSecret';
 
 userController.verifyUser = async (req, res, next) => {
   const { username, password } = req.body;
@@ -28,6 +30,8 @@ userController.verifyUser = async (req, res, next) => {
     if (!(await bcrypt.compare(password, user.password))) throw new Error();
 
     res.locals.user = user;
+    req.session.user = user;
+    req.session.save();
     return next();
   } catch (error) {
     return next({
@@ -62,6 +66,8 @@ userController.createUser = async (req, res, next) => {
     credentials.password = hashedPassword;
     const user = await User.create(credentials);
     res.locals.user = user;
+    req.session.user = user;
+    req.session.save();
     return next();
   } catch (error) {
     return next({ log: "error in userController.createrUser" });
@@ -70,18 +76,30 @@ userController.createUser = async (req, res, next) => {
 
 userController.logOut = (req, res, next) => {
   req.session.destroy();
+  res.clearCookie('token');
   return next();
 };
 
-userController.authorizeUser = (req, res, next) => {
-  if (res.locals.user) req.session.user = res.locals.user;
-  req.session.authorized = true;
-  req.session.save();
+userController.setUserAuth = (req, res, next) => {
+  const user = res.locals.user._id;
+  const token = jwt.sign({user}, superSecret, { expiresIn: 60 * 60 * 2 });
+  res.cookie('token', token, { httpOnly: true });
   return next();
-};
+}
+
+userController.checkUserAuth = (req, res, next) => {
+  const token = req.cookies.token;
+  const user = jwt.verify(token, superSecret);
+  if (req.session.user && user.user === req.session.user._id) return next();
+    return next({
+      log: "userController.checkUserAuth: ERROR: Unauthorized User",
+      message: {
+        err: "Unauthorized"
+      }
+    }); 
+}
 
 userController.addCloudCluster = async (req, res, next) => {
-  console.log("user is: ", req.session.user);
   if (!req.session.user)
     return next({
       log: "userController.addCloudCluster: ERROR: Unauthorized",

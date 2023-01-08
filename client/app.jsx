@@ -55,9 +55,13 @@ function App() {
         method: "GET"
       });
       if (response.ok) {
-        let session = await response.json();
+        const user = await response.json();
+        setLoggedIn(true);
+        setUser(user);
+      } else {
+        setLoggedIn(false);
+        setUser({});
       }
-      console.log(errorMessage);
     } catch (err) {
       // console.log('Network error occurred - User not logged in');
     }
@@ -85,6 +89,10 @@ function App() {
       setUser(user);
     }
   }, [metric]);
+
+  useEffect(() => {
+    checkSession();
+  },[])
 
   return (
     <NavbarContext.Provider value={providerValue}>

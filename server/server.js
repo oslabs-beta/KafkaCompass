@@ -1,5 +1,6 @@
 const express = require("express");
 const session = require("express-session");
+const cookieParser = require("cookie-parser");
 
 const path = require("path");
 const PORT = 3000;
@@ -13,11 +14,11 @@ const apiController = require("./controllers/api-controller");
 const metricController = require("./controllers/metric-controller");
 
 const app = express();
-app.use(express.json());
 
 mongodb.connect(MONGO_URI);
-// to parse incoming json objects
+// to parse incoming json objects and cookies
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.resolve(__dirname, "../dist")));
@@ -36,15 +37,14 @@ app.use(
 app.use(
   "/api/login",
   userController.verifyUser,
-  userController.authorizeUser,
+  userController.setUserAuth,
   (req, res, next) => {
-    // console.log(req.sessionID);
     res.status(200).json(res.locals.user);
   }
 );
 
-app.get("/api/authenticate", userController.authorizeUser, (req, res, next) => {
-  res.status(200).json(req.session);
+app.get("/api/authenticate", userController.checkUserAuth, (req, res, next) => {
+  res.status(200).json(req.session.user);
 });
 
 app.get("/api/logout", userController.logOut, (req, res, next) => {
@@ -56,7 +56,7 @@ app.get("/api/logout", userController.logOut, (req, res, next) => {
 app.use(
   "/api/signup",
   userController.createUser,
-  userController.authorizeUser,
+  userController.setUserAuth,
   (req, res, next) => {
     res.status(200).json(res.locals.user);
   }
@@ -69,6 +69,7 @@ app.use(
 //requests to server go here
 app.post(
   "/api/cloud-auth",
+  userController.checkUserAuth,
   cloudAuthController.encryptCredentials,
   userController.addCloudCluster,
   (req, res) => {
@@ -77,11 +78,11 @@ app.post(
 );
 
 //endpoint to switch current cluster in session
-app.get("/api/getClusterList", apiController.getClusterList, (req, res) => {
+app.get("/api/getClusterList", userController.checkUserAuth, apiController.getClusterList, (req, res) => {
   return res.status(201).json(res.locals.clusterList);
 });
 
-app.post("/api/switchCluster", userController.switchCluster, (req, res) => {
+app.post("/api/switchCluster", userController.checkUserAuth, userController.switchCluster, (req, res) => {
   return res.status(201).json("cluster switched");
 });
 
@@ -100,6 +101,7 @@ app.get(
 //add a message to a topic
 app.post(
   "/api/message",
+  userController.checkUserAuth,
   apiController.getClusterInfo,
   apiController.addMessage,
   (req, res) => {
@@ -111,6 +113,7 @@ app.post(
 //get all topics in a cluster
 app.get(
   "/api/topic",
+  userController.checkUserAuth,
   apiController.getClusterInfo,
   apiController.getTopics,
   (req, res) => {
@@ -120,6 +123,7 @@ app.get(
 //add a topic to a cluster
 app.post(
   "/api/topic",
+  userController.checkUserAuth,
   apiController.getClusterInfo,
   apiController.addTopic,
   (req, res) => {
@@ -129,6 +133,7 @@ app.post(
 //remove a topic from a cluster
 app.delete(
   "/api/topic",
+  userController.checkUserAuth,
   apiController.getClusterInfo,
   apiController.deleteTopic,
   (req, res) => {
@@ -138,6 +143,7 @@ app.delete(
 
 app.get(
   "/api/metric",
+  userController.checkUserAuth,
   metricController.decryptKeys,
   metricController.fetchData,
   userController.addMetrics,
