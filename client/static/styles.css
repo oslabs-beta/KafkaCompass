@@ -68,15 +68,6 @@
   width: 60%;
 }
 
-.landing-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 60vw;
-  margin: auto;
-  margin-top: 3rem;
-}
 
 .landing-container article h1 {
   text-align: center;
@@ -134,4 +125,58 @@ div.scrollable {
   display: flex;
   justify-content: center;
   margin-bottom: 4rem;
+}
+
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 60vw;
+  margin: auto;
+  margin-top: 3rem;
+}
+
+.first-page {
+  height: 100vh;
+}
+
+.about-header {
+  text-align: center;
+  font-size: 3rem;
+  font-family:Verdana, Geneva, Tahoma, sans-serif
+}
+
+.about-us {
+  height: 100vh;
+  width: 100vw;
+}
+
+.about-body {
+  display: flex;
+  flex-direction: row;
+}
+
+.bio-cardd {
+  height: 34rem;
+  margin: 1rem;
+}
+
+.card-actions form button {
+  margin: 1rem;
+}
+
+.bio-pic {
+  height: 25vh;
+  margin: 20px;
+}
+
+.about-links {
+  display: flex;
+  flex-direction: row;
+  margin: 1rem;
+}
+
+.landing-buttons button {
+  margin: 1rem;
 }
