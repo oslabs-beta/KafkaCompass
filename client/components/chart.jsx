@@ -11,6 +11,7 @@ const Chart = (props) => {
   const data = chartData.info;
 
   const { setMetric } = useContext(NavbarContext).metricState;
+  const { sideBarMode } = useContext(NavbarContext).sideBarState;
 
   async function updateMetrics() {
     const response = await fetch("/api/metric");
@@ -22,14 +23,24 @@ const Chart = (props) => {
   return (
     <div className="topic-chart font-mono chart-container">
       <div className="flex">
-        <button onClick={updateMetrics} className="mb-5 btn btn-accent">
-          Update Metrics
-        </button>
-        <div>
-          <label htmlFor="switch-cluster-modal" className="mb-5 btn btn-accent">
-            Switch Cluster
-          </label>
-        </div>
+        {sideBarMode === "current" && (
+          <>
+            <button
+              onClick={updateMetrics}
+              className="mb-5 mr-2 btn btn-accent"
+            >
+              Update Metrics
+            </button>
+            <div>
+              <label
+                htmlFor="switch-cluster-modal"
+                className="mb-5 btn btn-accent"
+              >
+                Switch Cluster
+              </label>
+            </div>
+          </>
+        )}
         <SwitchCluster />
       </div>
 

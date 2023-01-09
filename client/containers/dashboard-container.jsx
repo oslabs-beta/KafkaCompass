@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
 import AddClusterForm from "../components/add-cluster-form";
 import Chart from "../components/chart";
-import TopicButtons from "../components/topic-buttons";
 import Messages from "../components/messages";
 import { NavbarContext } from "../NavbarContext";
 import TableData from "../components/table-data";
 import DrawerSide from "../components/drawer-side";
 import mapChartData from "../helper/mapChartData";
+import ClusterHistory from "./cluster-history";
+
 const DashboardContainer = (props) => {
   //state of current topic for Real-Time Monitoring mode
   const [topic, setTopic] = useState("Select a topic");
@@ -29,6 +30,7 @@ const DashboardContainer = (props) => {
   const [tableData, setTableData] = useState([]);
 
   const { metricIndex } = useContext(NavbarContext).metricIndexState;
+  console.log(metricIndex);
 
   const data = useContext(NavbarContext).userState.user.metric.at(metricIndex);
 
@@ -81,51 +83,39 @@ const DashboardContainer = (props) => {
     useContext(NavbarContext).dashboardState;
 
   // mode switching functions
-  function changeModeViewCluster() {
-    setDashboardMode("viewCluster");
+  function changeModePerformanceStatistics() {
+    setDashboardMode("performanceStatistics");
   }
-  function changeModeRealtimeMonitoring() {
-    setDashboardMode("realTimeMonitoring");
+  function changeModeContentMonitoring() {
+    setDashboardMode("contentMonitoring");
   }
-  function changeModeClusterComparison() {
-    setDashboardMode("clusterComparison");
-  }
+  // function changeModeClusterComparison() {
+  //   setDashboardMode("clusterComparison");
+  // }
 
   // sets current dashboard view
   let dashboardView = <></>;
-  if (dashboardMode === "viewCluster") {
+  if (dashboardMode === "performanceStatistics") {
     dashboardView = (
       <>
         <main className="cluster-container">
           {chartData && (
             <>
-              <Chart
-                chartData={chartData}
-                metricSelection={metricSelection}
-                totalBytes={total.totalRetainedBytes}
-              />
+              <Chart chartData={chartData} metricSelection={metricSelection} />
             </>
           )}
         </main>
         <TableData tableData={tableData} />
       </>
     );
-  } else if (dashboardMode === "realTimeMonitoring") {
+  } else if (dashboardMode === "contentMonitoring") {
     dashboardView = (
       <div className="flex justify-center pt-10 items-start">
         <Messages setTopic={setTopic} topic={topic} />
-        <TopicButtons
-          topic={topic}
-          setTopic={setTopic}
-          chartData={chartData}
-          setChart={setChart}
-          totalBytes={total}
-          setTotal={setTotal}
-        />
       </div>
     );
-  } else {
-    dashboardView = <></>;
+  } else if (dashboardMode === "clusterHistory") {
+    dashboardView = <ClusterHistory />;
   }
 
   // update metrics object with desired viewing metrics
@@ -135,40 +125,44 @@ const DashboardContainer = (props) => {
 
   return (
     <>
-      <div class="drawer">
+      <div className="drawer">
         <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-        <div class="drawer-content border-solid border-2 border-black-500">
+        <div className="drawer-content border-solid border-2 border-black-500">
           <div className="mt-4 flex justify-around">
-            <div class="btn-group">
-              <button
-                className={
-                  dashboardMode === "viewCluster" ? "btn btn-accent" : "btn"
-                }
-                onClick={changeModeViewCluster}
-              >
-                View Cluster
-              </button>
-              <button
-                className={
-                  dashboardMode === "realTimeMonitoring"
-                    ? "btn btn-accent"
-                    : "btn"
-                }
-                onClick={changeModeRealtimeMonitoring}
-              >
-                Realtime Monitoring
-              </button>
-              <button
-                className={
-                  dashboardMode === "clusterComparison"
-                    ? "btn btn-accent"
-                    : "btn"
-                }
-                onClick={changeModeClusterComparison}
-              >
-                Cluster Comparison
-              </button>
-            </div>
+            {sideBarMode != "history" && (
+              <div class="btn-group">
+                <button
+                  className={
+                    dashboardMode === "performanceStatistics"
+                      ? "btn btn-accent"
+                      : "btn"
+                  }
+                  onClick={changeModePerformanceStatistics}
+                >
+                  Performance Statistics
+                </button>
+                <button
+                  className={
+                    dashboardMode === "contentMonitoring"
+                      ? "btn btn-accent"
+                      : "btn"
+                  }
+                  onClick={changeModeContentMonitoring}
+                >
+                  Content Monitoring
+                </button>
+                {/* <button
+                  className={
+                    dashboardMode === "clusterComparison"
+                      ? "btn btn-accent"
+                      : "btn"
+                  }
+                  onClick={changeModeClusterComparison}
+                >
+                  Cluster Comparison
+                </button> */}
+              </div>
+            )}
           </div>
           <div className="justify-center pt-10">{dashboardView}</div>
           {/* <!-- Page content here --> */}

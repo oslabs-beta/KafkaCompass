@@ -15,7 +15,7 @@ function App() {
   const [user, setUser] = useState({});
   const [authMode, setAuthMode] = useState("");
   const [sideBarMode, setSideBarMode] = useState("current");
-  const [dashboardMode, setDashboardMode] = useState("viewCluster");
+  const [dashboardMode, setDashboardMode] = useState("performanceStatistics");
   const [metricIndex, setMetricIndex] = useState(-1);
   const [metric, setMetric] = useState({});
 
@@ -92,7 +92,7 @@ function App() {
 
   useEffect(() => {
     checkSession();
-  },[])
+  }, []);
 
   return (
     <NavbarContext.Provider value={providerValue}>
