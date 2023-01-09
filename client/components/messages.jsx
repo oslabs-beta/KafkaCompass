@@ -42,7 +42,7 @@ const Messages = ({ topic, setTopic }) => {
   const topicMenu = [];
   for (const topic of topicList) {
     topicMenu.push(
-      <li>
+      <li key={topic}>
         <a className="justify-end" onClick={selectTopic}>
           {topic}
         </a>

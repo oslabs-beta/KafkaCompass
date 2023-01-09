@@ -5,7 +5,7 @@ const TableData = (props) => {
   let oneRow = <></>;
   for (let row of props.tableData) {
     oneRow = (
-      <tr>
+      <tr key={row.name}>
         <td>{row.name}</td>
         <td>
           <div class="scrollable">{row.description}</div>
