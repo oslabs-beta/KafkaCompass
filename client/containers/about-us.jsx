@@ -5,7 +5,7 @@ const AboutUs = () => {
     <div className="about-us">
       <h1 className="about-header">Meet the Team</h1>
 
-    <div className="about-body">
+    <div className="about-body drawer-content border-solid border-2 border-black-500">
 
     <div className="bio-cardd card w-96 bg-base-100 shadow-xl">
       <img src="https://placeimg.com/400/225/arch" alt="Shoes" className="bio-pic rounded-xl" />
