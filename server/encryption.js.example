@@ -1,0 +1,9 @@
+function encrypt(message){
+  //your code here
+}
+
+function decrypt(message) {
+  //your code here
+}
+
+module.exports = { encrypt, decrypt };
