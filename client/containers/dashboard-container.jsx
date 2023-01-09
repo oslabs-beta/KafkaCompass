@@ -126,11 +126,11 @@ const DashboardContainer = (props) => {
   return (
     <>
       <div className="drawer">
-        <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+        <input id="my-drawer" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content border-solid border-2 border-black-500">
           <div className="mt-4 flex justify-around">
             {sideBarMode != "history" && (
-              <div class="btn-group">
+              <div className="btn-group">
                 <button
                   className={
                     dashboardMode === "performanceStatistics"
