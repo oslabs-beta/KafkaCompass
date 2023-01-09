@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 const AboutUs = () => {
   return (
     <div className="about-us">
-      <h1 className="about-header">Meet the Team!</h1>
+      <h1 className="about-header">Meet the Team</h1>
 
     <div className="about-body">
 
