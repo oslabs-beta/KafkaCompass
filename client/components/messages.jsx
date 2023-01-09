@@ -88,6 +88,8 @@ const Messages = ({ topic, setTopic }) => {
 
   //check if messageList contains messages
 
+  messageList.sort((a, b) => b.timestamp - a.timestamp);
+
   messageList.forEach((el) => {
     el.timestamp = date.format(new Date(Number(el.timestamp)));
     // console.log(el);
