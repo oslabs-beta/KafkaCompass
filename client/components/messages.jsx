@@ -95,7 +95,10 @@ const Messages = ({ topic, setTopic }) => {
 
   for (const message of messageList) {
     messageTable.push(
-      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+      <tr
+        key={message.value}
+        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+      >
         {/* Checkbox column: might be added in a later version */}
         {/* <td className="p-4 w-4">
           <div className="flex items-center">
