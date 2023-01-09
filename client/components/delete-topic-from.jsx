@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-const DeleteTopic = ({ onDelete, chartData }) => {
+const DeleteTopic = ({ onDelete, topicList }) => {
   const [topic, setTopic] = useState("");
-  const topicNames = chartData.topics.labels;
+  const topicNames = topicList;
 
   return (
     <>
