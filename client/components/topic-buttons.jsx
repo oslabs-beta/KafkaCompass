@@ -3,55 +3,33 @@ import AddMessage from "./add-message-form";
 import AddTopic from "./add-topic-form";
 import DeleteTopic from "./delete-topic-from";
 
-const TopicButtons = ({
-  chartData,
-  setChart,
-  total,
-  setTotal,
-  topic,
-  setTopic
-}) => {
-  const handleCreateTopic = async (topic) => {
+const TopicButtons = ({ topic, setTopic, topicList }) => {
+  const handleCreateTopic = (topic) => {
     try {
-      const response = await fetch("/api/topic", {
+      fetch("/api/topic", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({ topic })
       });
-      if (response.ok) {
-        const newChartData = chartData;
-        newChartData.topics.labels.push(topic);
-        newChartData.topics.datasets[0].data.push(0);
-        setChart(newChartData);
-        return;
-      } else {
-        console.log("Could not add new topic to the cluster");
-      }
     } catch (err) {
-      console.log("Network error occurred");
+      console.log("Unable to create topic");
     }
   };
 
-  const handleDeleteTopic = async (topic) => {
-    await fetch("/api/topic", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ topic })
-    });
-    const newChartData = chartData;
-    console.log(newChartData);
-    const i = newChartData.topics.labels.findIndex((el) => el === topic);
-    newChartData.topics.labels.splice(i, 1);
-    newChartData.topics.datasets[0].data.splice(i, 1);
-    const totalBytes = newChartData.topics.datasets[0].data.reduce(
-      (a, b) => a + b
-    );
-    setChart(newChartData);
-    setTotal(totalBytes);
+  const handleDeleteTopic = (topic) => {
+    try {
+      fetch("/api/topic", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ topic })
+      });
+    } catch (error) {
+      console.log("Unable to delete topic");
+    }
   };
 
   //to submit message to topic
@@ -100,7 +78,7 @@ const TopicButtons = ({
         </label>
       </div>
       <AddTopic onCreate={handleCreateTopic} />
-      <DeleteTopic onDelete={handleDeleteTopic} chartData={chartData} />
+      <DeleteTopic onDelete={handleDeleteTopic} topicList={topicList} />
       <AddMessage
         onCreate={handleAddMessage}
         topic={topic}

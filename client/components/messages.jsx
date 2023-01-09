@@ -1,5 +1,6 @@
 // const { Kafka } = require('kafkajs');
 import React, { useState, useEffect } from "react";
+import TopicButtons from "../components/topic-buttons";
 
 const Messages = ({ topic, setTopic }) => {
   //create new Kafka instance using kafkajs
@@ -86,10 +87,8 @@ const Messages = ({ topic, setTopic }) => {
   });
 
   //check if messageList contains messages
-  if (messageList.length > 1) {
-    console.log("date is : ", date.format(messageList[0].timestamp));
-    messageList.sort((a, b) => b.timestamp - a.timestamp);
-  }
+
+  messageList.sort((a, b) => b.timestamp - a.timestamp);
 
   messageList.forEach((el) => {
     el.timestamp = date.format(new Date(Number(el.timestamp)));
@@ -98,7 +97,10 @@ const Messages = ({ topic, setTopic }) => {
 
   for (const message of messageList) {
     messageTable.push(
-      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+      <tr
+        key={message.value}
+        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+      >
         {/* Checkbox column: might be added in a later version */}
         {/* <td className="p-4 w-4">
           <div className="flex items-center">
@@ -137,42 +139,43 @@ const Messages = ({ topic, setTopic }) => {
   console.log("messageList is: ", messageList);
 
   return (
-    <div className="flex justify-center flex-col" style={{ width: "73%" }}>
-      <div className="flex flex-row w-full">
-        <div className="dropdown dropdown-end">
-          <label tabIndex={0} className="btn m-1">
-            Select Topic
-          </label>
-          <ul
-            tabIndex={0}
-            className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-min"
-          >
-            {topicMenu}
-          </ul>
-        </div>
-        <div className="flex flex-col align-center w-full">
-          <h2 className="text-center font-mono text-3xl mb-5 w-full">
-            {topic !== "" && topic}
-          </h2>
-          <div
-            style={{ maxHeight: "36rem" }}
-            className="overflow-y-auto relative shadow-md sm:rounded-lg w-full mb-2"
-          >
-            <table className="w-full text-sm text-gray-500 rounded dark:text-gray-400 table-fixed">
-              <colgroup>
-                <col span={"1"} style={{ maxWidth: "33%" }}></col>
-                <col></col>
-                <col></col>
-                <col></col>
-              </colgroup>
-              {/* <col className="w-" />
+    <div className="flex justify-center pt-10 items-start">
+      <div className="flex justify-center flex-col" style={{ width: "73%" }}>
+        <div className="flex flex-row w-full">
+          <div className="dropdown dropdown-end">
+            <label tabIndex={0} className="btn m-1">
+              Select Topic
+            </label>
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-min"
+            >
+              {topicMenu}
+            </ul>
+          </div>
+          <div className="flex flex-col align-center w-full">
+            <h2 className="text-center font-mono text-3xl mb-5 w-full">
+              {topic !== "" && topic}
+            </h2>
+            <div
+              style={{ maxHeight: "36rem" }}
+              className="overflow-y-auto relative shadow-md sm:rounded-lg w-full mb-2"
+            >
+              <table className="w-full text-sm text-gray-500 rounded dark:text-gray-400 table-fixed">
+                <colgroup>
+                  <col span={"1"} style={{ maxWidth: "33%" }}></col>
+                  <col></col>
+                  <col></col>
+                  <col></col>
+                </colgroup>
+                {/* <col className="w-" />
               <col className="w-" />
               <col className="w-" /> */}
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 table-header-group">
-                <tr>
-                  {/* TABLE COLUMN HEADERS */}
-                  {/* Checkbox column: might be added in a later version */}
-                  {/* <th scope="col" className="p-4">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 table-header-group">
+                  <tr>
+                    {/* TABLE COLUMN HEADERS */}
+                    {/* Checkbox column: might be added in a later version */}
+                    {/* <th scope="col" className="p-4">
                   <div className="flex items-center">
                     <input
                       id="checkbox-all-search"
@@ -184,33 +187,35 @@ const Messages = ({ topic, setTopic }) => {
                     </label>
                   </div>
                 </th> */}
-                  <th scope="col" className="py-3 px-6 text-center w-64">
-                    Value
-                  </th>
-                  <th scope="col" className="py-3 px-6 text-center">
-                    Partition
-                  </th>
-                  <th scope="col" className="py-3 px-6 text-center">
-                    Offset
-                  </th>
-                  <th scope="col" className="py-3 px-6 text-center">
-                    Time Sent
-                  </th>
-                  {/* More Details column: might be implemented in a later feature */}
-                  {/* <th scope="col" className="py-3 px-6"></th> */}
-                </tr>
-              </thead>
-              <tbody>{messageTable}</tbody>
-            </table>
+                    <th scope="col" className="py-3 px-6 text-center w-64">
+                      Value
+                    </th>
+                    <th scope="col" className="py-3 px-6 text-center">
+                      Partition
+                    </th>
+                    <th scope="col" className="py-3 px-6 text-center">
+                      Offset
+                    </th>
+                    <th scope="col" className="py-3 px-6 text-center">
+                      Time Sent
+                    </th>
+                    {/* More Details column: might be implemented in a later feature */}
+                    {/* <th scope="col" className="py-3 px-6"></th> */}
+                  </tr>
+                </thead>
+                <tbody>{messageTable}</tbody>
+              </table>
+            </div>
+            <button
+              className="btn btn-active btn-primary btn-accent w-min self-center"
+              onClick={consumeMessages}
+            >
+              Consume Messages
+            </button>
           </div>
-          <button
-            className="btn btn-active btn-primary btn-accent w-min self-center"
-            onClick={consumeMessages}
-          >
-            Consume Messages
-          </button>
         </div>
       </div>
+      <TopicButtons topic={topic} setTopic={setTopic} topicList={topicList} />
     </div>
   );
 };
