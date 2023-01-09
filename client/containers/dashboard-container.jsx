@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import AddClusterForm from "../components/add-cluster-form";
 import Chart from "../components/chart";
-import TopicButtons from "../components/topic-buttons";
 import Messages from "../components/messages";
 import { NavbarContext } from "../NavbarContext";
 import TableData from "../components/table-data";
@@ -99,11 +98,7 @@ const DashboardContainer = (props) => {
         <main className="cluster-container">
           {chartData && (
             <>
-              <Chart
-                chartData={chartData}
-                metricSelection={metricSelection}
-                totalBytes={total.totalRetainedBytes}
-              />
+              <Chart chartData={chartData} metricSelection={metricSelection} />
             </>
           )}
         </main>
@@ -111,19 +106,7 @@ const DashboardContainer = (props) => {
       </>
     );
   } else if (dashboardMode === "realTimeMonitoring") {
-    dashboardView = (
-      <div className="flex justify-center pt-10 items-start">
-        <Messages setTopic={setTopic} topic={topic} />
-        <TopicButtons
-          topic={topic}
-          setTopic={setTopic}
-          chartData={chartData}
-          setChart={setChart}
-          totalBytes={total}
-          setTotal={setTotal}
-        />
-      </div>
-    );
+    dashboardView = <Messages setTopic={setTopic} topic={topic} />;
   } else {
     dashboardView = <></>;
   }
