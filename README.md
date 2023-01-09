@@ -1,6 +1,6 @@
 # KafkaCompass
 
-Welcome to **KafkaCompass**, a GUI specialized in getting performance and content statistics for your Confluent Cloud clusters, in addition to giving you tools to interact with and change the content of you clusters. We're excited to have you as a user for our application, and we can't wait to help you navigate and optimize your Kafka clusters!
+Welcome to **KafkaCompass**, a GUI specialized in getting performance and content statistics for your Confluent Cloud Apache Kafka clusters, in addition to giving you tools to interact with and change the content of you clusters. We're excited to have you as a user for our application, and we can't wait to help you navigate and optimize your Kafka clusters!
 
 # Guide
 
