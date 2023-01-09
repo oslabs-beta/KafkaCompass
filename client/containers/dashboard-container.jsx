@@ -112,7 +112,6 @@ const DashboardContainer = (props) => {
     dashboardView = (
       <div className="flex justify-center pt-10 items-start">
         <Messages setTopic={setTopic} topic={topic} />
-        <TopicButtons topic={topic} setTopic={setTopic} />
       </div>
     );
   } else if (dashboardMode === "clusterHistory") {
