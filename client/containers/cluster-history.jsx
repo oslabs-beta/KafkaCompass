@@ -14,10 +14,6 @@ const ClusterHistory = (props) => {
     setRenderDrawerButton(true);
   });
 
-  const backToDashboard = () => {
-    navigate("/dashboard");
-  };
-
   //get cluster items from db
   // render cluster items
   const clusterItems = metrics.map((metric, idx) => {
@@ -36,11 +32,6 @@ const ClusterHistory = (props) => {
     <>
       <div>
         <h1 className="text-center text-xl font-bold">Cluster History</h1>
-        <div className="flex justify-around">
-          <button onClick={backToDashboard} className="btn">
-            Return to Dashboard
-          </button>
-        </div>
         {clusterItems}
       </div>
       <input type="checkbox" id="my-modal-4" className="modal-toggle" />

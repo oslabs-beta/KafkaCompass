@@ -3,19 +3,17 @@ import { NavbarContext } from "../NavbarContext";
 
 const Navbar = ({ navigate, logUserOut }) => {
   const { setAuthMode } = useContext(NavbarContext).authModeState;
-  const { sideBarMode } = useContext(NavbarContext).sideBarState;
   const { renderDrawerButton, setRenderDrawerButton } =
     useContext(NavbarContext).drawerButtonsState;
   const { loggedIn, setLoggedIn } = useContext(NavbarContext).loggedState;
 
-  let drawerButton = <></>;
-  const select = sideBarMode === "current" ? "Select Metrics" : "Select Topic";
+  let drawerButtons = <></>;
 
   if (renderDrawerButton) {
-    drawerButton = (
+    drawerButtons = (
       <>
         <label htmlFor="my-drawer" className="btn drawer-button mr-10 my-7">
-          {select}
+          Select Metrics
         </label>
         <label htmlFor="my-modal-4" className="btn btn-outline mr-10 my-7">
           Add New Cluster
@@ -78,9 +76,7 @@ const Navbar = ({ navigate, logUserOut }) => {
 
   return (
     <div className="navbar">
-      <div className="flex-1 flex-wrap justify-around grow-[2]">
-        {drawerButton}
-      </div>
+      <div className="flex-1 flex-wrap grow-[2]">{drawerButtons}</div>
       <div className="flex-1 justify-end overflow-auto flex-wrap">
         {logButtons}
       </div>

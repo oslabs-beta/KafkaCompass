@@ -5,6 +5,8 @@ const DrawerSide = ({ metricSelection, updateSideDrawer }) => {
   const { sideBarMode, setSideBarMode } =
     useContext(NavbarContext).sideBarState;
 
+  const { setDashboardMode } = useContext(NavbarContext).dashboardState;
+
   const choices = {
     retained_bytes: "Retained Bytes",
     sent_bytes: "Sent Bytes",
@@ -31,11 +33,21 @@ const DrawerSide = ({ metricSelection, updateSideDrawer }) => {
       <ul className="menu p-4 w-80 bg-base-100 text-base-content">
         {listItems}
         <div className="divider"></div>
-        <li onClick={() => setSideBarMode("history")}>
+        <li
+          onClick={() => {
+            setSideBarMode("history");
+            setDashboardMode("clusterHistory");
+          }}
+        >
           <a>Cluster History</a>
         </li>
         {sideBarMode === "history" && (
-          <li onClick={() => setSideBarMode("current")}>
+          <li
+            onClick={() => {
+              setSideBarMode("current");
+              setDashboardMode("performanceStatistics");
+            }}
+          >
             <a>Back to current cluster</a>
           </li>
         )}
