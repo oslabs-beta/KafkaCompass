@@ -106,7 +106,8 @@ function App() {
           element={loggedIn ? <DashboardContainer /> : <Navigate to="/" />}
         />
         <Route exact path="/auth" element={<Auth navigate={navigate} />} />
-        <Route exact path="/" element={<LandingPage navigate={navigate} />} />
+        <Route exact path="/" element=
+        {<LandingPage navigate={navigate} />} />
       </Routes>
     </NavbarContext.Provider>
   );
