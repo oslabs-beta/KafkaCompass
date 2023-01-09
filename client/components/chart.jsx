@@ -5,9 +5,10 @@ import { Bar } from "react-chartjs-2";
 import SwitchCluster from "./switch-cluster-form";
 
 const Chart = (props) => {
-  const data = props.topicChart
-    ? props.chartData.topics
-    : props.chartData.reqRes;
+  const metric = props.metricSelection;
+  const chartData = props.chartData[metric];
+  console.log(chartData);
+  const data = chartData.info;
 
   const { setMetric } = useContext(NavbarContext).metricState;
 
@@ -32,12 +33,8 @@ const Chart = (props) => {
         <SwitchCluster />
       </div>
 
-      {props.topicChart && (
-        <p style={{ fontSize: "18px" }}>Topics in your cluster</p>
-      )}
-      {props.reqResChart && (
-        <p style={{ fontSize: "18px" }}>Server request and response bytes</p>
-      )}
+      <p style={{ fontSize: "18px" }}>{chartData.colDescription}</p>
+
       <br />
       <Bar
         width={"20%"}
@@ -48,21 +45,22 @@ const Chart = (props) => {
         }}
       />
       <br />
-      {props.topicChart && (
-        <p className="chart-total">
-          Total number of bytes retained by server:{" "}
-          <span>{props.totalBytes}</span>
-        </p>
-      )}
-      {props.reqResChart && (
+      {chartData.compositeChart && (
         <>
           <p className="chart-total">
-            Total number of request bytes: <span>{props.totalReq}</span>
+            {chartData.totalDescription1} <span>{chartData.totalValue1}</span>
           </p>
           <p className="chart-total">
-            Total number of response bytes: <span>{props.totalRes}</span>
+            {chartData.totalDescription2} <span>{chartData.totalValue2}</span>
           </p>
         </>
+      )}
+
+      {!chartData.compositeChart && (
+        <p className="chart-total">
+          {chartData.totalDescription}
+          <span>{chartData.totalValue}</span>
+        </p>
       )}
     </div>
   );

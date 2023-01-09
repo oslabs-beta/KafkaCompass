@@ -6,6 +6,7 @@ import Messages from "../components/messages";
 import { NavbarContext } from "../NavbarContext";
 import TableData from "../components/table-data";
 import DrawerSide from "../components/drawer-side";
+import mapChartData from "../helper/mapChartData";
 const DashboardContainer = (props) => {
   //state of current topic for Real-Time Monitoring mode
   const [topic, setTopic] = useState("Select a topic");
@@ -15,10 +16,7 @@ const DashboardContainer = (props) => {
     useContext(NavbarContext).drawerButtonsState;
   const { sideBarMode } = useContext(NavbarContext).sideBarState;
 
-  const [chartData, setChart] = useState({
-    topics: { labels: [], datasets: [] },
-    reqRes: { labels: [], datasets: [] }
-  });
+  const [chartData, setChart] = useState();
 
   const [total, setTotal] = useState({
     totalRetainedBytes: 0,
@@ -26,14 +24,12 @@ const DashboardContainer = (props) => {
     totalRes: 0
   });
 
-  const [metricSelection, setMetricSelection] = useState({
-    retainedBytes: true,
-    reqResBytes: false
-  });
+  const [metricSelection, setMetricSelection] = useState("retained_bytes");
 
   const [tableData, setTableData] = useState([]);
 
   const { metricIndex } = useContext(NavbarContext).metricIndexState;
+
   const data = useContext(NavbarContext).userState.user.metric.at(metricIndex);
 
   useEffect(() => {
@@ -70,36 +66,7 @@ const DashboardContainer = (props) => {
         totalRes: data.response_bytes.totalValue
       });
 
-      setChart({
-        topics: {
-          labels: topics,
-          datasets: [
-            {
-              label: "bytes",
-              data: retainedBytes,
-              backgroundColor: "rgba(64, 180, 179, 0.5)",
-              borderWidth: 1
-            }
-          ]
-        },
-        reqRes: {
-          labels: data.request_bytes.metrics.map((topic) => topic.type),
-          datasets: [
-            {
-              label: "request bytes",
-              data: valuesReq,
-              backgroundColor: "rgba(64, 180, 179, 0.5)",
-              borderWidth: 1
-            },
-            {
-              label: "response bytes",
-              data: valuesRes,
-              backgroundColor: "rgba(250, 73, 112, 0.5)",
-              borderWidth: 1
-            }
-          ]
-        }
-      });
+      setChart(mapChartData(data));
     } catch {
       console.log("No clusters in user data");
     }
@@ -130,24 +97,14 @@ const DashboardContainer = (props) => {
     dashboardView = (
       <>
         <main className="cluster-container">
-          {metricSelection.retainedBytes && (
+          {chartData && (
             <>
               <Chart
                 chartData={chartData}
-                topicChart={true}
-                reqResChart={false}
+                metricSelection={metricSelection}
                 totalBytes={total.totalRetainedBytes}
               />
             </>
-          )}
-          {metricSelection.reqResBytes && (
-            <Chart
-              chartData={chartData}
-              topicChart={false}
-              reqResChart={true}
-              totalRes={total.totalRes}
-              totalReq={total.totalReq}
-            />
           )}
         </main>
         <TableData tableData={tableData} />
@@ -173,13 +130,7 @@ const DashboardContainer = (props) => {
 
   // update metrics object with desired viewing metrics
   function updateSideDrawer(next) {
-    const metrics = metricSelection;
-    for (let key in metrics) {
-      if (metrics[key] === true) metrics[key] = false;
-
-      if (key === next) metrics[key] = true;
-    }
-    setMetricSelection(metrics);
+    setMetricSelection(next);
   }
 
   return (
