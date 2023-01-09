@@ -2,13 +2,13 @@ import React, { useContext } from "react";
 import { NavbarContext } from "../NavbarContext";
 
 const ClusterItem = (props) => {
-  const { index, date, clusterId, navigate } = props;
+  const { index, date, clusterId } = props;
   const { setMetricIndex } = useContext(NavbarContext).metricIndexState;
-  console.log(setMetricIndex);
+  const { setDashboardMode } = useContext(NavbarContext).dashboardState;
 
   function handleClick() {
     setMetricIndex(index);
-    console.log(index);
+    setDashboardMode("performanceStatistics");
   }
 
   return (
