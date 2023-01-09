@@ -6,6 +6,7 @@ const DrawerSide = ({ metricSelection, updateSideDrawer }) => {
     useContext(NavbarContext).sideBarState;
 
   const { setDashboardMode } = useContext(NavbarContext).dashboardState;
+  const { metricIndex } = useContext(NavbarContext).metricIndexState;
 
   const choices = {
     retained_bytes: "Retained Bytes",
@@ -20,7 +21,15 @@ const DrawerSide = ({ metricSelection, updateSideDrawer }) => {
 
   const listItems = Object.keys(choices).map((key) => (
     <li
-      onClick={() => updateSideDrawer(key)}
+      onClick={() => {
+        updateSideDrawer(key);
+        // if we switched to history mode but have not choosen the snapshot,
+        // and now we whant to back to the chart on current cluster
+        if (sideBarMode === "history" && metricIndex === -1) {
+          setSideBarMode("current");
+          setDashboardMode("performanceStatistics");
+        }
+      }}
       className={metricSelection === key ? "bg-secondary" : ""}
     >
       <a>{choices[key]}</a>
