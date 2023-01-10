@@ -7,7 +7,7 @@ import SwitchCluster from "./switch-cluster-form";
 const Chart = (props) => {
   const metric = props.metricSelection;
   const chartData = props.chartData[metric];
-  console.log(chartData);
+
   const data = chartData.info;
 
   const { setMetric } = useContext(NavbarContext).metricState;

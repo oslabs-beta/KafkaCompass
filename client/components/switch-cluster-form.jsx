@@ -64,7 +64,7 @@ const SwitchCluster = () => {
                 Choose a cluster
               </option>
               {clusterNames.map((name, index) => (
-                <option>{name}</option>
+                <option key={name}>{name}</option>
               ))}
             </select>
 

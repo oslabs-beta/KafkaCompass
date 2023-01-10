@@ -5,10 +5,10 @@ const TableData = (props) => {
   let oneRow = <></>;
   for (let row of props.tableData) {
     oneRow = (
-      <tr>
+      <tr key={row.name}>
         <td>{row.name}</td>
         <td>
-          <div class="scrollable">{row.description}</div>
+          <div className="scrollable">{row.description}</div>
         </td>
         <td>{row.value}</td>
       </tr>

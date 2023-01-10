@@ -14,7 +14,7 @@ const Messages = ({ topic, setTopic }) => {
   const messageTable =
     messageList.length === 0
       ? [
-          <td colSpan={4} className="text-center p-4 w-4">
+          <td key="no topic" colSpan={4} className="text-center p-4 w-4">
             No messages
           </td>
         ]
@@ -42,7 +42,7 @@ const Messages = ({ topic, setTopic }) => {
   const topicMenu = [];
   for (const topic of topicList) {
     topicMenu.push(
-      <li>
+      <li key={topic}>
         <a className="justify-end" onClick={selectTopic}>
           {topic}
         </a>
