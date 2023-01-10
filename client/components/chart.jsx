@@ -25,20 +25,9 @@ const Chart = (props) => {
       <div className="flex">
         {sideBarMode === "current" && (
           <>
-            <button
-              onClick={updateMetrics}
-              className="mb-5 mr-2 btn btn-accent"
-            >
+            <button onClick={updateMetrics} className="mb-5 btn btn-accent">
               Update Metrics
             </button>
-            <div>
-              <label
-                htmlFor="switch-cluster-modal"
-                className="mb-5 btn btn-accent"
-              >
-                Switch Cluster
-              </label>
-            </div>
           </>
         )}
         <SwitchCluster />
