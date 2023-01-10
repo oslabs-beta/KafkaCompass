@@ -12,17 +12,43 @@ const Navbar = ({ navigate, logUserOut }) => {
 
   if (renderDrawerButton) {
     drawerButtons = (
-      <>
-        <label htmlFor="my-drawer" className="btn drawer-button mr-10 my-7">
-          Select Metrics
+      <div className="dropdown">
+        <label tabIndex={0} className="btn btn-ghost normal-case text-xl">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            className="inline-block w-5 h-5 stroke-current"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            ></path>
+          </svg>
         </label>
-        <label htmlFor="my-modal-4" className="btn btn-outline mr-10 my-7">
-          Add New Cluster
-        </label>
-        <label htmlFor="switch-cluster-modal" className="btn btn-outline">
-          Switch Cluster
-        </label>
-      </>
+        <ul
+          tabIndex={0}
+          className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+        >
+          <li>
+            <a>
+              <label htmlFor="my-drawer">Select Metrics</label>
+            </a>
+          </li>
+          <li>
+            <a>
+              <label htmlFor="my-modal-4">Add New Cluster</label>
+            </a>
+          </li>
+          <li>
+            <a>
+              <label htmlFor="switch-cluster-modal">Switch Cluster</label>
+            </a>
+          </li>
+        </ul>
+      </div>
     );
   }
 
@@ -78,6 +104,75 @@ const Navbar = ({ navigate, logUserOut }) => {
     );
   }
 
+  if (loggedIn === false) {
+    logButtons = (
+      <>
+        <button
+          onClick={() => {
+            setRenderDrawerButton(false);
+            navigate("/");
+          }}
+          className="btn btn-ghost btn-circle"
+        >
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png"
+            alt="home icon"
+            width="16"
+            height="16"
+          ></img>
+        </button>
+        <button
+          onClick={() => {
+            setAuthMode("signup");
+            navigate("/auth");
+          }}
+          className="btn btn-ghost normal-case text-l"
+        >
+          Sign Up
+        </button>
+        <button
+          onClick={() => {
+            setAuthMode("login");
+            navigate("/auth");
+          }}
+          className="btn btn-ghost normal-case text-l"
+        >
+          Login
+        </button>
+      </>
+    );
+  } else {
+    logButtons = (
+      <>
+        <button
+          onClick={() => {
+            setRenderDrawerButton(false);
+            navigate("/");
+          }}
+          className="btn btn-ghost btn-circle"
+        >
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png"
+            alt="home icon"
+            width="16"
+            height="16"
+          ></img>
+        </button>
+        <button
+          onClick={() => {
+            logUserOut();
+            setRenderDrawerButton(false);
+            setLoggedIn(false);
+            navigate("/");
+          }}
+          className="btn btn-ghost normal-case text-l"
+        >
+          Logout
+        </button>
+      </>
+    );
+  }
+
   return (
     <>
       <div className="navbar">
@@ -87,56 +182,11 @@ const Navbar = ({ navigate, logUserOut }) => {
         </div>
       </div>
       <div className="navbar bg-base-100">
-        <div className="navbar-start">
-          <div className="dropdown">
-            <label tabIndex={0} className="btn btn-ghost normal-case text-xl">
-              Cluster
-            </label>
-            <ul
-              tabIndex={0}
-              className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-            >
-              <li>
-                <a>Add</a>
-              </li>
-              <li>
-                <a>Switch</a>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <div className="navbar-start">{drawerButtons}</div>
         <div className="navbar-center">
           <a className="btn btn-ghost normal-case text-xl">KafkaCompass</a>
         </div>
-        <div className="navbar-end">
-          <button className="btn btn-ghost btn-circle">
-            <img
-              src="../static/homeIcon.png"
-              alt="home icon"
-              width="15"
-              height="15"
-            ></img>
-          </button>
-          <button className="btn btn-ghost btn-circle">
-            <div className="indicator">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                />
-              </svg>
-              <span className="badge badge-xs badge-primary indicator-item"></span>
-            </div>
-          </button>
-        </div>
+        <div className="navbar-end">{logButtons}</div>
       </div>
     </>
   );
