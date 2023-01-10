@@ -60,8 +60,8 @@ const AddClusterForm = () => {
   return (
     <>
       <input type="checkbox" id="my-modal-4" className="modal-toggle" />
-      <label for="my-modal-4" className="modal cursor-pointer">
-        <label className="modal-box relative" for="">
+      <label htmlFor="my-modal-4" className="modal cursor-pointer">
+        <label className="modal-box relative" htmlFor="">
           <h3 className="text-lg font-bold">Input Cluster Details:</h3>
           <div className="form-control w-full max-w-xs">
             <label className="label">

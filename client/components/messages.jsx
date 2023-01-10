@@ -14,7 +14,7 @@ const Messages = ({ topic, setTopic }) => {
   const messageTable =
     messageList.length === 0
       ? [
-          <td colSpan={4} className="text-center p-4 w-4">
+          <td key="no topic" colSpan={4} className="text-center p-4 w-4">
             No messages
           </td>
         ]
