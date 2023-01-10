@@ -58,57 +58,6 @@ const Navbar = ({ navigate, logUserOut }) => {
       <>
         <button
           onClick={() => {
-            setAuthMode("signup");
-            navigate("/auth");
-          }}
-          className="btn btn-outline mr-10 my-7"
-        >
-          Sign Up
-        </button>
-        <button
-          onClick={() => {
-            setAuthMode("login");
-            navigate("/auth");
-          }}
-          className="btn btn-accent btn-outline mr-10 my-7"
-        >
-          Log In{" "}
-        </button>
-      </>
-    );
-  } else {
-    logButtons = (
-      <>
-        <button
-          onClick={() => {
-            setRenderDrawerButton(false);
-            navigate("/");
-          }}
-          className="btn btn-outline mr-10 my-7"
-        >
-          Home
-        </button>
-
-        <button
-          onClick={() => {
-            logUserOut();
-            setRenderDrawerButton(false);
-            setLoggedIn(false);
-            navigate("/");
-          }}
-          className="btn btn-outline mr-10 my-7"
-        >
-          Logout
-        </button>
-      </>
-    );
-  }
-
-  if (loggedIn === false) {
-    logButtons = (
-      <>
-        <button
-          onClick={() => {
             setRenderDrawerButton(false);
             navigate("/");
           }}
@@ -175,12 +124,6 @@ const Navbar = ({ navigate, logUserOut }) => {
 
   return (
     <>
-      <div className="navbar">
-        <div className="flex-1 flex-wrap grow-[2]">{drawerButtons}</div>
-        <div className="flex-1 justify-end overflow-auto flex-wrap">
-          {logButtons}
-        </div>
-      </div>
       <div className="navbar bg-base-100">
         <div className="navbar-start">{drawerButtons}</div>
         <div className="navbar-center">
