@@ -19,12 +19,6 @@ const DashboardContainer = (props) => {
 
   const [chartData, setChart] = useState();
 
-  const [total, setTotal] = useState({
-    totalRetainedBytes: 0,
-    totalReq: 0,
-    totalRes: 0
-  });
-
   const [metricSelection, setMetricSelection] = useState("retained_bytes");
 
   const [tableData, setTableData] = useState([]);
@@ -55,19 +49,6 @@ const DashboardContainer = (props) => {
 
     //if no clusters in user info, no charts will load
     try {
-      const retainedBytes = data.retained_bytes.metrics.map(
-        (topic) => topic.value
-      );
-      const topics = data.retained_bytes.metrics.map((topic) => topic.topic);
-      const valuesReq = data.request_bytes.metrics.map((topic) => topic.value);
-      const valuesRes = data.response_bytes.metrics.map((topic) => topic.value);
-
-      setTotal({
-        totalRetainedBytes: data.retained_bytes.totalValue,
-        totalReq: data.request_bytes.totalValue,
-        totalRes: data.response_bytes.totalValue
-      });
-
       setChart(mapChartData(data));
     } catch {
       console.log("No clusters in user data");
@@ -126,11 +107,11 @@ const DashboardContainer = (props) => {
   return (
     <>
       <div className="drawer">
-        <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+        <input id="my-drawer" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content border-solid border-2 border-black-500">
           <div className="mt-4 flex justify-around">
             {sideBarMode != "history" && (
-              <div class="btn-group">
+              <div className="btn-group">
                 <button
                   className={
                     dashboardMode === "performanceStatistics"
