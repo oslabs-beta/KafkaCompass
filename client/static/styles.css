@@ -180,3 +180,13 @@ div.scrollable {
 .landing-buttons button {
   margin: 1rem;
 }
+
+.table-history {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.history-table {
+  width: 50rem;
+}
