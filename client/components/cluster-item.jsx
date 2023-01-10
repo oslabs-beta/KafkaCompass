@@ -12,20 +12,14 @@ const ClusterItem = (props) => {
   }
 
   return (
-    <div className="flex justify-around">
-      <div className="card w-96 bg-base-100 shadow-xl">
-        <div className="card-body">
-          <h2 className="card-title">{index}</h2>
-          <p>Date: {date}</p>
-          <p>Cluster ID: {clusterId}</p>
-          <div className="card-actions justify-end">
-            <button onClick={handleClick} className="btn btn-primary">
-              View Metrics
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+      <td>{index}</td>
+      <td>{date}</td>
+      <td>{clusterId}</td>
+      <td>
+      <a onClick={handleClick} class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Cluster Metrics</a>
+      </td>
+    </tr>
   );
 };
 
