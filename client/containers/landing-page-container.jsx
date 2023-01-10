@@ -1,12 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { NavbarContext } from "../NavbarContext";
+import AboutUs from "./about-us.jsx";
 import "../static/styles.css";
 
 const LandingPage = ({ navigate }) => {
   const { loggedIn } = useContext(NavbarContext).loggedState;
 
+  const myRef = useRef(null);
+
+  const executeScroll = () => {
+    myRef.current.scrollIntoView({behavior: "smooth"})
+  }
+
   return (
-    <main className="landing-container">
+  <><div className="first-page">
+    <div className="landing-container">
       <article className="font-mono">
         <h1 className="text-3xl">Kafka Compass</h1>
         <p className="my-7">
@@ -19,6 +27,7 @@ const LandingPage = ({ navigate }) => {
           culpa qui officia deserunt mollit anim id est laborum.
         </p>
       </article>
+      <div className="landing-buttons">
       <button
         className="btn"
         onClick={() => {
@@ -28,7 +37,14 @@ const LandingPage = ({ navigate }) => {
       >
         Navigate to Dashboard
       </button>
-    </main>
+      <button className="btn" onClick={executeScroll}>Meet the team</button>
+      </div>
+    </div>
+  </div>
+  
+    <div ref={myRef}>
+      <AboutUs />
+    </div> </>
   );
 };
 
