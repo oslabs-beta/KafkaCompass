@@ -21,6 +21,7 @@ const DrawerSide = ({ metricSelection, updateSideDrawer }) => {
 
   const listItems = Object.keys(choices).map((key) => (
     <li
+      key={key}
       onClick={() => {
         updateSideDrawer(key);
         // if we switched to history mode but have not choosen the snapshot,
@@ -43,6 +44,7 @@ const DrawerSide = ({ metricSelection, updateSideDrawer }) => {
         {listItems}
         <div className="divider"></div>
         <li
+          key="Cluster History"
           onClick={() => {
             setSideBarMode("history");
             setDashboardMode("clusterHistory");
@@ -52,6 +54,7 @@ const DrawerSide = ({ metricSelection, updateSideDrawer }) => {
         </li>
         {sideBarMode === "history" && (
           <li
+            key="Current Metric"
             onClick={() => {
               setSideBarMode("current");
               setDashboardMode("performanceStatistics");
