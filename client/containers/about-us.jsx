@@ -43,10 +43,9 @@ const AboutUs = () => {
     }
   ];
   return (
-    <div className="about-us">
-      <h1 className="about-header">Meet the Team</h1>
-
-      <div className="about-body drawer-content border-solid border-2 border-black-500">
+    <div className="about-us font-mono py-20">
+      <h3 className="page-title">Meet the team</h3>
+      <div className="about-body drawer-content">
         <Card team={team} />
       </div>
     </div>

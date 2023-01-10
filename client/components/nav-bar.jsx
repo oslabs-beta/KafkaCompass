@@ -43,7 +43,7 @@ const Navbar = ({ navigate, logUserOut }) => {
             setAuthMode("login");
             navigate("/auth");
           }}
-          className="btn btn-accent btn-outline mr-10 my-7"
+          className="btn btn-outline mr-10 my-7"
         >
           Log In{" "}
         </button>
