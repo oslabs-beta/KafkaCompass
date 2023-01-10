@@ -18,6 +18,9 @@ const Navbar = ({ navigate, logUserOut }) => {
         <label htmlFor="my-modal-4" className="btn btn-outline mr-10 my-7">
           Add New Cluster
         </label>
+        <label htmlFor="switch-cluster-modal" className="btn btn-outline">
+          Switch Cluster
+        </label>
       </>
     );
   }
