@@ -15,7 +15,7 @@ const AuthForm = ({
     <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
       <div className="wrapper shadow">
         <input
-          className="mt-7 mb-2 input input-bordered input-accent w-full max-w-xs"
+          className="mt-7 mb-2 input input-bordered bg-base-200 w-full max-w-xs"
           placeholder="Username..."
           {...register("username", { required: true })}
           name="username"
@@ -23,7 +23,7 @@ const AuthForm = ({
         />
         {!login && (
           <input
-            className="my-2 input input-bordered input-accent w-full max-w-xs"
+            className="my-2 input input-bordered bg-base-200 w-full max-w-xs"
             placeholder="First name..."
             {...register("firstName", { required: false })}
             name="firstName"
@@ -32,7 +32,7 @@ const AuthForm = ({
         )}
         {!login && (
           <input
-            className="my-2 input input-bordered input-accent w-full max-w-xs"
+            className="my-2 input input-bordered bg-base-200 w-full max-w-xs"
             placeholder="Last name..."
             {...register("lastName", { required: false })}
             name="lastName"
@@ -41,7 +41,7 @@ const AuthForm = ({
         )}
         {!login && (
           <input
-            className="my-2 input input-bordered input-accent w-full max-w-xs"
+            className="my-2 input input-bordered bg-base-200 w-full max-w-xs"
             placeholder="Email..."
             {...register("email", { required: true })}
             name="email"
@@ -49,14 +49,14 @@ const AuthForm = ({
           />
         )}
         <input
-          className="mb-7 mt-2 input input-bordered input-accent w-full max-w-xs"
+          className="mb-7 mt-2 input input-bordered bg-base-200 w-full max-w-xs"
           placeholder="Password..."
           {...register("password", { required: true })}
           name="password"
           type="password"
         />
         <input
-          className="btn my-2 btn-outline btn-accent auth-input"
+          className="btn my-2 btn-outline bg-base-100 auth-input"
           value={type}
           type="submit"
         />
@@ -67,7 +67,7 @@ const AuthForm = ({
           setAuthMode("");
           navigate("/");
         }}
-        className="btn btn-accent"
+        className="btn"
       >
         Back to main
       </button>

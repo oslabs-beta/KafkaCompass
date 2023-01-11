@@ -58,22 +58,13 @@ const TopicButtons = ({ topic, setTopic, topicList }) => {
   return (
     <>
       <div className="buttons-container btn-group btn-group-vertical mx-4">
-        <label
-          htmlFor="topic-create-modal"
-          className="btn btn-xs btn-outline btn-accent"
-        >
+        <label htmlFor="topic-create-modal" className="btn btn-xs btn-outline">
           Create topic
         </label>
-        <label
-          htmlFor="topic-delete-modal"
-          className="btn btn-xs btn-outline btn-accent"
-        >
+        <label htmlFor="topic-delete-modal" className="btn btn-xs btn-outline">
           Delete topic
         </label>
-        <label
-          htmlFor="message-add-modal"
-          className="btn btn-xs btn-outline btn-accent"
-        >
+        <label htmlFor="message-add-modal" className="btn btn-xs btn-outline">
           Write a message
         </label>
       </div>

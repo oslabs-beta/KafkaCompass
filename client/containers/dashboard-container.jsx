@@ -18,6 +18,8 @@ const DashboardContainer = (props) => {
     console.log("cluster in dashboard useEffect: ", cluster);
   }, [cluster]);
 
+  document.body.style.backgroundImage = "none";
+
   // getting sharable state from the useContex
   const { setRenderDrawerButton } =
     useContext(NavbarContext).drawerButtonsState;
@@ -30,11 +32,12 @@ const DashboardContainer = (props) => {
   const [tableData, setTableData] = useState([]);
 
   const { metricIndex } = useContext(NavbarContext).metricIndexState;
-  console.log(metricIndex);
 
-  const data = useContext(NavbarContext).userState.user.metric.at(metricIndex);
+  const { user } = useContext(NavbarContext).userState;
 
   useEffect(() => {
+    const data = user.metric.at(metricIndex);
+
     const dataForTable = [
       "partition_count",
       "active_connection_count",
@@ -59,7 +62,7 @@ const DashboardContainer = (props) => {
     } catch {
       console.log("No clusters in user data");
     }
-  }, []);
+  }, [metricIndex]);
 
   useEffect(() => {
     setRenderDrawerButton(true);
@@ -121,7 +124,7 @@ const DashboardContainer = (props) => {
                 <button
                   className={
                     dashboardMode === "performanceStatistics"
-                      ? "btn btn-accent"
+                      ? "btn bg-blue-800"
                       : "btn"
                   }
                   onClick={changeModePerformanceStatistics}
@@ -131,7 +134,7 @@ const DashboardContainer = (props) => {
                 <button
                   className={
                     dashboardMode === "contentMonitoring"
-                      ? "btn btn-accent"
+                      ? "btn bg-blue-800"
                       : "btn"
                   }
                   onClick={changeModeContentMonitoring}
