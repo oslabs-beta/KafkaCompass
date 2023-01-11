@@ -24,11 +24,12 @@ const DashboardContainer = (props) => {
   const [tableData, setTableData] = useState([]);
 
   const { metricIndex } = useContext(NavbarContext).metricIndexState;
-  console.log(metricIndex);
 
-  const data = useContext(NavbarContext).userState.user.metric.at(metricIndex);
+  const { user } = useContext(NavbarContext).userState;
 
   useEffect(() => {
+    const data = user.metric.at(metricIndex);
+
     const dataForTable = [
       "partition_count",
       "active_connection_count",
@@ -53,7 +54,7 @@ const DashboardContainer = (props) => {
     } catch {
       console.log("No clusters in user data");
     }
-  }, []);
+  }, [metricIndex]);
 
   useEffect(() => {
     setRenderDrawerButton(true);
