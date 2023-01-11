@@ -4,10 +4,10 @@ const Metric = require("../models/metric-model");
 const { Session } = require("express-session");
 const bcrypt = require("bcrypt");
 const { decrypt } = require("../encryption");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 const userController = {};
-const superSecret = 'thisIsAHolderForAMoreSecureSecret';
+const superSecret = "thisIsAHolderForAMoreSecureSecret";
 
 userController.verifyUser = async (req, res, next) => {
   const { username, password } = req.body;
@@ -76,28 +76,28 @@ userController.createUser = async (req, res, next) => {
 
 userController.logOut = (req, res, next) => {
   req.session.destroy();
-  res.clearCookie('token');
+  res.clearCookie("token");
   return next();
 };
 
 userController.setUserAuth = (req, res, next) => {
   const user = res.locals.user._id;
-  const token = jwt.sign({user}, superSecret, { expiresIn: 60 * 60 * 2 });
-  res.cookie('token', token, { httpOnly: true });
+  const token = jwt.sign({ user }, superSecret, { expiresIn: 60 * 60 * 2 });
+  res.cookie("token", token, { httpOnly: true });
   return next();
-}
+};
 
 userController.checkUserAuth = (req, res, next) => {
   const token = req.cookies.token;
   const user = jwt.verify(token, superSecret);
   if (req.session.user && user.user === req.session.user._id) return next();
-    return next({
-      log: "userController.checkUserAuth: ERROR: Unauthorized User",
-      message: {
-        err: "Unauthorized"
-      }
-    }); 
-}
+  return next({
+    log: "userController.checkUserAuth: ERROR: Unauthorized User",
+    message: {
+      err: "Unauthorized"
+    }
+  });
+};
 
 userController.addCloudCluster = async (req, res, next) => {
   if (!req.session.user)
@@ -142,67 +142,6 @@ userController.addCloudCluster = async (req, res, next) => {
     clusterId,
     RESTendpoint,
     bootstrapServer,
-    cluster_name
-  };
-
-  try {
-    const cluster = await CloudCluster.create(clusterInfo);
-
-    user.cloudCluster.push(cluster);
-    user.save();
-  } catch (error) {
-    return next({
-      log: "userController.addCloudCluster: ERROR: failed to create cluster",
-      message: {
-        err: "failed to create cluster"
-      }
-    });
-  }
-
-  return next();
-};
-
-userController.addMetrics = async (req, res, next) => {
-  if (!req.session.user)
-    return next({
-      log: "userController.addCloudCluster: ERROR: Unauthorized",
-      message: {
-        err: "Unauthorized"
-      }
-    });
-
-  const { _id } = req.session.user;
-
-  const {
-    API_KEY,
-    API_SECRET,
-    CLOUD_KEY,
-    CLOUD_SECRET,
-    clusterId,
-    RESTendpoint,
-    cluster_name
-  } = req.body;
-
-  let user;
-
-  try {
-    user = await User.findById(_id);
-  } catch (error) {
-    return next({
-      log: "userController.addCloudCluster: ERROR: unknown user",
-      message: {
-        err: "unknown user"
-      }
-    });
-  }
-
-  const clusterInfo = {
-    API_KEY,
-    API_SECRET,
-    CLOUD_KEY,
-    CLOUD_SECRET,
-    clusterId,
-    RESTendpoint,
     cluster_name
   };
 

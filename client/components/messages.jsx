@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import TopicButtons from "../components/topic-buttons";
 
-const Messages = ({ topic, setTopic }) => {
+const Messages = ({ topic, setTopic, cluster }) => {
   //create new Kafka instance using kafkajs
   // const kafka = new Kafka()
 
@@ -23,6 +23,7 @@ const Messages = ({ topic, setTopic }) => {
   console.log("messageList initialized to: ", messageList);
 
   useEffect(() => {
+    console.log("cluster in message useEffect: ", cluster);
     fetch("/api/topic")
       .then((res) => res.json())
       .then((data) => {
@@ -32,7 +33,7 @@ const Messages = ({ topic, setTopic }) => {
       .catch(() => {
         console.log("ERROR");
       });
-  }, []);
+  }, [cluster]);
 
   const selectTopic = (e) => {
     setTopic(e.target.text);
@@ -41,6 +42,7 @@ const Messages = ({ topic, setTopic }) => {
   // console.log('topicList is :', topicList);
   const topicMenu = [];
   for (const topic of topicList) {
+    console.log("topicList in render: ", topicList);
     topicMenu.push(
       <li key={topic}>
         <a className="justify-end" onClick={selectTopic}>

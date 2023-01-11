@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { NavbarContext } from "../NavbarContext";
 import "chart.js/auto";
 import { Bar } from "react-chartjs-2";
-import SwitchCluster from "./switch-cluster-form";
 
 const Chart = (props) => {
   const metric = props.metricSelection;
@@ -30,7 +29,6 @@ const Chart = (props) => {
             </button>
           </>
         )}
-        <SwitchCluster />
       </div>
 
       <p style={{ fontSize: "18px" }}>{chartData.colDescription}</p>

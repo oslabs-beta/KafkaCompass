@@ -75,6 +75,7 @@ apiController.getTopics = async (req, res, next) => {
     "base64"
   );
   const headers = { Authorization: "Basic " + token };
+  console.log("in getTopics with cluster: ", cluster);
 
   try {
     const response = await axios({
