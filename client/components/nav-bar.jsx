@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
 import { NavbarContext } from "../NavbarContext";
-import homeIcon from "../static/homeIcon.png";
 import logoWithoutText from "../static/logo_without_text.png";
-import logo from "../static/logo.png";
 
 const Navbar = ({ navigate, logUserOut }) => {
   const { setAuthMode } = useContext(NavbarContext).authModeState;
@@ -139,13 +137,11 @@ const Navbar = ({ navigate, logUserOut }) => {
   }
 
   return (
-    <>
-      <div className="navbar bg-blue-800 text-white">
-        <div className="navbar-start">{drawerButtons}</div>
-        <div className="navbar-end">{logButtons}</div>
-        <img className="h-12" src={logoWithoutText} alt="Kafka logo" />
-      </div>
-    </>
+    <div className="navbar bg-blue-800 text-white">
+      <div className="navbar-start">{drawerButtons}</div>
+      <div className="navbar-end">{logButtons}</div>
+      <img className="h-12" src={logoWithoutText} alt="Kafka logo" />
+    </div>
   );
 };
 

@@ -10,8 +10,7 @@ const SwitchCluster = ({ cluster, setCluster }) => {
       try {
         const response = await fetch("/api/getClusterList");
         const clusterList = await response.json();
-        console.log("clusterList: ", clusterList);
-        setClusterNames(() => [...clusterList]);
+        setClusterNames(clusterList);
       } catch (err) {
         console.log("Network error occurred - could not get cluste list");
       }

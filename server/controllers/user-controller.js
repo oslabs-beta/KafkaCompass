@@ -5,9 +5,10 @@ const { Session } = require("express-session");
 const bcrypt = require("bcrypt");
 const { decrypt } = require("../encryption");
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const userController = {};
-const superSecret = "thisIsAHolderForAMoreSecureSecret";
+const superSecret = process.env.SUPER_SECRET;
 
 userController.verifyUser = async (req, res, next) => {
   const { username, password } = req.body;
@@ -80,6 +81,7 @@ userController.logOut = (req, res, next) => {
   return next();
 };
 
+// Authentificates user with unique token for 2 hours and stores JWT token in the cookie
 userController.setUserAuth = (req, res, next) => {
   const user = res.locals.user._id;
   const token = jwt.sign({ user }, superSecret, { expiresIn: 60 * 60 * 2 });

@@ -10,14 +10,13 @@ import ClusterHistory from "./cluster-history";
 import SwitchCluster from "../components/switch-cluster-form";
 
 const DashboardContainer = (props) => {
-  //state of current topic for Real-Time Monitoring mode
+  // state of current topic inside the Content Monitoring view
   const [topic, setTopic] = useState("Select a topic");
-  const [cluster, setCluster] = useState(0);
-  useEffect(() => {
-    console.log("CLUSTER INDEX STATE CHANGE");
-    console.log("CURRENT CLUSTER STATE: ", cluster);
-  }, [cluster]);
 
+  // cluster selection for the Content Monitoring
+  const [cluster, setCluster] = useState(0);
+
+  // Setting document's background image back to none -> default
   document.body.style.backgroundImage = "none";
 
   // getting sharable state from the useContex
