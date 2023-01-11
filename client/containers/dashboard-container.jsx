@@ -10,30 +10,26 @@ import ClusterHistory from "./cluster-history";
 import SwitchCluster from "../components/switch-cluster-form";
 
 const DashboardContainer = (props) => {
-  //state of current topic for Real-Time Monitoring mode
+  // state of current topic inside the Content Monitoring view
   const [topic, setTopic] = useState("Select a topic");
-  const [cluster, setCluster] = useState(0);
   const [clusterAdded, setClusterAdded] = useState(false);
-  useEffect(() => {
-    console.log("CLUSTER INDEX STATE CHANGE");
-    console.log("CURRENT CLUSTER STATE: ", cluster);
-  }, [cluster]);
 
+  // cluster selection for the Content Monitoring
+  const [cluster, setCluster] = useState(0);
+
+  // Setting document's background image back to none -> default
   document.body.style.backgroundImage = "none";
 
   // getting sharable state from the useContex
   const { setRenderDrawerButton } =
     useContext(NavbarContext).drawerButtonsState;
   const { sideBarMode } = useContext(NavbarContext).sideBarState;
-
-  const [chartData, setChart] = useState();
-
   const [metricSelection, setMetricSelection] = useState("retained_bytes");
 
+  // cluster data for charts and tables for the user
+  const [chartData, setChart] = useState();
   const [tableData, setTableData] = useState([]);
-
   const { metricIndex } = useContext(NavbarContext).metricIndexState;
-
   const { user } = useContext(NavbarContext).userState;
 
   useEffect(() => {
@@ -73,16 +69,13 @@ const DashboardContainer = (props) => {
   const { dashboardMode, setDashboardMode } =
     useContext(NavbarContext).dashboardState;
 
-  // mode switching functions
+  // functions for switching mode of the dashboard
   function changeModePerformanceStatistics() {
     setDashboardMode("performanceStatistics");
   }
   function changeModeContentMonitoring() {
     setDashboardMode("contentMonitoring");
   }
-  // function changeModeClusterComparison() {
-  //   setDashboardMode("clusterComparison");
-  // }
 
   // sets current dashboard view
   let dashboardView = <></>;
@@ -142,7 +135,8 @@ const DashboardContainer = (props) => {
                 >
                   Content Monitoring
                 </button>
-                {/* <button
+                {/* Feature in work
+                <button
                   className={
                     dashboardMode === "clusterComparison"
                       ? "btn btn-accent"
@@ -156,7 +150,6 @@ const DashboardContainer = (props) => {
             )}
           </div>
           <div className="justify-center pt-10">{dashboardView}</div>
-          {/* <!-- Page content here --> */}
         </div>
         <AddClusterForm
           clusterAdded={clusterAdded}

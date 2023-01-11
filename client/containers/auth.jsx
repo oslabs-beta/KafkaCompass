@@ -4,20 +4,22 @@ import AuthForm from "../components/authForm";
 import { NavbarContext } from "../NavbarContext";
 
 const Auth = ({ navigate }) => {
+  // getting sharable state from the Context
   const { authMode, setAuthMode } = useContext(NavbarContext).authModeState;
   const { setRenderDrawerButton } =
     useContext(NavbarContext).drawerButtonsState;
   const { setLoggedIn } = useContext(NavbarContext).loggedState;
   const { setUser } = useContext(NavbarContext).userState;
 
+  // Setting document's background image back to none -> default
   document.body.style.backgroundImage = "none";
 
   const { register, handleSubmit } = useForm();
+
   // render either log in or sign up form
   const renderLogin = authMode === "login";
 
   const onSubmit = async (data) => {
-    console.log("in onSubmit");
     let endPoint = "/api/login";
     let errorMessage = "Login failed: invalid password or username";
 

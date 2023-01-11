@@ -25,7 +25,6 @@ const AddClusterForm = ({ clusterAdded, setClusterAdded }) => {
         bootstrapServer: newBootstrapServerInput,
         cluster_name: newClusterName
       };
-      console.log("newCluster: ", newCluster);
       // send post request to backend
       const data = await fetch("/api/cloud-auth", {
         method: "POST",
@@ -34,9 +33,7 @@ const AddClusterForm = ({ clusterAdded, setClusterAdded }) => {
         },
         body: JSON.stringify(newCluster)
       });
-      console.log("data in addCluster form: ", data);
       if (data.ok) {
-        console.log("cluster added");
         setClusterAdded(!clusterAdded);
       } else {
         console.log("error adding cluster");
@@ -47,6 +44,7 @@ const AddClusterForm = ({ clusterAdded, setClusterAdded }) => {
 
     //add functionality here to tell user if cluster was successfully added to DB, using status code as indicator
     //maybe a green banner saying request was successful and red if not successful
+
     //fields will clear out if this cluster was successfully added
     setNewAPIKeyInput("");
     setNewAPISecretInput("");
@@ -58,6 +56,7 @@ const AddClusterForm = ({ clusterAdded, setClusterAdded }) => {
     setNewClusterName("");
   }
 
+  // Might be refactored with React useForm
   return (
     <>
       <input type="checkbox" id="my-modal-4" className="modal-toggle" />

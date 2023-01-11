@@ -10,8 +10,8 @@ const LandingPage = ({ navigate }) => {
   document.body.style.backgroundImage =
     "linear-gradient(to right, white, rgb(113, 165, 246))";
 
+  // Using useRef hook to set smooth scrolling for the "About Us" component
   const myRef = useRef(null);
-
   const executeScroll = () => {
     myRef.current.scrollIntoView({ behavior: "smooth" });
   };
@@ -52,7 +52,7 @@ const LandingPage = ({ navigate }) => {
       </div>
       <div ref={myRef}>
         <AboutUs />
-      </div>{" "}
+      </div>
     </>
   );
 };

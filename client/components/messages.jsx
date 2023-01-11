@@ -1,13 +1,8 @@
-// const { Kafka } = require('kafkajs');
 import React, { useState, useEffect } from "react";
 import TopicButtons from "../components/topic-buttons";
 
 const Messages = ({ topic, setTopic, cluster }) => {
-  //create new Kafka instance using kafkajs
-  // const kafka = new Kafka()
-
   //state for current topic
-  // const [topic, setTopic] = useState("Select a topic");
   const [topicList, setTopicList] = useState([]);
   const [messageList, setMessageList] = useState([]);
 
@@ -20,14 +15,11 @@ const Messages = ({ topic, setTopic, cluster }) => {
         ]
       : [];
 
-  console.log("messageList initialized to: ", messageList);
-
+  // sets list of topics in the state depending on the data in the user's current cluster
   useEffect(() => {
-    console.log("cluster in message useEffect: ", cluster);
     fetch("/api/topic")
       .then((res) => res.json())
       .then((data) => {
-        console.log("data is :", data);
         setTopicList(data);
       })
       .catch(() => {
@@ -39,7 +31,6 @@ const Messages = ({ topic, setTopic, cluster }) => {
     setTopic(e.target.text);
   };
 
-  // console.log('topicList is :', topicList);
   const topicMenu = [];
   for (const topic of topicList) {
     console.log("topicList in render: ", topicList);
@@ -51,26 +42,11 @@ const Messages = ({ topic, setTopic, cluster }) => {
       </li>
     );
   }
-  console.log("topicMenu is : ", topicMenu);
-
-  // console.log('topic menu: ', topicMenu);
-
-  //create click handler that consumes messages
-  // const consumeMessages = () => {};
-
-  // topicList.map((topic) => {
-  //   return (
-  //     <li>
-  //       <a>{topic}</a>
-  //     </li>
-  //   );
-  // })
 
   const consumeMessages = async () => {
     try {
       const response = await fetch(`/api/message/${topic}`);
       const data = await response.json();
-      console.log(data);
       setMessageList(data);
     } catch (err) {
       console.log(err);
@@ -91,10 +67,8 @@ const Messages = ({ topic, setTopic, cluster }) => {
   //check if messageList contains messages
 
   messageList.sort((a, b) => b.timestamp - a.timestamp);
-
   messageList.forEach((el) => {
     el.timestamp = date.format(new Date(Number(el.timestamp)));
-    // console.log(el);
   });
 
   for (const message of messageList) {
@@ -125,20 +99,9 @@ const Messages = ({ topic, setTopic, cluster }) => {
         <td className="py-4 px-6 text-center ">{message.partition}</td>
         <td className="py-4 px-6 text-center">{message.offset}</td>
         <td className="py-4 px-6 text-center">{message.timestamp}</td>
-        {/* More Details column: might be implemented in a later feature */}
-        {/* <td className="flex items-center py-4 px-6 text-center space-x-3">
-          <a
-            href="#"
-            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-          >
-            More Details
-          </a>
-        </td> */}
       </tr>
     );
   }
-
-  console.log("messageList is: ", messageList);
 
   return (
     <div className="flex justify-center pt-10 items-start">
@@ -164,15 +127,6 @@ const Messages = ({ topic, setTopic, cluster }) => {
               className="overflow-y-auto relative shadow-md sm:rounded-lg w-full mb-2"
             >
               <table className="w-full text-sm text-gray-500 rounded dark:text-gray-400 table-fixed">
-                <colgroup>
-                  <col span={"1"} style={{ maxWidth: "33%" }}></col>
-                  <col></col>
-                  <col></col>
-                  <col></col>
-                </colgroup>
-                {/* <col className="w-" />
-              <col className="w-" />
-              <col className="w-" /> */}
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 table-header-group">
                   <tr>
                     {/* TABLE COLUMN HEADERS */}
@@ -201,8 +155,6 @@ const Messages = ({ topic, setTopic, cluster }) => {
                     <th scope="col" className="py-3 px-6 text-center">
                       Time Sent
                     </th>
-                    {/* More Details column: might be implemented in a later feature */}
-                    {/* <th scope="col" className="py-3 px-6"></th> */}
                   </tr>
                 </thead>
                 <tbody>{messageTable}</tbody>

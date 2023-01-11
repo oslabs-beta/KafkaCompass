@@ -1,7 +1,6 @@
 import React from "react";
 
 const Card = ({ team }) => {
-  console.log(team[0]);
   return (
     <>
       {team.map((person) => (

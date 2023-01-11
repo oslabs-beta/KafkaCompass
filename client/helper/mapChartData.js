@@ -18,8 +18,8 @@ function mapChartData(data) {
       totalDescription: "Records sent by server: "
     },
     request_bytes: {
-      colDescription: "Bytes requested form server",
-      totalDescription: "Bytes requested form server: "
+      colDescription: "Bytes requested from server",
+      totalDescription: "Bytes requested from server: "
     },
     response_bytes: {
       colDescription: "Bytes responded by server",

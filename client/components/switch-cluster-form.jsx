@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-const SwitchCluster = ({
-  cluster,
-  setCluster,
-  clusterAdded,
-  setClusterAdded
-}) => {
+const SwitchCluster = ({ setCluster, clusterAdded }) => {
   const [clusterNames, setClusterNames] = useState([]);
-  // const clusterNames = ["pig", "soup", "human"];
   const [clusterSelection, setClusterSelection] = useState(0);
 
   useEffect(() => {
@@ -15,15 +9,13 @@ const SwitchCluster = ({
       try {
         const response = await fetch("/api/getClusterList");
         const clusterList = await response.json();
-        setClusterNames(() => [...clusterList]);
+        setClusterNames(clusterList);
       } catch (err) {
         console.log("Network error occurred - could not get cluste list");
       }
     }
     getClusterList();
   }, [clusterAdded]);
-
-  // useEffect(() => {}, [clusterSelection]);
 
   async function switchCluster() {
     try {
@@ -34,10 +26,12 @@ const SwitchCluster = ({
         },
         body: JSON.stringify({ cluster: clusterSelection })
       });
+      if (response.ok) {
+        setCluster(clusterSelection);
+      }
     } catch (err) {
       console.log("Network error occurred - could not switch cluster");
     }
-    setCluster(clusterSelection);
   }
 
   return (
@@ -67,7 +61,7 @@ const SwitchCluster = ({
               <option disabled selected>
                 Choose a cluster
               </option>
-              {clusterNames.map((name, index) => (
+              {clusterNames.map((name) => (
                 <option key={name}>{name}</option>
               ))}
             </select>

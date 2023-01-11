@@ -9,14 +9,25 @@ import Auth from "./containers/auth";
 import "./static/styles.css";
 
 function App() {
+  // using useNavigate hook to navigate between routes
   const navigate = useNavigate();
+
+  // navigation bar and mode-related state
   const [renderDrawerButton, setRenderDrawerButton] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [user, setUser] = useState({});
-  const [authMode, setAuthMode] = useState("");
   const [sideBarMode, setSideBarMode] = useState("current");
   const [dashboardMode, setDashboardMode] = useState("performanceStatistics");
+
+  // user-related state:
+  // user data from the backend
+  // variable to check if user is logged in
+  // if user is not logged in, what authentification form we need to render
+  const [user, setUser] = useState({});
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [authMode, setAuthMode] = useState("");
+
+  // metric-related state (for loading data for cluster)
   const [metricIndex, setMetricIndex] = useState(-1);
+  // holder for data -> metric is the part of user state to force the re-render when user updates metrics
   const [metric, setMetric] = useState({});
 
   // shared navigation bar state
@@ -51,9 +62,7 @@ function App() {
 
   const checkSession = async () => {
     try {
-      const response = await fetch("/api/authenticate", {
-        method: "GET"
-      });
+      const response = await fetch("/api/authenticate");
       if (response.ok) {
         const user = await response.json();
         setLoggedIn(true);
@@ -63,15 +72,13 @@ function App() {
         setUser({});
       }
     } catch (err) {
-      // console.log('Network error occurred - User not logged in');
+      // If try-catch block fails Network error occurred
     }
   };
 
   const logUserOut = async () => {
     try {
-      const response = await fetch("/api/logout", {
-        method: "GET"
-      });
+      const response = await fetch("/api/logout");
       if (response.ok) {
         setUser({});
         setLoggedIn(false);
@@ -83,6 +90,7 @@ function App() {
     }
   };
 
+  // if data on cluster was updated, useEffect updates user state with new metrics
   useEffect(() => {
     if (metric.created_at) {
       user.metric.push(metric);
@@ -90,6 +98,7 @@ function App() {
     }
   }, [metric]);
 
+  // if user gets updated, set metric's index to -1 (we switch user to the current cluster)
   useEffect(() => {
     setMetricIndex(-1);
   }, [user]);
@@ -103,7 +112,6 @@ function App() {
       <Navbar navigate={navigate} logUserOut={logUserOut} />
       <Routes>
         <Route path="*" element={<NotFound />} />
-
         <Route
           exact
           path="/dashboard"
