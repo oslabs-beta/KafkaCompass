@@ -55,27 +55,25 @@ apiController.getClusterList = (req, res, next) => {
   try {
     const clusterList = [];
     for (let i = 0; i < cloudCluster.length; i++) {
-      clusterList[i] = decrypt(cloudCluster[i].clusterId);
+      clusterList.push(decrypt(cloudCluster[i].clusterId));
     }
     res.locals.clusterList = clusterList;
     next();
-  } catch {
+  } catch (err) {
     next({
       log: "apiController.getClusterList: ERROR: Could not create clusterList",
-      message: { err: "Could not create cluster list" }
+      message: { error: err } //"Could not create cluster list" }
     });
   }
 };
 
 apiController.getTopics = async (req, res, next) => {
   const { cluster } = res.locals;
-  // console.log('cluster', cluster);
   const { RESTendpoint, clusterId, API_KEY, API_SECRET } = cluster;
   const token = Buffer.from(`${API_KEY}:${API_SECRET}`, "utf8").toString(
     "base64"
   );
   const headers = { Authorization: "Basic " + token };
-  console.log("in getTopics with cluster: ", cluster);
 
   try {
     const response = await axios({
@@ -105,12 +103,8 @@ apiController.addTopic = async (req, res, next) => {
   const headers = { Authorization: "Basic " + token };
 
   const { topic } = req.body;
-  console.log("session current cluster: ", req.session.currentCluster);
-  console.log("cluster in add topic: ", cluster);
-  console.log("topic to be added: ", topic);
   //format topic to remove any spaces in the name with an underscore
   const formattedTopic = topic.replace(/ /g, "_");
-  console.log("formattedTopic: ", formattedTopic);
 
   try {
     const response = axios({

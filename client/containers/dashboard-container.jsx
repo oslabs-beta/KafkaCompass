@@ -12,6 +12,7 @@ import SwitchCluster from "../components/switch-cluster-form";
 const DashboardContainer = (props) => {
   // state of current topic inside the Content Monitoring view
   const [topic, setTopic] = useState("Select a topic");
+  const [clusterAdded, setClusterAdded] = useState(false);
 
   // cluster selection for the Content Monitoring
   const [cluster, setCluster] = useState(0);
@@ -156,13 +157,20 @@ const DashboardContainer = (props) => {
           <div className="justify-center pt-10">{dashboardView}</div>
           {/* <!-- Page content here --> */}
         </div>
-        <AddClusterForm />
+        <AddClusterForm
+          clusterAdded={clusterAdded}
+          setClusterAdded={setClusterAdded}
+        />
         <DrawerSide
           metricSelection={metricSelection}
           updateSideDrawer={updateSideDrawer}
         />
       </div>
-      <SwitchCluster cluster={cluster} setCluster={setCluster} />
+      <SwitchCluster
+        cluster={cluster}
+        setCluster={setCluster}
+        clusterAdded={clusterAdded}
+      />
     </>
   );
 };

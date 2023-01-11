@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-const SwitchCluster = ({ cluster, setCluster }) => {
+const SwitchCluster = ({
+  cluster,
+  setCluster,
+  clusterAdded,
+  setClusterAdded
+}) => {
   const [clusterNames, setClusterNames] = useState([]);
   // const clusterNames = ["pig", "soup", "human"];
   const [clusterSelection, setClusterSelection] = useState(0);
@@ -16,13 +21,11 @@ const SwitchCluster = ({ cluster, setCluster }) => {
       }
     }
     getClusterList();
-  }, []);
+  }, [clusterAdded]);
 
   // useEffect(() => {}, [clusterSelection]);
 
   async function switchCluster() {
-    console.log("SENDING CLUSTER SELECTION INDEX : ", clusterSelection);
-
     try {
       const response = await fetch("/api/switchCluster", {
         method: "POST",
@@ -54,7 +57,6 @@ const SwitchCluster = ({ cluster, setCluster }) => {
                 for (let i = 0; i < clusterNames.length; i++) {
                   if (e.target.value === clusterNames[i]) {
                     index = i;
-                    console.log(index);
                     break;
                   }
                 }
