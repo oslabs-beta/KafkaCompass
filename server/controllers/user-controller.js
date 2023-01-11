@@ -150,6 +150,7 @@ userController.addCloudCluster = async (req, res, next) => {
 
     user.cloudCluster.push(cluster);
     user.save();
+    req.session.user.cloudCluster.push(cluster);
   } catch (error) {
     return next({
       log: "userController.addCloudCluster: ERROR: failed to create cluster",

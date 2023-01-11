@@ -13,6 +13,7 @@ const DashboardContainer = (props) => {
   //state of current topic for Real-Time Monitoring mode
   const [topic, setTopic] = useState("Select a topic");
   const [cluster, setCluster] = useState(0);
+  const [clusterAdded, setClusterAdded] = useState(false);
   useEffect(() => {
     console.log("CLUSTER INDEX STATE CHANGE");
     console.log("CURRENT CLUSTER STATE: ", cluster);
@@ -157,13 +158,20 @@ const DashboardContainer = (props) => {
           <div className="justify-center pt-10">{dashboardView}</div>
           {/* <!-- Page content here --> */}
         </div>
-        <AddClusterForm />
+        <AddClusterForm
+          clusterAdded={clusterAdded}
+          setClusterAdded={setClusterAdded}
+        />
         <DrawerSide
           metricSelection={metricSelection}
           updateSideDrawer={updateSideDrawer}
         />
       </div>
-      <SwitchCluster cluster={cluster} setCluster={setCluster} />
+      <SwitchCluster
+        cluster={cluster}
+        setCluster={setCluster}
+        clusterAdded={clusterAdded}
+      />
     </>
   );
 };
