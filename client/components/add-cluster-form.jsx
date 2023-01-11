@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const AddClusterForm = () => {
+const AddClusterForm = ({ clusterAdded, setClusterAdded }) => {
   //keeps track of user inputs in 'Add New Cluster' form
   const [newAPIKeyInput, setNewAPIKeyInput] = useState("");
   const [newAPISecretInput, setNewAPISecretInput] = useState("");
@@ -34,9 +34,10 @@ const AddClusterForm = () => {
         },
         body: JSON.stringify(newCluster)
       });
-      const response = await response.json();
-      if (response.ok) {
+      console.log("data in addCluster form: ", data);
+      if (data.ok) {
         console.log("cluster added");
+        setClusterAdded(!clusterAdded);
       } else {
         console.log("error adding cluster");
       }
