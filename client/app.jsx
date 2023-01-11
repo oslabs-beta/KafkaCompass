@@ -91,6 +91,10 @@ function App() {
   }, [metric]);
 
   useEffect(() => {
+    setMetricIndex(-1);
+  }, [user]);
+
+  useEffect(() => {
     checkSession();
   }, []);
 

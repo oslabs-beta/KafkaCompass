@@ -6,7 +6,8 @@ const DrawerSide = ({ metricSelection, updateSideDrawer }) => {
     useContext(NavbarContext).sideBarState;
 
   const { setDashboardMode } = useContext(NavbarContext).dashboardState;
-  const { metricIndex } = useContext(NavbarContext).metricIndexState;
+  const { metricIndex, setMetricIndex } =
+    useContext(NavbarContext).metricIndexState;
 
   const choices = {
     retained_bytes: "Retained Bytes",
@@ -58,6 +59,7 @@ const DrawerSide = ({ metricSelection, updateSideDrawer }) => {
             onClick={() => {
               setSideBarMode("current");
               setDashboardMode("performanceStatistics");
+              setMetricIndex(-1);
             }}
           >
             <a>Back to current cluster</a>
