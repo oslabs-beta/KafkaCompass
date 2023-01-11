@@ -42,6 +42,7 @@ const Messages = ({ topic, setTopic, cluster }) => {
   // console.log('topicList is :', topicList);
   const topicMenu = [];
   for (const topic of topicList) {
+    console.log("topicList in render: ", topicList);
     topicMenu.push(
       <li key={topic}>
         <a className="justify-end" onClick={selectTopic}>

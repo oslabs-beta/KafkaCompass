@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 const SwitchCluster = ({ cluster, setCluster }) => {
   const [clusterNames, setClusterNames] = useState([]);
   // const clusterNames = ["pig", "soup", "human"];
-  let clusterSelection = null;
+  const [clusterSelection, setClusterSelection] = useState(0);
 
   useEffect(() => {
     async function getClusterList() {
@@ -19,8 +19,10 @@ const SwitchCluster = ({ cluster, setCluster }) => {
     getClusterList();
   }, []);
 
+  // useEffect(() => {}, [clusterSelection]);
+
   async function switchCluster() {
-    console.log("in switch cluster with cluster: ", cluster);
+    console.log("SENDING CLUSTER SELECTION INDEX : ", clusterSelection);
 
     try {
       const response = await fetch("/api/switchCluster", {
@@ -28,12 +30,12 @@ const SwitchCluster = ({ cluster, setCluster }) => {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ cluster })
+        body: JSON.stringify({ cluster: clusterSelection })
       });
-      setCluster(clusterSelection);
     } catch (err) {
       console.log("Network error occurred - could not switch cluster");
     }
+    setCluster(clusterSelection);
   }
 
   return (
@@ -57,7 +59,7 @@ const SwitchCluster = ({ cluster, setCluster }) => {
                     break;
                   }
                 }
-                clusterSelection = index;
+                setClusterSelection(index);
               }}
               className="select w-full max-w-xs"
             >

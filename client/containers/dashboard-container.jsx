@@ -14,8 +14,8 @@ const DashboardContainer = (props) => {
   const [topic, setTopic] = useState("Select a topic");
   const [cluster, setCluster] = useState(0);
   useEffect(() => {
-    console.log("cluster changed");
-    console.log("cluster in dashboard useEffect: ", cluster);
+    console.log("CLUSTER INDEX STATE CHANGE");
+    console.log("CURRENT CLUSTER STATE: ", cluster);
   }, [cluster]);
 
   document.body.style.backgroundImage = "none";
