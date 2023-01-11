@@ -31,7 +31,7 @@ const DrawerSide = ({ metricSelection, updateSideDrawer }) => {
           setDashboardMode("performanceStatistics");
         }
       }}
-      className={metricSelection === key ? "bg-secondary" : ""}
+      className={metricSelection === key ? "bg-blue-800 text-white" : ""}
     >
       <a>{choices[key]}</a>
     </li>

@@ -117,7 +117,7 @@ const DashboardContainer = (props) => {
                 <button
                   className={
                     dashboardMode === "performanceStatistics"
-                      ? "btn btn-accent"
+                      ? "btn bg-blue-800"
                       : "btn"
                   }
                   onClick={changeModePerformanceStatistics}
@@ -127,7 +127,7 @@ const DashboardContainer = (props) => {
                 <button
                   className={
                     dashboardMode === "contentMonitoring"
-                      ? "btn btn-accent"
+                      ? "btn bg-blue-800"
                       : "btn"
                   }
                   onClick={changeModeContentMonitoring}
