@@ -7,6 +7,7 @@ import App from "./app.jsx";
 import ReactDOM from "react-dom/client";
 import styles from "./static/styles.css";
 import styles2 from "../dist/output.css";
+import logo from "./static/logo.png";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
