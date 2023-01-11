@@ -1,50 +1,59 @@
 import React, { useContext, useRef } from "react";
 import { NavbarContext } from "../NavbarContext";
 import AboutUs from "./about-us.jsx";
+import LogoWithoutText from "../static/logo_without_text.png";
 import "../static/styles.css";
 
 const LandingPage = ({ navigate }) => {
   const { loggedIn } = useContext(NavbarContext).loggedState;
 
+  document.body.style.backgroundImage =
+    "linear-gradient(to right, white, rgb(113, 165, 246))";
+
   const myRef = useRef(null);
 
   const executeScroll = () => {
-    myRef.current.scrollIntoView({behavior: "smooth"})
-  }
+    myRef.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
-  <><div className="first-page">
-    <div className="landing-container">
-      <article className="font-mono">
-        <h1 className="text-3xl">Kafka Compass</h1>
-        <p className="my-7">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-      </article>
-      <div className="landing-buttons">
-      <button
-        className="btn"
-        onClick={() => {
-          if (loggedIn) navigate("/dashboard");
-          else navigate("/auth");
-        }}
-      >
-        Navigate to Dashboard
-      </button>
-      <button className="btn" onClick={executeScroll}>Meet the team</button>
+    <>
+      <div className="first-page">
+        <div className="landing-container">
+          <article className="font-mono">
+            <img className="icon-logo my-2" src={LogoWithoutText} />
+            <h2 className="page-title text-lg ">Kafka Compass</h2>
+            <p className="text-justify text-lg">
+              Welcome to KafkaCompass: an open source tool to make your Kafka
+              experience easier. KafkaCompass will be your navigator while
+              working with Confluent Cloud. Get performance and content
+              statistics to monitor your Kafka cluster, view messages in your
+              topics, and check your cluster's history snapshots to see how you
+              cluster's performance changed over time. All you need to get
+              started is a running Kafka cluster in your Confluent Cloud. Sign
+              up and start monitoring!
+            </p>
+          </article>
+          <div className="landing-buttons my-3">
+            <button
+              className="btn btn-outline"
+              onClick={() => {
+                if (loggedIn) navigate("/dashboard");
+                else navigate("/auth");
+              }}
+            >
+              Navigate to Dashboard
+            </button>
+            <button className="btn btn-outline" onClick={executeScroll}>
+              Meet the team
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  
-    <div ref={myRef}>
-      <AboutUs />
-    </div> </>
+      <div ref={myRef}>
+        <AboutUs />
+      </div>{" "}
+    </>
   );
 };
 

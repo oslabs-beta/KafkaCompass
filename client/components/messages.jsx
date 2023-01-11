@@ -207,7 +207,7 @@ const Messages = ({ topic, setTopic }) => {
               </table>
             </div>
             <button
-              className="btn btn-active btn-primary btn-accent w-min self-center"
+              className="btn btn-active  bg-blue-800 w-min self-center"
               onClick={consumeMessages}
             >
               Consume Messages

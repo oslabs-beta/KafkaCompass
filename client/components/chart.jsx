@@ -25,7 +25,7 @@ const Chart = (props) => {
       <div className="flex">
         {sideBarMode === "current" && (
           <>
-            <button onClick={updateMetrics} className="mb-5 btn btn-accent">
+            <button onClick={updateMetrics} className="mb-5 btn bg-blue-800">
               Update Metrics
             </button>
           </>

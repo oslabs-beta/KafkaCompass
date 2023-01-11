@@ -27,6 +27,22 @@
 
 .view-container { grid-area: view-container; } */
 
+article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page-title {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 26px;
+}
+
+.icon-logo {
+  width: 70px;
+}
+
 .navbar {
   border-bottom: 1 px solid lightgray;
   display: flex;
@@ -36,7 +52,9 @@
   height: 500px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
+  gap: 30px;
+  margin-top: 20px;
   align-items: center;
   background-color: white;
 }
@@ -67,7 +85,6 @@
 .wrapper input {
   width: 60%;
 }
-
 
 .landing-container article h1 {
   text-align: center;
@@ -105,7 +122,7 @@
 }
 
 .chart-total {
-  color: rgb(64, 180, 179);
+  color: rgb(113, 165, 246);
 }
 
 .chart-total span {
@@ -144,7 +161,7 @@ div.scrollable {
 .about-header {
   text-align: center;
   font-size: 3rem;
-  font-family:Verdana, Geneva, Tahoma, sans-serif
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .about-us {

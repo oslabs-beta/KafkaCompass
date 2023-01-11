@@ -10,6 +10,8 @@ const Auth = ({ navigate }) => {
   const { setLoggedIn } = useContext(NavbarContext).loggedState;
   const { setUser } = useContext(NavbarContext).userState;
 
+  document.body.style.backgroundImage = "none";
+
   const { register, handleSubmit } = useForm();
   // render either log in or sign up form
   const renderLogin = authMode === "login";

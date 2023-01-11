@@ -38,7 +38,7 @@ function mapChartData(data) {
     const dataset = {};
     dataset.label = key.split("_").at(-1);
     dataset.data = data[key].metrics.map((metric) => metric.value);
-    dataset.backgroundColor = "rgba(64, 180, 179, 0.5)";
+    dataset.backgroundColor = "rgba(113, 165, 246, 0.5)";
     dataset.borderWidth = 1;
     metricsObj[key].totalValue = data[key].totalValue;
 

@@ -12,6 +12,8 @@ const DashboardContainer = (props) => {
   //state of current topic for Real-Time Monitoring mode
   const [topic, setTopic] = useState("Select a topic");
 
+  document.body.style.backgroundImage = "none";
+
   // getting sharable state from the useContex
   const { setRenderDrawerButton } =
     useContext(NavbarContext).drawerButtonsState;
@@ -115,7 +117,7 @@ const DashboardContainer = (props) => {
                 <button
                   className={
                     dashboardMode === "performanceStatistics"
-                      ? "btn btn-accent"
+                      ? "btn bg-blue-800"
                       : "btn"
                   }
                   onClick={changeModePerformanceStatistics}
@@ -125,7 +127,7 @@ const DashboardContainer = (props) => {
                 <button
                   className={
                     dashboardMode === "contentMonitoring"
-                      ? "btn btn-accent"
+                      ? "btn bg-blue-800"
                       : "btn"
                   }
                   onClick={changeModeContentMonitoring}

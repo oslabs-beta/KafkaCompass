@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { NavbarContext } from "../NavbarContext";
 import homeIcon from "../static/homeIcon.png";
+import logoWithoutText from "../static/logo_without_text.png";
+import logo from "../static/logo.png";
 
 const Navbar = ({ navigate, logUserOut }) => {
   const { setAuthMode } = useContext(NavbarContext).authModeState;
@@ -30,7 +32,7 @@ const Navbar = ({ navigate, logUserOut }) => {
         </label>
         <ul
           tabIndex={0}
-          className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+          className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 text-black"
         >
           <li>
             <a>
@@ -63,12 +65,19 @@ const Navbar = ({ navigate, logUserOut }) => {
           }}
           className="btn btn-ghost btn-circle"
         >
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png"
-            alt="home icon"
-            width="16"
-            height="16"
-          ></img>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 32 32"
+            className="inline-block w-5 h-5 stroke-current"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M32 18.451l-16-12.42-16 12.42v-5.064l16-12.42 16 12.42zM28 18v12h-8v-8h-8v8h-8v-12l12-9z"
+            ></path>
+          </svg>
         </button>
         <button
           onClick={() => {
@@ -100,12 +109,19 @@ const Navbar = ({ navigate, logUserOut }) => {
           }}
           className="btn btn-ghost btn-circle"
         >
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png"
-            alt="home icon"
-            width="16"
-            height="16"
-          ></img>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 32 32"
+            className="inline-block w-5 h-5 stroke-current"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M32 18.451l-16-12.42-16 12.42v-5.064l16-12.42 16 12.42zM28 18v12h-8v-8h-8v8h-8v-12l12-9z"
+            ></path>
+          </svg>
         </button>
         <button
           onClick={() => {
@@ -124,12 +140,10 @@ const Navbar = ({ navigate, logUserOut }) => {
 
   return (
     <>
-      <div className="navbar bg-base-100">
+      <div className="navbar bg-blue-800 text-white">
         <div className="navbar-start">{drawerButtons}</div>
-        <div className="navbar-center">
-          <a className="btn btn-ghost normal-case text-xl">KafkaCompass</a>
-        </div>
         <div className="navbar-end">{logButtons}</div>
+        <img className="h-12" src={logoWithoutText} alt="Kafka logo" />
       </div>
     </>
   );
