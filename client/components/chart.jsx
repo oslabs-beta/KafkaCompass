@@ -4,6 +4,7 @@ import "chart.js/auto";
 import { Bar } from "react-chartjs-2";
 
 const Chart = (props) => {
+  // selecting metric specific to this chart
   const metric = props.metricSelection;
   const chartData = props.chartData[metric];
 

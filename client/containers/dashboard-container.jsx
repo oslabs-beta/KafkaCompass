@@ -24,15 +24,12 @@ const DashboardContainer = (props) => {
   const { setRenderDrawerButton } =
     useContext(NavbarContext).drawerButtonsState;
   const { sideBarMode } = useContext(NavbarContext).sideBarState;
-
-  const [chartData, setChart] = useState();
-
   const [metricSelection, setMetricSelection] = useState("retained_bytes");
 
+  // cluster data for charts and tables for the user
+  const [chartData, setChart] = useState();
   const [tableData, setTableData] = useState([]);
-
   const { metricIndex } = useContext(NavbarContext).metricIndexState;
-
   const { user } = useContext(NavbarContext).userState;
 
   useEffect(() => {
@@ -72,16 +69,13 @@ const DashboardContainer = (props) => {
   const { dashboardMode, setDashboardMode } =
     useContext(NavbarContext).dashboardState;
 
-  // mode switching functions
+  // functions for switching mode of the dashboard
   function changeModePerformanceStatistics() {
     setDashboardMode("performanceStatistics");
   }
   function changeModeContentMonitoring() {
     setDashboardMode("contentMonitoring");
   }
-  // function changeModeClusterComparison() {
-  //   setDashboardMode("clusterComparison");
-  // }
 
   // sets current dashboard view
   let dashboardView = <></>;
@@ -141,7 +135,8 @@ const DashboardContainer = (props) => {
                 >
                   Content Monitoring
                 </button>
-                {/* <button
+                {/* Feature in work
+                <button
                   className={
                     dashboardMode === "clusterComparison"
                       ? "btn btn-accent"
@@ -155,7 +150,6 @@ const DashboardContainer = (props) => {
             )}
           </div>
           <div className="justify-center pt-10">{dashboardView}</div>
-          {/* <!-- Page content here --> */}
         </div>
         <AddClusterForm
           clusterAdded={clusterAdded}

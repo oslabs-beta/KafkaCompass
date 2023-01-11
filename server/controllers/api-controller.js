@@ -157,16 +157,7 @@ apiController.getMessages = async (req, res, next) => {
   //thinking we could use kafka.js for
   const { topic } = req.params;
   const { cluster } = res.locals;
-  console.log(cluster);
-  const {
-    API_KEY,
-    API_SECRET,
-    CLOUD_KEY,
-    CLOUD_SECRET,
-    clusterId,
-    RESTendpoint,
-    bootstrapServer
-  } = cluster;
+  const { API_KEY, API_SECRET, clusterId, bootstrapServer } = cluster;
   const kafka = new Kafka({
     brokers: [bootstrapServer],
     clientId: clusterId,

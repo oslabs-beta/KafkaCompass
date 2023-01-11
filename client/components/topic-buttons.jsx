@@ -34,7 +34,6 @@ const TopicButtons = ({ topic, setTopic, topicList }) => {
 
   //to submit message to topic
   const handleAddMessage = async (topic, message) => {
-    console.log("topic: ", topic, "message: ", message);
     try {
       const response = await fetch("/api/message", {
         method: "POST",
@@ -43,9 +42,7 @@ const TopicButtons = ({ topic, setTopic, topicList }) => {
         },
         body: JSON.stringify({ topic, message })
       });
-      console.log("response: ", response);
       if (response.ok) {
-        console.log("message added to cluster");
         return;
       } else {
         console.log("Could not add new message to the cluster");

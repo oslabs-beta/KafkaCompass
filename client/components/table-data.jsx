@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 const TableData = (props) => {
   let tableRows = [];
@@ -16,13 +16,10 @@ const TableData = (props) => {
     tableRows.push(oneRow);
   }
 
-  useEffect(() => {}, []);
-
   return (
     <div className="table-stats">
       <div className="overflow-x-auto">
         <table className="table w-full">
-          {/* <!-- head --> */}
           <thead>
             <tr>
               <th>Name</th>
