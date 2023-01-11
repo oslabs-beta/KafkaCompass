@@ -7,10 +7,16 @@ import TableData from "../components/table-data";
 import DrawerSide from "../components/drawer-side";
 import mapChartData from "../helper/mapChartData";
 import ClusterHistory from "./cluster-history";
+import SwitchCluster from "../components/switch-cluster-form";
 
 const DashboardContainer = (props) => {
   //state of current topic for Real-Time Monitoring mode
   const [topic, setTopic] = useState("Select a topic");
+  const [cluster, setCluster] = useState(0);
+  useEffect(() => {
+    console.log("cluster changed");
+    console.log("cluster in dashboard useEffect: ", cluster);
+  }, [cluster]);
 
   // getting sharable state from the useContex
   const { setRenderDrawerButton } =
@@ -92,7 +98,7 @@ const DashboardContainer = (props) => {
   } else if (dashboardMode === "contentMonitoring") {
     dashboardView = (
       <div className="flex justify-center pt-10 items-start">
-        <Messages setTopic={setTopic} topic={topic} />
+        <Messages setTopic={setTopic} topic={topic} cluster={cluster} />
       </div>
     );
   } else if (dashboardMode === "clusterHistory") {
@@ -154,6 +160,7 @@ const DashboardContainer = (props) => {
           updateSideDrawer={updateSideDrawer}
         />
       </div>
+      <SwitchCluster cluster={cluster} setCluster={setCluster} />
     </>
   );
 };

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-const SwitchCluster = () => {
-  const [cluster, setCluster] = useState(0);
+const SwitchCluster = ({ cluster, setCluster }) => {
   const [clusterNames, setClusterNames] = useState([]);
   // const clusterNames = ["pig", "soup", "human"];
+  let clusterSelection = null;
 
   useEffect(() => {
     async function getClusterList() {
@@ -30,6 +30,7 @@ const SwitchCluster = () => {
         },
         body: JSON.stringify({ cluster })
       });
+      setCluster(clusterSelection);
     } catch (err) {
       console.log("Network error occurred - could not switch cluster");
     }
@@ -56,7 +57,7 @@ const SwitchCluster = () => {
                     break;
                   }
                 }
-                setCluster(index);
+                clusterSelection = index;
               }}
               className="select w-full max-w-xs"
             >
