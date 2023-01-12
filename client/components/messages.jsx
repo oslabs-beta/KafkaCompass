@@ -88,11 +88,11 @@ const Messages = ({ topic, setTopic, cluster }) => {
       el.timestamp = date.format(new Date(Number(el.timestamp)));
     }
   });
-
+  let i = 0;
   for (const message of messageList) {
     messageTable.push(
       <tr
-        key={message.value}
+        key={message.value + i}
         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
       >
         {/* Checkbox column: might be added in a later version */}
@@ -119,6 +119,7 @@ const Messages = ({ topic, setTopic, cluster }) => {
         <td className="py-4 px-6 text-center">{message.timestamp}</td>
       </tr>
     );
+    i++;
   }
 
   return (
