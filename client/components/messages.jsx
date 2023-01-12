@@ -7,6 +7,10 @@ const Messages = ({ topic, setTopic, cluster }) => {
   const [messageList, setMessageList] = useState([]);
   const [topicDeleted, setTopicDeleted] = useState(false);
 
+  useEffect(() => {
+    setMessageList([]);
+  }, [topic]);
+
   const messageTable =
     messageList.length === 0
       ? [
@@ -80,7 +84,9 @@ const Messages = ({ topic, setTopic, cluster }) => {
 
   messageList.sort((a, b) => b.timestamp - a.timestamp);
   messageList.forEach((el) => {
-    el.timestamp = date.format(new Date(Number(el.timestamp)));
+    if (!isNaN(Number(el.timestamp))) {
+      el.timestamp = date.format(new Date(Number(el.timestamp)));
+    }
   });
 
   for (const message of messageList) {
