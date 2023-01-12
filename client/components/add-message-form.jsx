@@ -6,17 +6,21 @@ const AddMessage = ({ onCreate, topic }) => {
   const [topicList, setTopicList] = useState([]);
 
   //I use an identical function to get topic list as sibling button here, I'll plan on putting this higher in state later
-  useEffect(() => {
-    fetch("/api/topic")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("data is :", data);
-        setTopicList(data);
-      })
-      .catch(() => {
-        console.log("ERROR");
-      });
-  }, []);
+  // useEffect(() => {
+  //   try {
+  //     fetch("/api/topic")
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log("data is :", data);
+  //         setTopicList(data);
+  //       })
+  //       .catch(() => {
+  //         console.log("ERROR");
+  //       });
+  //   } catch {
+  //     console.log("Could not fetch topics");
+  //   }
+  // }, []);
 
   return (
     <>
