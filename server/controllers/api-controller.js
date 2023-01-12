@@ -194,7 +194,7 @@ apiController.getMessages = async (req, res, next) => {
           setTimeout(() => {
             consumer.disconnect();
             next();
-          }, 1000);
+          }, 1500);
         }
       });
     };

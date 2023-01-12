@@ -3,30 +3,44 @@ import AddMessage from "./add-message-form";
 import AddTopic from "./add-topic-form";
 import DeleteTopic from "./delete-topic-from";
 
-const TopicButtons = ({ topic, setTopic, topicList }) => {
-  const handleCreateTopic = (topic) => {
+const TopicButtons = ({
+  topic,
+  setTopic,
+  topicList,
+  setTopicList,
+  topicDeleted,
+  setTopicDeleted
+}) => {
+  const handleCreateTopic = async (topic) => {
     try {
-      fetch("/api/topic", {
+      const response = await fetch("/api/topic", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({ topic })
       });
+      if (response.ok) {
+        console.log("in ok response");
+        setTopicList((prev) => [...prev, topic]);
+      }
     } catch (err) {
       console.log("Unable to create topic");
     }
   };
 
-  const handleDeleteTopic = (topic) => {
+  const handleDeleteTopic = async (topic) => {
     try {
-      fetch("/api/topic", {
+      const response = await fetch("/api/topic", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({ topic })
       });
+      if (response.ok) {
+        setTopicDeleted(!topicDeleted);
+      }
     } catch (error) {
       console.log("Unable to delete topic");
     }
