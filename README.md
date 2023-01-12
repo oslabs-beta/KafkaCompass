@@ -77,7 +77,7 @@ Now that you have a cluster stored in your account, you will be able to see perf
 
 - KafkaCompass is open source, and we would love to see contributions from the community! If you would like to contribute, submit a pull request to the "dev" branch of the original repository. Additionally, if you notice any issues with the application, please add an entry to the "issues" section of the repository.
 
-- If you are looking for specific ideas on where to contribute, here are some features we would like to see being added/worked on:
+If you are looking for specific ideas on where to contribute, here are some features we would like to see being added/worked on:
 
 - Visual cluster comparison features 
 - Additional performance metrics
