@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import TopicButtons from "../components/topic-buttons";
 
 const Messages = ({ topic, setTopic, cluster }) => {
@@ -6,6 +6,8 @@ const Messages = ({ topic, setTopic, cluster }) => {
   const [topicList, setTopicList] = useState([]);
   const [messageList, setMessageList] = useState([]);
   const [topicDeleted, setTopicDeleted] = useState(false);
+  const consumeButton = useRef();
+  console.log("button", consumeButton);
 
   useEffect(() => {
     setMessageList([]);
@@ -58,9 +60,15 @@ const Messages = ({ topic, setTopic, cluster }) => {
   const consumeMessages = async () => {
     if (topic !== "Select a topic") {
       try {
+        consumeButton.current.disabled = true;
         const response = await fetch(`/api/message/${topic}`);
         const data = await response.json();
         setMessageList(data);
+        console.log("consumeButton disabled");
+        setTimeout(() => {
+          consumeButton.current.disabled = false;
+          console.log("consumeButton activated");
+        }, 5000);
       } catch (err) {
         console.log(err);
       }
@@ -182,6 +190,7 @@ const Messages = ({ topic, setTopic, cluster }) => {
             <button
               className="btn btn-active  bg-blue-800 w-min self-center"
               onClick={consumeMessages}
+              ref={consumeButton}
             >
               Consume Messages
             </button>
