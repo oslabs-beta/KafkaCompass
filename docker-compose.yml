@@ -1,4 +1,3 @@
-version: '1'
 services:
   dev:
     image: kafkacompass/mm-prod
