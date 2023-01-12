@@ -3,6 +3,8 @@ import Card from "../components/card";
 import DariaMordvinov from "../static/DariaMordvinov.jpg";
 import KevinDooley from "../static/KevinDooley.png";
 import Cat from "../static/cat.jpg";
+import JasonKuyper from "../static/JasonKuyper.jpg";
+import RyanZarou from "../static/RyanZarou.png";
 
 const AboutUs = () => {
   const team = [
@@ -29,17 +31,17 @@ const AboutUs = () => {
     },
     {
       name: "Jason Kuyper",
-      img: Cat,
+      img: JasonKuyper,
       description: "Software Engineer",
       github: "https://github.com/jasonkuyper",
-      linkedin: "https://www.linkedin.com/"
+      linkedin: "www.linkedin.com/in/jason-kuyper"
     },
     {
       name: "Ryan Zarou",
-      img: Cat,
+      img: RyanZarou,
       description: "Software Engineer",
       github: "https://github.com/rzarou",
-      linkedin: "https://www.linkedin.com/"
+      linkedin: "https://www.linkedin.com/in/rzarou/"
     }
   ];
   return (
