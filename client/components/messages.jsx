@@ -17,14 +17,20 @@ const Messages = ({ topic, setTopic, cluster }) => {
 
   // sets list of topics in the state depending on the data in the user's current cluster
   useEffect(() => {
-    fetch("/api/topic")
-      .then((res) => res.json())
-      .then((data) => {
-        setTopicList(data);
-      })
-      .catch(() => {
-        console.log("ERROR");
-      });
+    async function getTopicList() {
+      try {
+        const response = await fetch("/api/topic");
+        const data = await response.json();
+        if (response.ok) {
+          setTopicList(data);
+        } else {
+          console.log("Could not get topics.");
+        }
+      } catch {
+        console.log("Network error fetching topic list");
+      }
+    }
+    getTopicList();
   }, [cluster]);
 
   const selectTopic = (e) => {
@@ -32,24 +38,29 @@ const Messages = ({ topic, setTopic, cluster }) => {
   };
 
   const topicMenu = [];
-  for (const topic of topicList) {
-    console.log("topicList in render: ", topicList);
-    topicMenu.push(
-      <li key={topic}>
-        <a className="justify-end" onClick={selectTopic}>
-          {topic}
-        </a>
-      </li>
-    );
+  if (topicList.length) {
+    for (const topic of topicList) {
+      topicMenu.push(
+        <li key={topic}>
+          <a className="justify-end" onClick={selectTopic}>
+            {topic}
+          </a>
+        </li>
+      );
+    }
   }
 
   const consumeMessages = async () => {
-    try {
-      const response = await fetch(`/api/message/${topic}`);
-      const data = await response.json();
-      setMessageList(data);
-    } catch (err) {
-      console.log(err);
+    if (topic !== "Select a topic") {
+      try {
+        const response = await fetch(`/api/message/${topic}`);
+        const data = await response.json();
+        setMessageList(data);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.log("No topic selected");
     }
   };
 

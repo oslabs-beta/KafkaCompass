@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 const DeleteTopic = ({ onDelete, topicList }) => {
   const [topic, setTopic] = useState("");
-  const topicNames = topicList;
+  let topicNames = [];
+  if (topicList) topicNames = topicList;
 
   return (
     <>

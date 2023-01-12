@@ -155,49 +155,56 @@ apiController.deleteTopic = async (req, res, next) => {
 apiController.getMessages = async (req, res, next) => {
   //general plan for this one would be to make our own consumer which would just give the latest stream of messages from the cluster
   //thinking we could use kafka.js for
-  const { topic } = req.params;
-  const { cluster } = res.locals;
-  const { API_KEY, API_SECRET, clusterId, bootstrapServer } = cluster;
-  const kafka = new Kafka({
-    brokers: [bootstrapServer],
-    clientId: clusterId,
-    ssl: true,
-    sasl: {
-      mechanism: "plain",
-      password: API_SECRET,
-      username: API_KEY
-    }
-  });
-  const groupId = "kafka-group";
-  const consumer = kafka.consumer({ groupId });
-  const admin = kafka.admin();
-
-  const receiveMessages = async () => {
-    await admin.connect();
-    await admin.resetOffsets({ groupId, topic });
-    await admin.disconnect();
-    await consumer.connect();
-    await consumer.subscribe({ topic: topic, fromBeginning: true });
-    res.locals.messageList = [];
-    await consumer.run({
-      eachMessage: async ({ topic, partition, message }) => {
-        const kafkaMessage = {
-          topic,
-          partition,
-          timestamp: message.timestamp,
-          offset: message.offset,
-          value: message.value.toString()
-        };
-        console.log("Received message:", kafkaMessage);
-        res.locals.messageList.push(kafkaMessage);
-        setTimeout(() => {
-          consumer.disconnect();
-          next();
-        }, 4000);
+  try {
+    const { topic } = req.params;
+    const { cluster } = res.locals;
+    const { API_KEY, API_SECRET, clusterId, bootstrapServer } = cluster;
+    const kafka = new Kafka({
+      brokers: [bootstrapServer],
+      clientId: clusterId,
+      ssl: true,
+      sasl: {
+        mechanism: "plain",
+        password: API_SECRET,
+        username: API_KEY
       }
     });
-  };
-  receiveMessages();
+    const groupId = "kafka-group";
+    const consumer = kafka.consumer({ groupId });
+    const admin = kafka.admin();
+
+    const receiveMessages = async () => {
+      await admin.connect();
+      await admin.resetOffsets({ groupId, topic });
+      await admin.disconnect();
+      await consumer.connect();
+      await consumer.subscribe({ topic: topic, fromBeginning: true });
+      res.locals.messageList = [];
+      await consumer.run({
+        eachMessage: async ({ topic, partition, message }) => {
+          const kafkaMessage = {
+            topic,
+            partition,
+            timestamp: message.timestamp,
+            offset: message.offset,
+            value: message.value.toString()
+          };
+          console.log("Received message:", kafkaMessage);
+          res.locals.messageList.push(kafkaMessage);
+          setTimeout(() => {
+            consumer.disconnect();
+            next();
+          }, 1000);
+        }
+      });
+    };
+    receiveMessages();
+  } catch (err) {
+    next({
+      log: "error in getMessages",
+      message: "Could not get messages from cluster"
+    });
+  }
 };
 
 apiController.addMessage = async (req, res, next) => {

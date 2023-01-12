@@ -33,28 +33,28 @@ const DashboardContainer = (props) => {
   const { user } = useContext(NavbarContext).userState;
 
   useEffect(() => {
-    const data = user.metric.at(metricIndex);
-
-    const dataForTable = [
-      "partition_count",
-      "active_connection_count",
-      "successful_authentication_count",
-      "cluster_load_percent"
-    ].map((td) => {
-      const name = td.replace(/_/g, " ");
-      const description = data[td].description;
-      const value = data[td].totalValue;
-      return {
-        name,
-        description,
-        value
-      };
-    });
-
-    setTableData(dataForTable);
-
     //if no clusters in user info, no charts will load
     try {
+      const data = user.metric.at(metricIndex);
+
+      const dataForTable = [
+        "partition_count",
+        "active_connection_count",
+        "successful_authentication_count",
+        "cluster_load_percent"
+      ].map((td) => {
+        const name = td.replace(/_/g, " ");
+        const description = data[td].description;
+        const value = data[td].totalValue;
+        return {
+          name,
+          description,
+          value
+        };
+      });
+
+      setTableData(dataForTable);
+
       setChart(mapChartData(data));
     } catch {
       console.log("No clusters in user data");
