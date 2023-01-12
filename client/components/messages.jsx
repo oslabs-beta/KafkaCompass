@@ -5,6 +5,7 @@ const Messages = ({ topic, setTopic, cluster }) => {
   //state for current topic
   const [topicList, setTopicList] = useState([]);
   const [messageList, setMessageList] = useState([]);
+  const [topicDeleted, setTopicDeleted] = useState(false);
 
   const messageTable =
     messageList.length === 0
@@ -31,7 +32,7 @@ const Messages = ({ topic, setTopic, cluster }) => {
       }
     }
     getTopicList();
-  }, [cluster]);
+  }, [cluster, topicDeleted]);
 
   const selectTopic = (e) => {
     setTopic(e.target.text);
@@ -180,7 +181,14 @@ const Messages = ({ topic, setTopic, cluster }) => {
           </div>
         </div>
       </div>
-      <TopicButtons topic={topic} setTopic={setTopic} topicList={topicList} />
+      <TopicButtons
+        topic={topic}
+        setTopic={setTopic}
+        topicList={topicList}
+        setTopicList={setTopicList}
+        topicDeleted={topicDeleted}
+        setTopicDeleted={setTopicDeleted}
+      />
     </div>
   );
 };
