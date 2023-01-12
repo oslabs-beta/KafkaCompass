@@ -90,15 +90,26 @@ userController.setUserAuth = (req, res, next) => {
 };
 
 userController.checkUserAuth = (req, res, next) => {
-  const token = req.cookies.token;
-  const user = jwt.verify(token, superSecret);
-  if (req.session.user && user.user === req.session.user._id) return next();
-  return next({
-    log: "userController.checkUserAuth: ERROR: Unauthorized User",
-    message: {
-      err: "Unauthorized"
+  try {
+    const token = req.cookies.token;
+    const user = jwt.verify(token, superSecret);
+    if (req.session.user && user.user === req.session.user._id) {
+      req.session.auth = true;
+      return next();
+    } 
+    else {
+      req.session.auth = false;
+      return next();
     }
-  });
+  } catch (err) {
+    return next({
+      log: "userController.checkUserAuth: ERROR: Unauthorized User",
+      status: 401,
+      message: {
+        err: err
+      }
+    });
+  }
 };
 
 userController.addCloudCluster = async (req, res, next) => {

@@ -44,7 +44,7 @@ app.use(
 );
 
 app.get("/api/authenticate", userController.checkUserAuth, (req, res, next) => {
-  res.status(200).json(req.session.user);
+  res.status(200).json(req.session);
 });
 
 app.get("/api/logout", userController.logOut, (req, res, next) => {
@@ -78,13 +78,23 @@ app.post(
 );
 
 //endpoint to switch current cluster in session
-app.get("/api/getClusterList", userController.checkUserAuth, apiController.getClusterList, (req, res) => {
-  return res.status(201).json(res.locals.clusterList);
-});
+app.get(
+  "/api/getClusterList",
+  userController.checkUserAuth,
+  apiController.getClusterList,
+  (req, res) => {
+    return res.status(201).json(res.locals.clusterList);
+  }
+);
 
-app.post("/api/switchCluster", userController.checkUserAuth, userController.switchCluster, (req, res) => {
-  return res.status(201).json("cluster switched");
-});
+app.post(
+  "/api/switchCluster",
+  userController.checkUserAuth,
+  userController.switchCluster,
+  (req, res) => {
+    return res.status(201).json("cluster switched");
+  }
+);
 
 //endpoints to get and modify various elements of the cluster
 
@@ -151,11 +161,16 @@ app.get(
     return res.json(res.locals.metric);
   }
 );
+
+app.get("/index.js", (req, res) => {
+  res.status(200).sendFile(path.resolve(__dirname, "../dist/index.html"));
+});
+
 //catch-all that sends index.html file to client-side
-// app.get('/*', (req, res) => {
-//   console.log('here');
-//   res.sendFile(path.resolve(__dirname, '../dist/index.html'));
-// });
+app.get("/", (req, res) => {
+  res.status(200).sendFile(path.resolve(__dirname, "../dist/index.html"));
+});
+
 
 // global error handler
 app.use((err, req, res, next) => {
