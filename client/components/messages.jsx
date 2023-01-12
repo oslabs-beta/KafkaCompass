@@ -6,21 +6,22 @@ const Messages = ({ topic, setTopic, cluster }) => {
   const [topicList, setTopicList] = useState([]);
   const [messageList, setMessageList] = useState([]);
   const [topicDeleted, setTopicDeleted] = useState(false);
+  const [consumedTopic, setConsumedTopic] = useState("");
   const consumeButton = useRef();
-  console.log("button", consumeButton);
+  let messageTable = [];
 
   useEffect(() => {
     setMessageList([]);
   }, [topic]);
 
-  const messageTable =
-    messageList.length === 0
-      ? [
-          <td key="no topic" colSpan={4} className="text-center p-4 w-4">
-            No messages
-          </td>
-        ]
-      : [];
+  // const messageTable =
+  //   messageList.length === 0
+  //     ? [
+  //         <td key="no topic" colSpan={4} className="text-center p-4 w-4">
+  //           No messages
+  //         </td>
+  //       ]
+  //     : [];
 
   // sets list of topics in the state depending on the data in the user's current cluster
   useEffect(() => {
@@ -58,6 +59,7 @@ const Messages = ({ topic, setTopic, cluster }) => {
   }
 
   const consumeMessages = async () => {
+    setConsumedTopic(topic);
     if (topic !== "Select a topic") {
       try {
         consumeButton.current.disabled = true;
@@ -97,38 +99,48 @@ const Messages = ({ topic, setTopic, cluster }) => {
     }
   });
   let i = 0;
-  for (const message of messageList) {
-    messageTable.push(
-      <tr
-        key={message.value + i}
-        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-      >
-        {/* Checkbox column: might be added in a later version */}
-        {/* <td className="p-4 w-4">
-          <div className="flex items-center">
-            <input
-              id="checkbox-table-search-1"
-              type="checkbox"
-              className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-            ></input>
-            <label for="checkbox-table-search-1" className="sr-only">
-              checkbox
-            </label>
-          </div>
-        </td> */}
-        <td
-          scope="row"
-          className="max-w-min py-4 px-6 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white overflow-scroll"
+
+  console.log("consumedTopic: ", consumedTopic);
+  console.log("topic: ", topic);
+  if (consumedTopic === topic) {
+    for (const message of messageList) {
+      messageTable.push(
+        <tr
+          key={message.value + i}
+          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
         >
-          {message.value}
-        </td>
-        <td className="py-4 px-6 text-center ">{message.partition}</td>
-        <td className="py-4 px-6 text-center">{message.offset}</td>
-        <td className="py-4 px-6 text-center">{message.timestamp}</td>
-      </tr>
+          {/* Checkbox column: might be added in a later version */}
+          {/* <td className="p-4 w-4">
+            <div className="flex items-center">
+              <input
+                id="checkbox-table-search-1"
+                type="checkbox"
+                className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              ></input>
+              <label for="checkbox-table-search-1" className="sr-only">
+                checkbox
+              </label>
+            </div>
+          </td> */}
+          <td
+            scope="row"
+            className="max-w-min py-4 px-6 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white overflow-scroll"
+          >
+            {message.value}
+          </td>
+          <td className="py-4 px-6 text-center ">{message.partition}</td>
+          <td className="py-4 px-6 text-center">{message.offset}</td>
+          <td className="py-4 px-6 text-center">{message.timestamp}</td>
+        </tr>
+      );
+      i++;
+    }
+  } else
+    messageTable.push(
+      <td key="no topic" colSpan={4} className="text-center p-4 w-4">
+        No messages
+      </td>
     );
-    i++;
-  }
 
   return (
     <div className="flex justify-center pt-10 items-start">
