@@ -1,0 +1,8 @@
+version: 1
+services:
+  dev:
+    image: kafkacompass/mm-prod
+    container_name: kafkacompass-prod
+    ports:
+      - 3000:3000
+    command: npm start
