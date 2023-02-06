@@ -191,12 +191,12 @@ apiController.getMessages = async (req, res, next) => {
           };
           console.log("Received message:", kafkaMessage);
           res.locals.messageList.push(kafkaMessage);
-          setTimeout(() => {
-            consumer.disconnect();
-            next();
-          }, 1500);
         }
       });
+      setTimeout(() => {
+        consumer.disconnect();
+        next();
+      }, 2000);
     };
     receiveMessages();
   } catch (err) {
