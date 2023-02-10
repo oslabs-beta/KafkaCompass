@@ -24,7 +24,7 @@ const LandingPage = ({ navigate }) => {
 
   return (
     <>
-      <div className="h-screen p-16 xl:mx-60 lg:mx-28 md:px-4 md:pb-8 sm:pb-64 sm:mb-72">
+      <div className="h-screen p-16 xl:mx-60 lg:mx-28 md:px-4 md:pb-8 md:mb-72 sm:pb-64 sm:mb-72">
         <div className="flex-1 justify-around">
           <article className="font-mono overflow-auto">
             <img className="icon-logo my-2" src={LogoWithoutText} />
