@@ -36,12 +36,12 @@ const LandingPage = ({ navigate }) => {
               statistics to monitor your Kafka cluster, view messages in your
               topics, and check your cluster's history snapshots to see how you
               cluster's performance changed over time. All you need to get
-              started is a running Kafka cluster in your Confluent Cloud. Clone
-              and run our respository, sign up, and start monitoring!
+              started is a running Kafka cluster in your Confluent Cloud. Create
+              an account and start monitoring!
             </p>
           </article>
           <div className="flex justify-around">
-            <div className="landing-buttons my-3 flex sm:flex-col">
+            <div className="landing-buttons my-3 flex md:flex-col">
               <form action="https://github.com/oslabs-beta/KafkaCompass">
                 <button className="btn btn-outline"> Github Repository </button>
               </form>
