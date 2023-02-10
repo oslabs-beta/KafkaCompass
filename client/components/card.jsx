@@ -4,7 +4,7 @@ const Card = ({ team }) => {
   return (
     <>
       {team.map((person) => (
-        <div className="bio-cardd card w-96 bg-base-100 shadow-xl">
+        <div className="bio-cardd card w-70 bg-base-100 shadow-xl flex-grow-1">
           <img
             src={person.img}
             alt={person.name}
