@@ -64,9 +64,14 @@ function App() {
     try {
       const response = await fetch("/api/authenticate");
       if (response.ok) {
-        const user = await response.json();
-        setLoggedIn(true);
-        setUser(user);
+        const session = await response.json();
+        if (session.auth) {
+          setLoggedIn(true);
+          setUser(session.user);
+        } else {
+          setLoggedIn(false);
+          setUser({});
+        }
       } else {
         setLoggedIn(false);
         setUser({});
