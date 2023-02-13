@@ -175,7 +175,7 @@ div.scrollable {
 }
 
 .bio-cardd {
-  height: 34rem;
+  /* height: 34rem; */
   margin: 1rem;
 }
 
@@ -196,6 +196,7 @@ div.scrollable {
 
 .landing-buttons button {
   margin: 1rem;
+  width: 15rem;
 }
 
 .table-history {

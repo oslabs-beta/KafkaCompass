@@ -8,6 +8,20 @@ module.exports = {
   mode: "jit",
   purge: ["./dist/*.html", "./client/**/*.{js,jsx,ts,tsx,vue}"],
   theme: {
+    screens: {
+      xsm: { max: "480px" },
+      sm: { max: "640px" },
+      // => @media (min-width: 640px) { ... }
+      md: { max: "768px" },
+      // => @media (min-width: 768px) { ... }
+      lgmax: { max: "1024px" },
+      lg: "1024px",
+      // => @media (min-width: 1024px) { ... }
+      xl: "1280px",
+      // => @media (min-width: 1280px) { ... }
+      "2xl": "1536px"
+      // => @media (min-width: 1536px) { ... }
+    },
     extend: {}
   },
   plugins: [require("daisyui")],
