@@ -22,16 +22,18 @@ const AggregatedChart = (props) => {
   const data = chartData.info;
 
   const { user } = useContext(NavbarContext).userState;
-  console.log("chartData: ", user.metric);
   //object with all statistics for user clusters
   const rawMetric = user.metric;
 
   //stats for aggregated charts
   const aggStats = {
-    active_connection_count: "",
-    partition_count: "",
-    successful_authentication_count: "",
-    cluster_load_percent: ""
+    active_connection_count: { label: "Active Connection Count", data: {} },
+    partition_count: { label: "Partition Count", data: {} },
+    successful_authentication_count: {
+      label: "Successful Authentication Count",
+      data: {}
+    },
+    cluster_load_percent: { label: "Cluster Load Percent", data: {} }
   };
 
   //dataset creation for charts
@@ -59,17 +61,15 @@ const AggregatedChart = (props) => {
         }
       }
     }
-    aggStats[stat] = data;
+    aggStats[stat].data = data;
   }
-
-  console.log("data: ", aggStats);
 
   //creating aggregated charts
   const charts = [];
   for (const stat in aggStats) {
     const chart = (
-      <div className="topic-chart font-mono chart-container pb-10">
-        <p style={{ fontSize: "18px" }}>{stat}</p>
+      <div className="topic-chart font-mono chart-container pb-24">
+        <p style={{ fontSize: "18px" }}>{aggStats[stat].label}</p>
 
         <br />
         <Line
@@ -77,14 +77,14 @@ const AggregatedChart = (props) => {
           options={{
             maintainAspectRatio: false
           }}
-          data={aggStats[stat]}
+          data={aggStats[stat].data}
         />
       </div>
     );
     charts.push(chart);
   }
 
-  return <>{charts}</>;
+  return <div className="grid grid-cols-2 pb-8">{charts}</div>;
 };
 
 export default AggregatedChart;

@@ -34,17 +34,20 @@ const ClusterHistory = ({ chartData }) => {
   return (
     <>
       <div>
+        <h1 className="text-center text-2xl font-bold pb-10">
+          Cluster History
+        </h1>
         <AggregatedChart
           chartData={chartData}
           metricSelection={metricSelection}
         />
-        <h1 className="text-center text-xl font-bold">Cluster History</h1>
+        <h1 className="text-center text-xl font-bold">Snapshots</h1>
         <div className="table-history">
           <div className="overflow-x-auto shadow-md sm:rounded-lg">
             <table className="history-table table-compact w-auto">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                  <th>Cluster Index</th>
+                  <th></th>
                   <th>Date</th>
                   <th>Cluster Id:</th>
                   <th>View Metrics</th>
