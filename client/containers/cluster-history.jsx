@@ -1,10 +1,11 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AddClusterForm from "../components/add-cluster-form";
 import ClusterItem from "../components/cluster-item";
+import AggregatedChart from "../components/aggregated-chart";
 import { NavbarContext } from "../NavbarContext";
 
-const ClusterHistory = (props) => {
+const ClusterHistory = ({ chartData }) => {
   const navigate = useNavigate();
   const metrics = useContext(NavbarContext).userState.user.metric;
   const { setRenderDrawerButton } =
@@ -27,11 +28,17 @@ const ClusterHistory = (props) => {
     );
   });
 
+  //temp
+  const [metricSelection, setMetricSelection] = useState("retained_bytes");
+
   return (
     <>
       <div>
+        <AggregatedChart
+          chartData={chartData}
+          metricSelection={metricSelection}
+        />
         <h1 className="text-center text-xl font-bold">Cluster History</h1>
-
         <div className="table-history">
           <div className="overflow-x-auto shadow-md sm:rounded-lg">
             <table className="history-table table-compact w-auto">

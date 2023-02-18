@@ -107,7 +107,7 @@ const DashboardContainer = (props) => {
       </div>
     );
   } else if (dashboardMode === "clusterHistory") {
-    dashboardView = <ClusterHistory />;
+    dashboardView = <ClusterHistory chartData={chartData} />;
   }
 
   // update metrics object with desired viewing metrics
