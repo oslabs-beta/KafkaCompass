@@ -7,7 +7,8 @@ const PerformanceStatistics = ({
   chartData,
   metricSelection,
   tableData,
-  updateSideDrawer
+  updateSideDrawer,
+  clusterId
 }) => {
   const { setMetric } = useContext(NavbarContext).metricState;
   async function updateMetrics() {
@@ -95,6 +96,9 @@ const PerformanceStatistics = ({
           </ul>
         </div>
         <div className="border col-span-3">
+          <h1 className="flex justify-around font-bold text-xl pb-5">
+            Cluster: {clusterId}
+          </h1>
           {chartData && (
             <>
               <Chart chartData={chartData} metricSelection={metricSelection} />

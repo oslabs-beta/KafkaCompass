@@ -17,6 +17,7 @@ const DashboardContainer = (props) => {
 
   // cluster selection for the Content Monitoring
   const [cluster, setCluster] = useState(0);
+  const [clusterId, setClusterId] = useState();
 
   // Setting document's background image back to none -> default
   document.body.style.backgroundImage = "none";
@@ -42,7 +43,15 @@ const DashboardContainer = (props) => {
         "partition_count",
         "active_connection_count",
         "successful_authentication_count",
-        "cluster_load_percent"
+        "cluster_load_percent",
+        "consumer_lag_offsets",
+        "received_bytes",
+        "received_records",
+        "request_bytes",
+        "request_count",
+        "retained_bytes",
+        "sent_bytes",
+        "sent_records"
       ].map((td) => {
         const name = td.replace(/_/g, " ");
         const description = data[td].description;
@@ -55,8 +64,8 @@ const DashboardContainer = (props) => {
       });
 
       setTableData(dataForTable);
-
       setChart(mapChartData(data));
+      setClusterId(data.clusterId);
     } catch {
       console.log("No clusters in user data");
     }
@@ -97,6 +106,7 @@ const DashboardContainer = (props) => {
           metricSelection={metricSelection}
           tableData={tableData}
           updateSideDrawer={updateSideDrawer}
+          clusterId={clusterId}
         />
       </>
     );

@@ -1,5 +1,4 @@
 function mapChartData(data) {
-  console.log(data);
   const metricsObj = {
     retained_bytes: {
       colDescription: "Topics in Cluster",
@@ -65,8 +64,6 @@ function mapChartData(data) {
     },
     compositeChart: true
   };
-
-  console.log(metricsObj);
 
   return metricsObj;
 }
