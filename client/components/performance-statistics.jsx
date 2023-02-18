@@ -8,7 +8,8 @@ const PerformanceStatistics = ({
   metricSelection,
   tableData,
   updateSideDrawer,
-  clusterId
+  clusterId,
+  snapshotTime
 }) => {
   const { setMetric } = useContext(NavbarContext).metricState;
   async function updateMetrics() {
@@ -58,8 +59,10 @@ const PerformanceStatistics = ({
     <>
       <div class="grid grid-cols-6">
         <div className="border">
-          <ul class="menu border bg-base-100 menu-compact lg:menu-normal">
-            <b>Metrics</b>
+          <ul class="menu border bg-base-100 menu-compact lg:menu-normal h-screen">
+            <span className="pl-4">
+              <b>Metrics</b>
+            </span>
             {listItems}
             <li>
               <a>
@@ -96,8 +99,8 @@ const PerformanceStatistics = ({
           </ul>
         </div>
         <div className="border col-span-3">
-          <h1 className="flex justify-around font-bold text-xl pb-5">
-            Cluster: {clusterId}
+          <h1 className="flex justify-around text-xl pb-5">
+            <b>Cluster: {clusterId}</b> <b>Snapshot: {snapshotTime}</b>
           </h1>
           {chartData && (
             <>

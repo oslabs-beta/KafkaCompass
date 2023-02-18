@@ -17,7 +17,9 @@ const DashboardContainer = (props) => {
 
   // cluster selection for the Content Monitoring
   const [cluster, setCluster] = useState(0);
-  const [clusterId, setClusterId] = useState();
+  // current cluster information
+  const [clusterId, setClusterId] = useState("");
+  const [snapshotTime, setSnapshotTime] = useState("");
 
   // Setting document's background image back to none -> default
   document.body.style.backgroundImage = "none";
@@ -66,6 +68,7 @@ const DashboardContainer = (props) => {
       setTableData(dataForTable);
       setChart(mapChartData(data));
       setClusterId(data.clusterId);
+      setSnapshotTime(data.created_at);
     } catch {
       console.log("No clusters in user data");
     }
@@ -107,6 +110,7 @@ const DashboardContainer = (props) => {
           tableData={tableData}
           updateSideDrawer={updateSideDrawer}
           clusterId={clusterId}
+          snapshotTime={snapshotTime}
         />
       </>
     );
