@@ -7,9 +7,6 @@ const TableData = (props) => {
     oneRow = (
       <tr key={row.name}>
         <td>{row.name}</td>
-        <td>
-          <div className="scrollable">{row.description}</div>
-        </td>
         <td>{row.value}</td>
       </tr>
     );
@@ -17,13 +14,12 @@ const TableData = (props) => {
   }
 
   return (
-    <div className="table-stats">
+    <div className="">
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
             <tr>
               <th>Name</th>
-              <th>Description</th>
               <th>Metrics</th>
             </tr>
           </thead>

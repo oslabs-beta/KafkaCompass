@@ -8,6 +8,7 @@ import DrawerSide from "../components/drawer-side";
 import mapChartData from "../helper/mapChartData";
 import ClusterHistory from "./cluster-history";
 import SwitchCluster from "../components/switch-cluster-form";
+import PerformanceStatistics from "../components/performance-statistics";
 
 const DashboardContainer = (props) => {
   // state of current topic inside the Content Monitoring view
@@ -77,19 +78,26 @@ const DashboardContainer = (props) => {
     setDashboardMode("contentMonitoring");
   }
 
+  const { setMetric } = useContext(NavbarContext).metricState;
+  async function updateMetrics() {
+    console.log("doing the thing");
+    const response = await fetch("/api/metric");
+    const metric = await response.json();
+
+    setMetric(metric);
+  }
+
   // sets current dashboard view
   let dashboardView = <></>;
   if (dashboardMode === "performanceStatistics") {
     dashboardView = (
       <>
-        <main className="cluster-container">
-          {chartData && (
-            <>
-              <Chart chartData={chartData} metricSelection={metricSelection} />
-            </>
-          )}
-        </main>
-        <TableData tableData={tableData} />
+        <PerformanceStatistics
+          chartData={chartData}
+          metricSelection={metricSelection}
+          tableData={tableData}
+          updateSideDrawer={updateSideDrawer}
+        />
       </>
     );
   } else if (dashboardMode === "contentMonitoring") {
@@ -109,57 +117,16 @@ const DashboardContainer = (props) => {
 
   return (
     <>
-      <div className="drawer">
-        <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content border-solid border-2 border-black-500">
-          <div className="mt-4 flex justify-around">
-            {sideBarMode != "history" && (
-              <div className="btn-group">
-                <button
-                  className={
-                    dashboardMode === "performanceStatistics"
-                      ? "btn bg-blue-800"
-                      : "btn"
-                  }
-                  onClick={changeModePerformanceStatistics}
-                >
-                  Performance Statistics
-                </button>
-                <button
-                  className={
-                    dashboardMode === "contentMonitoring"
-                      ? "btn bg-blue-800"
-                      : "btn"
-                  }
-                  onClick={changeModeContentMonitoring}
-                >
-                  Content Monitoring
-                </button>
-                {/* Feature in work
-                <button
-                  className={
-                    dashboardMode === "clusterComparison"
-                      ? "btn btn-accent"
-                      : "btn"
-                  }
-                  onClick={changeModeClusterComparison}
-                >
-                  Cluster Comparison
-                </button> */}
-              </div>
-            )}
-          </div>
-          <div className="justify-center pt-10">{dashboardView}</div>
-        </div>
-        <AddClusterForm
-          clusterAdded={clusterAdded}
-          setClusterAdded={setClusterAdded}
-        />
-        <DrawerSide
-          metricSelection={metricSelection}
-          updateSideDrawer={updateSideDrawer}
-        />
-      </div>
+      <div className="justify-center h-screen">{dashboardView}</div>
+      <AddClusterForm
+        clusterAdded={clusterAdded}
+        setClusterAdded={setClusterAdded}
+      />
+      {/* <DrawerSide
+        metricSelection={metricSelection}
+        updateSideDrawer={updateSideDrawer}
+      /> */}
+
       <SwitchCluster
         cluster={cluster}
         setCluster={setCluster}

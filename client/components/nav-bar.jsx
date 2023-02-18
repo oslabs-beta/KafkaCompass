@@ -7,6 +7,16 @@ const Navbar = ({ navigate, logUserOut }) => {
   const { renderDrawerButton, setRenderDrawerButton } =
     useContext(NavbarContext).drawerButtonsState;
   const { loggedIn, setLoggedIn } = useContext(NavbarContext).loggedState;
+  // dictates the view mode on dashbaord
+  const { dashboardMode, setDashboardMode } =
+    useContext(NavbarContext).dashboardState;
+  // functions for switching mode of the dashboard
+  function changeModePerformanceStatistics() {
+    setDashboardMode("performanceStatistics");
+  }
+  function changeModeContentMonitoring() {
+    setDashboardMode("contentMonitoring");
+  }
 
   let drawerButtons = <></>;
 
@@ -32,11 +42,34 @@ const Navbar = ({ navigate, logUserOut }) => {
           tabIndex={0}
           className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 text-black"
         >
-          <li>
+          <b>View Modes</b>
+          <li
+            className={
+              dashboardMode === "performanceStatistics"
+                ? " bg-blue-800 text-white"
+                : ""
+            }
+          >
             <a>
-              <label htmlFor="my-drawer">Select Metrics</label>
+              <label onClick={changeModePerformanceStatistics}>
+                Performance Statistics
+              </label>
             </a>
           </li>
+          <li
+            className={
+              dashboardMode === "contentMonitoring"
+                ? " bg-blue-800 text-white"
+                : ""
+            }
+          >
+            <a>
+              <label onClick={changeModeContentMonitoring}>
+                Content Monitoring
+              </label>
+            </a>
+          </li>
+          <b>Cluster Options</b>
           <li>
             <a>
               <label htmlFor="my-modal-4">Add New Cluster</label>
