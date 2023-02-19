@@ -45,7 +45,7 @@ const ClusterHistory = ({ chartData }) => {
         <div className="table-history">
           <div className="overflow-x-auto shadow-md sm:rounded-lg">
             <table className="history-table table-compact w-auto">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
                   <th></th>
                   <th>Date</th>

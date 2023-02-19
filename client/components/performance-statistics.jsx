@@ -61,7 +61,7 @@ const PerformanceStatistics = ({
         <div className="border">
           <ul class="menu border bg-base-100 menu-compact lg:menu-normal h-screen">
             <span className="pl-4">
-              <b>Metrics</b>
+              <b>Metric Views</b>
             </span>
             {listItems}
             <li>
@@ -99,7 +99,14 @@ const PerformanceStatistics = ({
           </ul>
         </div>
         <div className="border col-span-3">
-          <h1 className="flex justify-around text-xl pb-5">
+          <table className="table w-full">
+            <thead>
+              <th className="flex justify-around text-l">
+                <b>Performance Statistics</b>
+              </th>
+            </thead>
+          </table>
+          <h1 className="flex justify-around text-xl pb-5 pt-5">
             <b>Cluster: {clusterId}</b> <b>Snapshot: {snapshotTime}</b>
           </h1>
           {chartData && (

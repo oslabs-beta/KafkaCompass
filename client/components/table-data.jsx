@@ -19,8 +19,8 @@ const TableData = (props) => {
         <table className="table w-full">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Metrics</th>
+              <th>Metric</th>
+              <th>Value</th>
             </tr>
           </thead>
           <tbody>{tableRows}</tbody>
