@@ -59,8 +59,8 @@ const PerformanceStatistics = ({
     <>
       <div class="grid grid-cols-6">
         <div className="border">
-          <ul class="menu border bg-base-100 menu-compact lg:menu-normal h-screen">
-            <span className="pl-4">
+          <ul class="menu border bg-base-100 menu-compact lg:menu-normal h-screen bg-slate-100">
+            <span className="pl-4 pt-3 pb-3">
               <b>Metric Views</b>
             </span>
             {listItems}

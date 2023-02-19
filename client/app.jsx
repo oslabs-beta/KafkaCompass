@@ -6,6 +6,7 @@ import LandingPage from "./containers/landing-page-container";
 import NotFound from "./containers/NotFound";
 import Navbar from "./components/nav-bar";
 import Auth from "./containers/auth";
+import Footer from "./components/footer";
 import "./static/styles.css";
 
 function App() {
@@ -114,17 +115,20 @@ function App() {
 
   return (
     <NavbarContext.Provider value={providerValue}>
-      <Navbar navigate={navigate} logUserOut={logUserOut} />
-      <Routes>
-        <Route path="*" element={<NotFound />} />
-        <Route
-          exact
-          path="/dashboard"
-          element={loggedIn ? <DashboardContainer /> : <Navigate to="/" />}
-        />
-        <Route exact path="/auth" element={<Auth navigate={navigate} />} />
-        <Route exact path="/" element={<LandingPage navigate={navigate} />} />
-      </Routes>
+      <main className="flex flex-col min-h-screen">
+        <Navbar navigate={navigate} logUserOut={logUserOut} />
+        <Routes>
+          <Route path="*" element={<NotFound />} />
+          <Route
+            exact
+            path="/dashboard"
+            element={loggedIn ? <DashboardContainer /> : <Navigate to="/" />}
+          />
+          <Route exact path="/auth" element={<Auth navigate={navigate} />} />
+          <Route exact path="/" element={<LandingPage navigate={navigate} />} />
+        </Routes>
+      </main>
+      <Footer />
     </NavbarContext.Provider>
   );
 }

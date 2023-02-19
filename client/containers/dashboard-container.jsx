@@ -131,7 +131,7 @@ const DashboardContainer = (props) => {
 
   return (
     <>
-      <div className="justify-center h-screen">{dashboardView}</div>
+      <div className="justify-center">{dashboardView}</div>
       <AddClusterForm
         clusterAdded={clusterAdded}
         setClusterAdded={setClusterAdded}
