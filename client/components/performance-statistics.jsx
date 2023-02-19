@@ -13,7 +13,6 @@ const PerformanceStatistics = ({
 }) => {
   const { setMetric } = useContext(NavbarContext).metricState;
   async function updateMetrics() {
-    console.log("doing the thing");
     const response = await fetch("/api/metric");
     const metric = await response.json();
 
@@ -69,17 +68,6 @@ const PerformanceStatistics = ({
                 <label onClick={updateMetrics}>
                   <b>Update Metrics</b>
                 </label>
-              </a>
-            </li>
-            <li
-              key="Cluster History"
-              onClick={() => {
-                setSideBarMode("history");
-                setDashboardMode("clusterHistory");
-              }}
-            >
-              <a>
-                <b>Cluster History</b>
               </a>
             </li>
             {sideBarMode === "history" && (

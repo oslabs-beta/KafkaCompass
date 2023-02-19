@@ -58,8 +58,6 @@ const ClusterHistory = ({ chartData }) => {
           </div>
         </div>
       </div>
-      <input type="checkbox" id="my-modal-4" className="modal-toggle" />
-      <AddClusterForm />
     </>
   );
 };

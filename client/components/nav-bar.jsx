@@ -10,6 +10,9 @@ const Navbar = ({ navigate, logUserOut }) => {
   // dictates the view mode on dashbaord
   const { dashboardMode, setDashboardMode } =
     useContext(NavbarContext).dashboardState;
+  // modifies the performance mode menu in the case of looking at historical metrics
+  const { sideBarMode, setSideBarMode } =
+    useContext(NavbarContext).sideBarState;
   // functions for switching mode of the dashboard
   function changeModePerformanceStatistics() {
     setDashboardMode("performanceStatistics");
@@ -49,12 +52,9 @@ const Navbar = ({ navigate, logUserOut }) => {
                 ? " bg-blue-800 text-white"
                 : ""
             }
+            onClick={changeModePerformanceStatistics}
           >
-            <a>
-              <label onClick={changeModePerformanceStatistics}>
-                Performance Statistics
-              </label>
-            </a>
+            <a>Performance Statistics</a>
           </li>
           <li
             className={
@@ -62,12 +62,18 @@ const Navbar = ({ navigate, logUserOut }) => {
                 ? " bg-blue-800 text-white"
                 : ""
             }
+            onClick={changeModeContentMonitoring}
           >
-            <a>
-              <label onClick={changeModeContentMonitoring}>
-                Content Monitoring
-              </label>
-            </a>
+            <a>Content Monitoring</a>
+          </li>
+          <li
+            key="Cluster History"
+            onClick={() => {
+              setSideBarMode("history");
+              setDashboardMode("clusterHistory");
+            }}
+          >
+            <a>Cluster History</a>
           </li>
           <b>Cluster Options</b>
           <li>
