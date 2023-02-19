@@ -28,8 +28,8 @@ const ClusterHistory = ({ chartData }) => {
     );
   });
 
-  //temp
-  const [metricSelection, setMetricSelection] = useState("retained_bytes");
+  // //temp
+  // const [metricSelection, setMetricSelection] = useState("retained_bytes");
 
   return (
     <>
@@ -37,10 +37,7 @@ const ClusterHistory = ({ chartData }) => {
         <h1 className="text-center text-2xl font-bold pb-10">
           Cluster History
         </h1>
-        <AggregatedChart
-          chartData={chartData}
-          metricSelection={metricSelection}
-        />
+        <AggregatedChart chartData={chartData} />
         <h1 className="text-center text-xl font-bold">Snapshots</h1>
         <div className="table-history">
           <div className="overflow-x-auto shadow-md sm:rounded-lg">
