@@ -1,10 +1,11 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AddClusterForm from "../components/add-cluster-form";
 import ClusterItem from "../components/cluster-item";
+import AggregatedChart from "../components/aggregated-chart";
 import { NavbarContext } from "../NavbarContext";
 
-const ClusterHistory = (props) => {
+const ClusterHistory = ({ chartData }) => {
   const navigate = useNavigate();
   const metrics = useContext(NavbarContext).userState.user.metric;
   const { setRenderDrawerButton } =
@@ -27,17 +28,23 @@ const ClusterHistory = (props) => {
     );
   });
 
+  // //temp
+  // const [metricSelection, setMetricSelection] = useState("retained_bytes");
+
   return (
     <>
       <div>
-        <h1 className="text-center text-xl font-bold">Cluster History</h1>
-
+        <h1 className="text-center text-2xl font-bold pb-10">
+          Cluster History
+        </h1>
+        <AggregatedChart chartData={chartData} />
+        <h1 className="text-center text-xl font-bold">Snapshots</h1>
         <div className="table-history">
           <div className="overflow-x-auto shadow-md sm:rounded-lg">
             <table className="history-table table-compact w-auto">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
-                  <th>Cluster Index</th>
+                  <th></th>
                   <th>Date</th>
                   <th>Cluster Id:</th>
                   <th>View Metrics</th>
@@ -48,8 +55,6 @@ const ClusterHistory = (props) => {
           </div>
         </div>
       </div>
-      <input type="checkbox" id="my-modal-4" className="modal-toggle" />
-      <AddClusterForm />
     </>
   );
 };

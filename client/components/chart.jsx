@@ -22,16 +22,6 @@ const Chart = (props) => {
 
   return (
     <div className="topic-chart font-mono chart-container">
-      <div className="flex">
-        {sideBarMode === "current" && (
-          <>
-            <button onClick={updateMetrics} className="mb-5 btn bg-blue-800">
-              Update Metrics
-            </button>
-          </>
-        )}
-      </div>
-
       <p style={{ fontSize: "18px" }}>{chartData.colDescription}</p>
 
       <br />

@@ -8,6 +8,7 @@ import DrawerSide from "../components/drawer-side";
 import mapChartData from "../helper/mapChartData";
 import ClusterHistory from "./cluster-history";
 import SwitchCluster from "../components/switch-cluster-form";
+import PerformanceStatistics from "../components/performance-statistics";
 
 const DashboardContainer = (props) => {
   // state of current topic inside the Content Monitoring view
@@ -16,6 +17,9 @@ const DashboardContainer = (props) => {
 
   // cluster selection for the Content Monitoring
   const [cluster, setCluster] = useState(0);
+  // current cluster information
+  const [clusterId, setClusterId] = useState("");
+  const [snapshotTime, setSnapshotTime] = useState("");
 
   // Setting document's background image back to none -> default
   document.body.style.backgroundImage = "none";
@@ -41,7 +45,15 @@ const DashboardContainer = (props) => {
         "partition_count",
         "active_connection_count",
         "successful_authentication_count",
-        "cluster_load_percent"
+        "cluster_load_percent",
+        "consumer_lag_offsets",
+        "received_bytes",
+        "received_records",
+        "request_bytes",
+        "request_count",
+        "retained_bytes",
+        "sent_bytes",
+        "sent_records"
       ].map((td) => {
         const name = td.replace(/_/g, " ");
         const description = data[td].description;
@@ -54,8 +66,9 @@ const DashboardContainer = (props) => {
       });
 
       setTableData(dataForTable);
-
       setChart(mapChartData(data));
+      setClusterId(data.clusterId);
+      setSnapshotTime(data.created_at);
     } catch {
       console.log("No clusters in user data");
     }
@@ -77,19 +90,28 @@ const DashboardContainer = (props) => {
     setDashboardMode("contentMonitoring");
   }
 
+  const { setMetric } = useContext(NavbarContext).metricState;
+  async function updateMetrics() {
+    console.log("doing the thing");
+    const response = await fetch("/api/metric");
+    const metric = await response.json();
+
+    setMetric(metric);
+  }
+
   // sets current dashboard view
   let dashboardView = <></>;
   if (dashboardMode === "performanceStatistics") {
     dashboardView = (
       <>
-        <main className="cluster-container">
-          {chartData && (
-            <>
-              <Chart chartData={chartData} metricSelection={metricSelection} />
-            </>
-          )}
-        </main>
-        <TableData tableData={tableData} />
+        <PerformanceStatistics
+          chartData={chartData}
+          metricSelection={metricSelection}
+          tableData={tableData}
+          updateSideDrawer={updateSideDrawer}
+          clusterId={clusterId}
+          snapshotTime={snapshotTime}
+        />
       </>
     );
   } else if (dashboardMode === "contentMonitoring") {
@@ -99,7 +121,7 @@ const DashboardContainer = (props) => {
       </div>
     );
   } else if (dashboardMode === "clusterHistory") {
-    dashboardView = <ClusterHistory />;
+    dashboardView = <ClusterHistory chartData={chartData} />;
   }
 
   // update metrics object with desired viewing metrics
@@ -109,57 +131,16 @@ const DashboardContainer = (props) => {
 
   return (
     <>
-      <div className="drawer">
-        <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content border-solid border-2 border-black-500">
-          <div className="mt-4 flex justify-around">
-            {sideBarMode != "history" && (
-              <div className="btn-group">
-                <button
-                  className={
-                    dashboardMode === "performanceStatistics"
-                      ? "btn bg-blue-800"
-                      : "btn"
-                  }
-                  onClick={changeModePerformanceStatistics}
-                >
-                  Performance Statistics
-                </button>
-                <button
-                  className={
-                    dashboardMode === "contentMonitoring"
-                      ? "btn bg-blue-800"
-                      : "btn"
-                  }
-                  onClick={changeModeContentMonitoring}
-                >
-                  Content Monitoring
-                </button>
-                {/* Feature in work
-                <button
-                  className={
-                    dashboardMode === "clusterComparison"
-                      ? "btn btn-accent"
-                      : "btn"
-                  }
-                  onClick={changeModeClusterComparison}
-                >
-                  Cluster Comparison
-                </button> */}
-              </div>
-            )}
-          </div>
-          <div className="justify-center pt-10">{dashboardView}</div>
-        </div>
-        <AddClusterForm
-          clusterAdded={clusterAdded}
-          setClusterAdded={setClusterAdded}
-        />
-        <DrawerSide
-          metricSelection={metricSelection}
-          updateSideDrawer={updateSideDrawer}
-        />
-      </div>
+      <div className="justify-center">{dashboardView}</div>
+      <AddClusterForm
+        clusterAdded={clusterAdded}
+        setClusterAdded={setClusterAdded}
+      />
+      {/* <DrawerSide
+        metricSelection={metricSelection}
+        updateSideDrawer={updateSideDrawer}
+      /> */}
+
       <SwitchCluster
         cluster={cluster}
         setCluster={setCluster}

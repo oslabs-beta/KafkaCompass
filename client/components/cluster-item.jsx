@@ -13,7 +13,7 @@ const ClusterItem = (props) => {
   }
 
   return (
-    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+    <tr className="bg-white border-b  hover:bg-gray-50">
       <td>{index}</td>
       <td>{date}</td>
       <td>{clusterId}</td>

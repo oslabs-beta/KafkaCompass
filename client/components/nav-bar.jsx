@@ -7,6 +7,19 @@ const Navbar = ({ navigate, logUserOut }) => {
   const { renderDrawerButton, setRenderDrawerButton } =
     useContext(NavbarContext).drawerButtonsState;
   const { loggedIn, setLoggedIn } = useContext(NavbarContext).loggedState;
+  // dictates the view mode on dashbaord
+  const { dashboardMode, setDashboardMode } =
+    useContext(NavbarContext).dashboardState;
+  // modifies the performance mode menu in the case of looking at historical metrics
+  const { sideBarMode, setSideBarMode } =
+    useContext(NavbarContext).sideBarState;
+  // functions for switching mode of the dashboard
+  function changeModePerformanceStatistics() {
+    setDashboardMode("performanceStatistics");
+  }
+  function changeModeContentMonitoring() {
+    setDashboardMode("contentMonitoring");
+  }
 
   let drawerButtons = <></>;
 
@@ -32,11 +45,37 @@ const Navbar = ({ navigate, logUserOut }) => {
           tabIndex={0}
           className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 text-black"
         >
-          <li>
-            <a>
-              <label htmlFor="my-drawer">Select Metrics</label>
-            </a>
+          <b>View Modes</b>
+          <li
+            className={
+              dashboardMode === "performanceStatistics"
+                ? " bg-blue-800 text-white"
+                : ""
+            }
+            onClick={changeModePerformanceStatistics}
+          >
+            <a>Performance Statistics</a>
           </li>
+          <li
+            className={
+              dashboardMode === "contentMonitoring"
+                ? " bg-blue-800 text-white"
+                : ""
+            }
+            onClick={changeModeContentMonitoring}
+          >
+            <a>Content Monitoring</a>
+          </li>
+          <li
+            key="Cluster History"
+            onClick={() => {
+              setSideBarMode("history");
+              setDashboardMode("clusterHistory");
+            }}
+          >
+            <a>Cluster History</a>
+          </li>
+          <b>Cluster Options</b>
           <li>
             <a>
               <label htmlFor="my-modal-4">Add New Cluster</label>
