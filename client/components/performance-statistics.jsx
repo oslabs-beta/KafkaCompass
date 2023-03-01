@@ -14,9 +14,10 @@ const PerformanceStatistics = ({
   const { setMetric } = useContext(NavbarContext).metricState;
   async function updateMetrics() {
     const response = await fetch("/api/metric");
-    const metric = await response.json();
-
-    setMetric(metric);
+    if (response.ok) {
+      const metric = await response.json();
+      setMetric(metric);
+    } else console.log("Could not update metrics");
   }
 
   const { sideBarMode, setSideBarMode } =
