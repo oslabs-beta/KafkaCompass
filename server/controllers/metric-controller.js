@@ -9,23 +9,30 @@ const metricController = {};
 metricController.fetchData = async (req, res, next) => {
   const { CLOUD_KEY, CLOUD_SECRET, clusterId } = res.locals.credentials;
 
-  const url = `https://api.telemetry.confluent.cloud/v2/metrics/cloud/export?resource.kafka.id=${clusterId}`;
-  const cloudToken = Buffer.from(
-    `${CLOUD_KEY}:${CLOUD_SECRET}`,
-    "utf8"
-  ).toString("base64");
-  const cloudHeaders = { Authorization: "Basic " + cloudToken };
+  try {
+    const url = `https://api.telemetry.confluent.cloud/v2/metrics/cloud/export?resource.kafka.id=${clusterId}`;
+    const cloudToken = Buffer.from(
+      `${CLOUD_KEY}:${CLOUD_SECRET}`,
+      "utf8"
+    ).toString("base64");
+    const cloudHeaders = { Authorization: "Basic " + cloudToken };
 
-  const response = await axios({
-    url,
-    headers: cloudHeaders
-  });
+    const response = await axios({
+      url,
+      headers: cloudHeaders
+    });
 
-  const data = parsePrometheusTextFormat(response.data);
-  const metricsData = await formatMetrics(data);
+    const data = parsePrometheusTextFormat(response.data);
+    const metricsData = await formatMetrics(data);
 
-  res.locals.metricsData = metricsData;
-  return next();
+    res.locals.metricsData = metricsData;
+    return next();
+  } catch {
+    return next({
+      log: "error in metricController.fetchData",
+      message: "could not update metrics"
+    });
+  }
 };
 
 metricController.decryptKeys = (req, res, next) => {
