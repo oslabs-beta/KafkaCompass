@@ -20,6 +20,9 @@ const Navbar = ({ navigate, logUserOut }) => {
   function changeModeContentMonitoring() {
     setDashboardMode("contentMonitoring");
   }
+  function changeModeSnapshotComparison() {
+    setDashboardMode("snapshotComparison");
+  }
 
   let drawerButtons = <></>;
 
@@ -67,6 +70,21 @@ const Navbar = ({ navigate, logUserOut }) => {
             <a>Content Monitoring</a>
           </li>
           <li
+            className={
+              dashboardMode === "snapshotComparison"
+                ? " bg-blue-800 text-white"
+                : ""
+            }
+            onClick={changeModeSnapshotComparison}
+          >
+            <a>Snapshot Comparison</a>
+          </li>
+          <li
+            className={
+              dashboardMode === "clusterHistory"
+                ? " bg-blue-800 text-white"
+                : ""
+            }
             key="Cluster History"
             onClick={() => {
               setSideBarMode("history");

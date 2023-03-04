@@ -9,6 +9,7 @@ import mapChartData from "../helper/mapChartData";
 import ClusterHistory from "./cluster-history";
 import SwitchCluster from "../components/switch-cluster-form";
 import PerformanceStatistics from "../components/performance-statistics";
+import SnapshotComparison from "../components/snapshot-comparison";
 
 const DashboardContainer = (props) => {
   // state of current topic inside the Content Monitoring view
@@ -122,6 +123,8 @@ const DashboardContainer = (props) => {
     );
   } else if (dashboardMode === "clusterHistory") {
     dashboardView = <ClusterHistory chartData={chartData} />;
+  } else if (dashboardMode === "snapshotComparison") {
+    dashboardView = <SnapshotComparison chartData={chartData} />;
   }
 
   // update metrics object with desired viewing metrics
