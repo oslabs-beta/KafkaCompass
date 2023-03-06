@@ -35,6 +35,11 @@ const SnapshotComparison = ({ chartData }) => {
       setMode("display");
     } else console.log("Please select two snapshots to compare");
   }
+  function backToSelectionMode() {
+    snapshot1.current = "";
+    snapshot2.current = "";
+    setMode("select");
+  }
 
   console.log("metrics: ", metrics);
 
@@ -45,27 +50,29 @@ const SnapshotComparison = ({ chartData }) => {
     const snapshotList2 = [];
     const selectItems = [];
     if (metrics.length) {
-      for (const metric of metrics) {
-        console.log("metric: ", metric);
+      for (const metricIndex in metrics) {
+        console.log("metric: ", metricIndex);
         snapshotList1.push(
-          <li key={metric.created_at}>
+          <li key={metricIndex}>
             <a
               className="justify-end"
               onClick={selectSnapshot1}
-              id={metric.created_at}
+              id={metricIndex}
             >
-              {metric.clusterId} : {metric.created_at}
+              {metrics[metricIndex].clusterId} :{" "}
+              {metrics[metricIndex].created_at}
             </a>
           </li>
         );
         snapshotList2.push(
-          <li key={metric.created_at}>
+          <li key={metricIndex}>
             <a
               className="justify-end"
               onClick={selectSnapshot2}
-              id={metric.created_at}
+              id={metricIndex}
             >
-              {metric.clusterId} : {metric.created_at}
+              {metrics[metricIndex].clusterId} :{" "}
+              {metrics[metricIndex].created_at}
             </a>
           </li>
         );
@@ -112,7 +119,64 @@ const SnapshotComparison = ({ chartData }) => {
       );
     }
   } else if (mode === "display") {
-    render = <h1>Check out these stats</h1>;
+    const snapshot1Obj = metrics[snapshot1.current];
+    const snapshot2Obj = metrics[snapshot2.current];
+    console.log("snapshot1Obj: ", snapshot1Obj);
+    console.log("snapshot2Obj: ", snapshot2Obj);
+    let tableRows = [];
+    for (const metric in snapshot1Obj) {
+      if (
+        metric === "created_at" ||
+        metric === "_id" ||
+        metric === "clusterId" ||
+        metric === "__v"
+      )
+        continue;
+      console.log("metric: ", metric);
+      console.log("snapShot1Obj total: ", snapshot1Obj[metric].totalValue);
+      let oneRow = <></>;
+      oneRow = (
+        <tr key={metric}>
+          <td>{snapshot1Obj[metric].totalValue}</td>
+          <td className="text-center bg-slate-200">{metric}</td>
+          <td className="text-end">{snapshot2Obj[metric].totalValue}</td>
+        </tr>
+      );
+      tableRows.push(oneRow);
+    }
+
+    render = (
+      <div>
+        <div className="flex justify-around pb-5">
+          <button
+            className="btn btn-active  bg-blue-800 w-min self-center"
+            onClick={backToSelectionMode}
+          >
+            Select New Snapshots
+          </button>
+        </div>
+        <div className="flex justify-around pb-5">
+          <div className="overflow-x-auto">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>
+                    Cluster: {snapshot1Obj.clusterId} at{" "}
+                    {snapshot1Obj.created_at}
+                  </th>
+                  <th className="text-center">Metric</th>
+                  <th>
+                    Cluster: {snapshot2Obj.clusterId} at{" "}
+                    {snapshot2Obj.created_at}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>{tableRows}</tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   // gets cluster items from metrics
@@ -134,7 +198,7 @@ const SnapshotComparison = ({ chartData }) => {
   return (
     <>
       <div>
-        <h1 className="text-center text-2xl font-bold pb-10">
+        <h1 className="text-center text-2xl font-bold pb-5">
           Snapshot Comparison
         </h1>
         {render}
