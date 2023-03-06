@@ -36,8 +36,8 @@ const SnapshotComparison = ({ chartData }) => {
     } else console.log("Please select two snapshots to compare");
   }
   function backToSelectionMode() {
-    snapshot1.current = "";
-    snapshot2.current = "";
+    snapshot1.current = undefined;
+    snapshot2.current = undefined;
     setMode("select");
   }
 
