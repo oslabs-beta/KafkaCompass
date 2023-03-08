@@ -15,29 +15,23 @@ const SnapshotComparison = ({ chartData }) => {
   useEffect(() => {
     setRenderDrawerButton(true);
   });
-  let snapshot1 = useRef();
-  let snapshot2 = useRef();
+  const [snapshot1State, setSnapshot1State] = useState();
+  const [snapshot2State, setSnapshot2State] = useState();
 
   function selectSnapshot1(e) {
-    console.log("snapshotSelected");
-    snapshot1.current = e.target.id;
-    console.log("snapshot1: ", snapshot1);
+    setSnapshot1State(e.target.id);
   }
   function selectSnapshot2(e) {
-    console.log("snapshotSelected");
-    snapshot2.current = e.target.id;
-    console.log("snapshot2: ", snapshot2);
+    setSnapshot2State(e.target.id);
   }
   function submitSnapshots(e) {
-    console.log("snapshots Submitted");
-    console.log("Snapshot 1: ", snapshot1, "Snapshot 2: ", snapshot2);
-    if (snapshot1.current !== undefined && snapshot2.current !== undefined) {
+    if (snapshot1State !== undefined && snapshot2State !== undefined) {
       setMode("display");
     } else console.log("Please select two snapshots to compare");
   }
   function backToSelectionMode() {
-    snapshot1.current = undefined;
-    snapshot2.current = undefined;
+    setSnapshot1State();
+    setSnapshot2State();
     setMode("select");
   }
 
@@ -53,7 +47,12 @@ const SnapshotComparison = ({ chartData }) => {
       for (const metricIndex in metrics) {
         console.log("metric: ", metricIndex);
         snapshotList1.push(
-          <li key={metricIndex}>
+          <li
+            key={metricIndex}
+            className={
+              snapshot1State === metricIndex ? "bg-blue-800 text-white" : ""
+            }
+          >
             <a
               className="justify-end"
               onClick={selectSnapshot1}
@@ -65,7 +64,12 @@ const SnapshotComparison = ({ chartData }) => {
           </li>
         );
         snapshotList2.push(
-          <li key={metricIndex}>
+          <li
+            key={metricIndex}
+            className={
+              snapshot2State === metricIndex ? "bg-blue-800 text-white" : ""
+            }
+          >
             <a
               className="justify-end"
               onClick={selectSnapshot2}
@@ -91,7 +95,7 @@ const SnapshotComparison = ({ chartData }) => {
               </label>
               <ul
                 tabIndex={0}
-                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-min"
+                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-min max-h-96 overflow-y-auto flex-nowrap"
               >
                 {snapshotList1}
               </ul>
@@ -102,7 +106,7 @@ const SnapshotComparison = ({ chartData }) => {
               </label>
               <ul
                 tabIndex={0}
-                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-min"
+                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-min h-96 max-h-96 overflow-y-auto flex-nowrap"
               >
                 {snapshotList2}
               </ul>
@@ -114,13 +118,12 @@ const SnapshotComparison = ({ chartData }) => {
               Compare Snapshots
             </button>
           </div>
-          {/* <select>{selectItems}</select> */}
         </div>
       );
     }
   } else if (mode === "display") {
-    const snapshot1Obj = metrics[snapshot1.current];
-    const snapshot2Obj = metrics[snapshot2.current];
+    const snapshot1Obj = metrics[snapshot1State];
+    const snapshot2Obj = metrics[snapshot2State];
     console.log("snapshot1Obj: ", snapshot1Obj);
     console.log("snapshot2Obj: ", snapshot2Obj);
     let tableRows = [];
@@ -191,9 +194,6 @@ const SnapshotComparison = ({ chartData }) => {
       />
     );
   });
-
-  // //temp
-  // const [metricSelection, setMetricSelection] = useState("retained_bytes");
 
   return (
     <>

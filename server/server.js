@@ -167,10 +167,9 @@ app.get("/index.js", (req, res) => {
 });
 
 //catch-all that sends index.html file to client-side
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
   res.status(200).sendFile(path.resolve(__dirname, "../dist/index.html"));
 });
-
 
 // global error handler
 app.use((err, req, res, next) => {
