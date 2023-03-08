@@ -74,7 +74,7 @@ const DashboardContainer = (props) => {
     } catch {
       console.log("No clusters in user data");
     }
-  }, [metricIndex, cluster]);
+  }, [metricIndex, metric]);
 
   useEffect(() => {
     setRenderDrawerButton(true);
@@ -92,7 +92,7 @@ const DashboardContainer = (props) => {
     setDashboardMode("contentMonitoring");
   }
 
-  const { setMetric } = useContext(NavbarContext).metricState;
+  const { metric, setMetric } = useContext(NavbarContext).metricState;
   async function updateMetrics() {
     console.log("doing the thing");
     const response = await fetch("/api/metric");
