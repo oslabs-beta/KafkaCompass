@@ -34,7 +34,7 @@ const ClusterHistory = ({ chartData }) => {
   return (
     <>
       <div>
-        <h1 className="text-center text-2xl font-bold pb-10">
+        <h1 className="text-center text-2xl font-bold pb-10 pt-5">
           Cluster History
         </h1>
         <AggregatedChart chartData={chartData} />

@@ -117,9 +117,14 @@ const DashboardContainer = (props) => {
     );
   } else if (dashboardMode === "contentMonitoring") {
     dashboardView = (
-      <div className="flex justify-center pt-10 items-start">
-        <Messages setTopic={setTopic} topic={topic} cluster={cluster} />
-      </div>
+      <>
+        <h1 className="text-center text-2xl font-bold pt-5">
+          Content Monitoring
+        </h1>
+        <div className="flex justify-center pt-10 items-start">
+          <Messages setTopic={setTopic} topic={topic} cluster={cluster} />
+        </div>
+      </>
     );
   } else if (dashboardMode === "clusterHistory") {
     dashboardView = <ClusterHistory chartData={chartData} />;

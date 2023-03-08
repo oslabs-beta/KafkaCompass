@@ -198,7 +198,7 @@ const SnapshotComparison = ({ chartData }) => {
   return (
     <>
       <div>
-        <h1 className="text-center text-2xl font-bold pb-5">
+        <h1 className="text-center text-2xl font-bold pb-5 pt-5">
           Snapshot Comparison
         </h1>
         {render}
