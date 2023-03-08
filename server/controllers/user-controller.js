@@ -96,8 +96,7 @@ userController.checkUserAuth = (req, res, next) => {
     if (req.session.user && user.user === req.session.user._id) {
       req.session.auth = true;
       return next();
-    } 
-    else {
+    } else {
       req.session.auth = false;
       return next();
     }
@@ -183,6 +182,7 @@ userController.addMetrics = async (req, res, next) => {
   metricsData.clusterId = clusterId;
   try {
     const metric = await Metric.create(metricsData);
+    console.log("metric in addMetrics: ", metric);
     user.metric.push(metric);
     user.save();
     res.locals.metric = metric;

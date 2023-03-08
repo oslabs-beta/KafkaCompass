@@ -8,6 +8,8 @@ const metricController = {};
 
 metricController.fetchData = async (req, res, next) => {
   const { CLOUD_KEY, CLOUD_SECRET, clusterId } = res.locals.credentials;
+  console.log("res credentials: ", res.locals.credentials);
+  console.log("in fetch data");
 
   try {
     const url = `https://api.telemetry.confluent.cloud/v2/metrics/cloud/export?resource.kafka.id=${clusterId}`;
@@ -21,6 +23,8 @@ metricController.fetchData = async (req, res, next) => {
       url,
       headers: cloudHeaders
     });
+
+    console.log("response: ", response);
 
     const data = parsePrometheusTextFormat(response.data);
     const metricsData = await formatMetrics(data);
@@ -44,9 +48,15 @@ metricController.decryptKeys = (req, res, next) => {
       }
     });
   }
+  console.log("in metric controller decrypt keys");
+  const { cloudCluster } = req.session.user;
+  let rawCluster;
+  if (!req.session.currentCluster) rawCluster = cloudCluster[0];
+  else rawCluster = cloudCluster[req.session.currentCluster];
 
-  const { CLOUD_KEY, CLOUD_SECRET, clusterId } =
-    req.session.user.cloudCluster[0];
+  console.log(rawCluster);
+
+  const { CLOUD_KEY, CLOUD_SECRET, clusterId } = rawCluster;
 
   const credentials = { CLOUD_KEY, CLOUD_SECRET, clusterId };
 
@@ -56,7 +66,7 @@ metricController.decryptKeys = (req, res, next) => {
 
   res.locals.credentials = credentials;
   res.locals.userId = req.session.user.id;
-  res.locals.clusterId = req.session.user.cloudCluster[0].clusterId;
+  res.locals.clusterId = rawCluster.clusterId;
 
   return next();
 };
