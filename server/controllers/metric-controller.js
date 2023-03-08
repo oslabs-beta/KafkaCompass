@@ -8,9 +8,6 @@ const metricController = {};
 
 metricController.fetchData = async (req, res, next) => {
   const { CLOUD_KEY, CLOUD_SECRET, clusterId } = res.locals.credentials;
-  console.log("res credentials: ", res.locals.credentials);
-  console.log("in fetch data");
-
   try {
     const url = `https://api.telemetry.confluent.cloud/v2/metrics/cloud/export?resource.kafka.id=${clusterId}`;
     const cloudToken = Buffer.from(
@@ -23,8 +20,6 @@ metricController.fetchData = async (req, res, next) => {
       url,
       headers: cloudHeaders
     });
-
-    console.log("response: ", response);
 
     const data = parsePrometheusTextFormat(response.data);
     const metricsData = await formatMetrics(data);
@@ -48,13 +43,10 @@ metricController.decryptKeys = (req, res, next) => {
       }
     });
   }
-  console.log("in metric controller decrypt keys");
   const { cloudCluster } = req.session.user;
   let rawCluster;
   if (!req.session.currentCluster) rawCluster = cloudCluster[0];
   else rawCluster = cloudCluster[req.session.currentCluster];
-
-  console.log(rawCluster);
 
   const { CLOUD_KEY, CLOUD_SECRET, clusterId } = rawCluster;
 

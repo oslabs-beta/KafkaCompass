@@ -35,8 +35,6 @@ const SnapshotComparison = ({ chartData }) => {
     setMode("select");
   }
 
-  console.log("metrics: ", metrics);
-
   let render = <></>;
 
   if (mode === "select") {
@@ -45,7 +43,6 @@ const SnapshotComparison = ({ chartData }) => {
     const selectItems = [];
     if (metrics.length) {
       for (const metricIndex in metrics) {
-        console.log("metric: ", metricIndex);
         snapshotList1.push(
           <li
             key={metricIndex}
@@ -124,8 +121,6 @@ const SnapshotComparison = ({ chartData }) => {
   } else if (mode === "display") {
     const snapshot1Obj = metrics[snapshot1State];
     const snapshot2Obj = metrics[snapshot2State];
-    console.log("snapshot1Obj: ", snapshot1Obj);
-    console.log("snapshot2Obj: ", snapshot2Obj);
     let tableRows = [];
     for (const metric in snapshot1Obj) {
       if (
@@ -135,8 +130,6 @@ const SnapshotComparison = ({ chartData }) => {
         metric === "__v"
       )
         continue;
-      console.log("metric: ", metric);
-      console.log("snapShot1Obj total: ", snapshot1Obj[metric].totalValue);
       let oneRow = <></>;
       oneRow = (
         <tr key={metric}>

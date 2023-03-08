@@ -98,7 +98,6 @@ function App() {
 
   // if data on cluster was updated, useEffect updates user state with new metrics
   useEffect(() => {
-    console.log("metric in app: ", metric);
     if (metric.created_at) {
       user.metric.push(metric);
       setUser(user);

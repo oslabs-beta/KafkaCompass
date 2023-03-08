@@ -18,7 +18,6 @@ const DashboardContainer = (props) => {
 
   // cluster selection for the Content Monitoring
   const [cluster, setCluster] = useState(0);
-  console.log("cluster in Dashboard: ", cluster);
   // current cluster information
   const [clusterId, setClusterId] = useState("");
   const [snapshotTime, setSnapshotTime] = useState("");
@@ -94,7 +93,6 @@ const DashboardContainer = (props) => {
 
   const { metric, setMetric } = useContext(NavbarContext).metricState;
   async function updateMetrics() {
-    console.log("doing the thing");
     const response = await fetch("/api/metric");
     const metric = await response.json();
 
