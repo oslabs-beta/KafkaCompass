@@ -182,7 +182,7 @@ userController.addMetrics = async (req, res, next) => {
   metricsData.clusterId = clusterId;
   try {
     const metric = await Metric.create(metricsData);
-    console.log("metric in addMetrics: ", metric);
+    metric.created_at = Date.now();
     user.metric.push(metric);
     user.save();
     res.locals.metric = metric;
