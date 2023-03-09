@@ -8,13 +8,13 @@ import "../static/styles.css";
 import AboutUsCards from "../components/card";
 import logoWithoutText from "../static/logo_without_text.png";
 
-//navigation menu in top right corner
-const navigation = [
-  { name: "Product", href: "#" },
-  { name: "Features", href: "#" },
-  { name: "Marketplace", href: "#" },
-  { name: "Company", href: "#" }
-];
+//placeholder
+// const navigation = [
+//   { name: "Product", href: "#" },
+//   { name: "Features", href: "#" },
+//   { name: "Marketplace", href: "#" },
+//   { name: "Company", href: "#" }
+// ];
 
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
