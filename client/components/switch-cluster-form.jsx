@@ -28,7 +28,6 @@ const SwitchCluster = ({ setCluster, clusterAdded }) => {
         body: JSON.stringify({ cluster: clusterSelection })
       });
       if (response.ok) {
-        console.log("clusterSelection: ", clusterSelection);
         setCluster(clusterSelection);
         console.log();
       }

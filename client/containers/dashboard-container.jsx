@@ -36,6 +36,7 @@ const DashboardContainer = (props) => {
   const [tableData, setTableData] = useState([]);
   const { metricIndex } = useContext(NavbarContext).metricIndexState;
   const { user } = useContext(NavbarContext).userState;
+  const { metricUpdated } = useContext(NavbarContext).metricUpdatedState;
 
   useEffect(() => {
     //if no clusters in user info, no charts will load
@@ -73,7 +74,7 @@ const DashboardContainer = (props) => {
     } catch {
       console.log("No clusters in user data");
     }
-  }, [metricIndex, metric]);
+  }, [metricIndex, metricUpdated]);
 
   useEffect(() => {
     setRenderDrawerButton(true);

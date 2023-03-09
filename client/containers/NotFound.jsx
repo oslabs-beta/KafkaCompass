@@ -6,7 +6,6 @@ const NotFound = () => {
   const navigate = useNavigate();
 
   const goHome = () => {
-    console.log("Go Home button clicked");
     navigate("/");
   };
 

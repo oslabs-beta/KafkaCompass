@@ -199,7 +199,6 @@ userController.addMetrics = async (req, res, next) => {
 
 userController.switchCluster = async (req, res, next) => {
   const { cluster } = req.body;
-  console.log("in switchCluster with cluster: ", cluster);
   try {
     req.session.currentCluster = cluster;
     next();
