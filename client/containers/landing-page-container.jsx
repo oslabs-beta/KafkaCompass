@@ -67,7 +67,7 @@ const LandingPage = ({ navigate }) => {
       <div className="px-6 pt-6 lg:px-8">
         <nav className="flex items-center justify-between" aria-label="Global">
           <div className="flex lg:flex-1">
-            <a href="#" className="-m-1.5 p-1.5">
+            <a href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">KafkaCompass</span>
               <img
                 className="h-8"

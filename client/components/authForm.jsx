@@ -43,18 +43,17 @@ const AuthForm = ({
           </defs>
         </svg>
       </div>
-      {!login && (
-        <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
-          <div className="sm:mx-auto sm:w-full sm:max-w-md">
-            <img
-              className="mx-auto h-12 w-auto"
-              src={logoWithoutText}
-              alt="KafkaCompass Logo (login)"
-            />
-            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-              Sign in to your account
-            </h2>
-            {/* <p className="mt-2 text-center text-sm text-gray-600">
+      <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-md">
+          <img
+            className="mx-auto h-12 w-auto"
+            src={logoWithoutText}
+            alt="KafkaCompass Logo (login)"
+          />
+          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+            Sign in to your account
+          </h2>
+          {/* <p className="mt-2 text-center text-sm text-gray-600">
               Or{" "}
               <a
                 href="#"
@@ -63,35 +62,35 @@ const AuthForm = ({
                 start your 14-day free trial
               </a>
             </p> */}
-          </div>
+        </div>
 
+        <div
+          className="mt-8 sm:mx-auto sm:w-full sm:max-w-md"
+          // style={formStyle}
+        >
           <div
-            className="mt-8 sm:mx-auto sm:w-full sm:max-w-md"
-            // style={formStyle}
+            className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10"
+            // style={{ padding: "2rem" }}
           >
-            <div
-              className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10"
-              // style={{ padding: "2rem" }}
-            >
-              <form className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
-                <div>
-                  <label
-                    htmlFor="username"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Username
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      {...register("username", { required: true })}
-                      id="username"
-                      name="username"
-                      type="text"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
+            <form className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
+              <div>
+                <label
+                  htmlFor="username"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Username
+                </label>
+                <div className="mt-2">
+                  <input
+                    {...register("username", { required: true })}
+                    name="username"
+                    type="text"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
                 </div>
+              </div>
 
+              {!login && (
                 <div>
                   <label
                     htmlFor="firstName"
@@ -101,7 +100,6 @@ const AuthForm = ({
                   </label>
                   <div className="mt-2">
                     <input
-                      id="firstName"
                       {...register("firstName", { required: false })}
                       name="firstName"
                       type="text"
@@ -109,7 +107,9 @@ const AuthForm = ({
                     />
                   </div>
                 </div>
+              )}
 
+              {!login && (
                 <div>
                   <label
                     htmlFor="lastName"
@@ -119,7 +119,6 @@ const AuthForm = ({
                   </label>
                   <div className="mt-2">
                     <input
-                      id="lastName"
                       {...register("lastName", { required: false })}
                       name="lastName"
                       type="text"
@@ -127,7 +126,9 @@ const AuthForm = ({
                     />
                   </div>
                 </div>
+              )}
 
+              {!login && (
                 <div>
                   <label
                     htmlFor="email"
@@ -137,7 +138,6 @@ const AuthForm = ({
                   </label>
                   <div className="mt-2">
                     <input
-                      id="email"
                       {...register("email", { required: true })}
                       name="email"
                       type="email"
@@ -145,27 +145,26 @@ const AuthForm = ({
                     />
                   </div>
                 </div>
+              )}
 
-                <div>
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Password
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="password"
-                      name="password"
-                      type="password"
-                      autoComplete="current-password"
-                      required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Password
+                </label>
+                <div className="mt-2">
+                  <input
+                    {...register("password", { required: true })}
+                    name="password"
+                    type="password"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
                 </div>
+              </div>
 
-                {/* <div className="flex items-center justify-between">
+              {/* <div className="flex items-center justify-between">
                   <div className="flex items-center">
                     <input
                       id="remember-me"
@@ -191,30 +190,38 @@ const AuthForm = ({
                   </div>
                 </div> */}
 
-                <div>
-                  <button
-                    value={type}
-                    type="submit"
-                    className="mt-6 flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    Sign in
-                  </button>
-                </div>
+              <div>
+                <input
+                  style={{ cursor: "pointer" }}
+                  className="mt-6 flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  value={type}
+                  type="submit"
+                />
+                {/* <button
+                  value={type}
+                  type="submit"
+                  className="mt-6 flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Sign Up
+                </button> */}
+              </div>
 
-                <div>
-                  <button
-                    onClick={() => {
-                      navigate("/");
-                    }}
-                    type="button"
-                    className="mt-2 flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    Go back
-                  </button>
-                </div>
-              </form>
+              <div>
+                <button
+                  onClick={() => {
+                    setRenderDrawerButton(false);
+                    setAuthMode("");
+                    navigate("/");
+                  }}
+                  type="button"
+                  className="mt-2 flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Go Back
+                </button>
+              </div>
+            </form>
 
-              {/* <div className="mt-6">
+            {/* <div className="mt-6">
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
                     <div className="w-full border-t border-gray-300" />
@@ -287,10 +294,34 @@ const AuthForm = ({
                   </div>
                 </div>
               </div> */}
-            </div>
+          </div>
+          <div className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
+            <svg
+              className="relative left-[calc(50%+3rem)] h-[21.1875rem] max-w-none -translate-x-1/2 sm:left-[calc(50%+36rem)] sm:h-[42.375rem]"
+              viewBox="0 0 1155 678"
+            >
+              <path
+                fill="url(#b9e4a85f-ccd5-4151-8e84-ab55c66e5aa1)"
+                fillOpacity=".3"
+                d="M317.219 518.975L203.852 678 0 438.341l317.219 80.634 204.172-286.402c1.307 132.337 45.083 346.658 209.733 145.248C936.936 126.058 882.053-94.234 1031.02 41.331c119.18 108.451 130.68 295.337 121.53 375.223L855 299l21.173 362.054-558.954-142.079z"
+              />
+              <defs>
+                <linearGradient
+                  id="b9e4a85f-ccd5-4151-8e84-ab55c66e5aa1"
+                  x1="1155.49"
+                  x2="-78.208"
+                  y1=".177"
+                  y2="474.645"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  <stop stopColor="#9089FC" />
+                  <stop offset={1} stopColor="#FF80B5" />
+                </linearGradient>
+              </defs>
+            </svg>
           </div>
         </div>
-      )}
+      </div>
 
       {/* {login && ()} */}
     </>
