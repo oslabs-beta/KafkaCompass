@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { NavbarContext } from "../NavbarContext";
 
 const SwitchCluster = ({ setCluster, clusterAdded }) => {
   const [clusterNames, setClusterNames] = useState([]);
@@ -28,6 +29,7 @@ const SwitchCluster = ({ setCluster, clusterAdded }) => {
       });
       if (response.ok) {
         setCluster(clusterSelection);
+        console.log();
       }
     } catch (err) {
       console.log("Network error occurred - could not switch cluster");

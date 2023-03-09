@@ -96,8 +96,7 @@ userController.checkUserAuth = (req, res, next) => {
     if (req.session.user && user.user === req.session.user._id) {
       req.session.auth = true;
       return next();
-    } 
-    else {
+    } else {
       req.session.auth = false;
       return next();
     }
@@ -181,6 +180,7 @@ userController.addMetrics = async (req, res, next) => {
   const user = await User.findById(req.session.user._id);
   const metricsData = res.locals.metricsData;
   metricsData.clusterId = clusterId;
+  metricsData.created_at = Date.now();
   try {
     const metric = await Metric.create(metricsData);
     user.metric.push(metric);
@@ -199,7 +199,6 @@ userController.addMetrics = async (req, res, next) => {
 
 userController.switchCluster = async (req, res, next) => {
   const { cluster } = req.body;
-  console.log("in switchCluster with cluster: ", cluster);
   try {
     req.session.currentCluster = cluster;
     next();

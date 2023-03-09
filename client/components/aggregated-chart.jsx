@@ -31,7 +31,7 @@ const AggregatedChart = (props) => {
       for (let i = 0; i < rawMetric.length; i++) {
         data.labels.push(rawMetric[i].created_at);
         statArr.push({
-          x: i,
+          x: rawMetric[i].created_at,
           //edge case where some of the arrays were empty
           y: rawMetric[i][stat].metrics.length
             ? rawMetric[i][stat].metrics[0].value
@@ -39,7 +39,7 @@ const AggregatedChart = (props) => {
         });
         if (i + 1 === rawMetric.length || rawMetric[i + 1].clusterId !== curr) {
           const metricObj = { label: curr, data: statArr };
-          data.labels.sort();
+          // data.labels.sort();
           data.datasets.push(metricObj);
           if (i + 1 !== rawMetric.length) {
             statArr = [];

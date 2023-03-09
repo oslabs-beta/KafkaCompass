@@ -9,6 +9,7 @@ import mapChartData from "../helper/mapChartData";
 import ClusterHistory from "./cluster-history";
 import SwitchCluster from "../components/switch-cluster-form";
 import PerformanceStatistics from "../components/performance-statistics";
+import SnapshotComparison from "../components/snapshot-comparison";
 
 const DashboardContainer = (props) => {
   // state of current topic inside the Content Monitoring view
@@ -35,6 +36,7 @@ const DashboardContainer = (props) => {
   const [tableData, setTableData] = useState([]);
   const { metricIndex } = useContext(NavbarContext).metricIndexState;
   const { user } = useContext(NavbarContext).userState;
+  const { metricUpdated } = useContext(NavbarContext).metricUpdatedState;
 
   useEffect(() => {
     //if no clusters in user info, no charts will load
@@ -72,7 +74,7 @@ const DashboardContainer = (props) => {
     } catch {
       console.log("No clusters in user data");
     }
-  }, [metricIndex]);
+  }, [metricIndex, metricUpdated]);
 
   useEffect(() => {
     setRenderDrawerButton(true);
@@ -90,9 +92,8 @@ const DashboardContainer = (props) => {
     setDashboardMode("contentMonitoring");
   }
 
-  const { setMetric } = useContext(NavbarContext).metricState;
+  const { metric, setMetric } = useContext(NavbarContext).metricState;
   async function updateMetrics() {
-    console.log("doing the thing");
     const response = await fetch("/api/metric");
     const metric = await response.json();
 
@@ -116,12 +117,19 @@ const DashboardContainer = (props) => {
     );
   } else if (dashboardMode === "contentMonitoring") {
     dashboardView = (
-      <div className="flex justify-center pt-10 items-start">
-        <Messages setTopic={setTopic} topic={topic} cluster={cluster} />
-      </div>
+      <>
+        <h1 className="text-center text-2xl font-bold pt-5">
+          Content Monitoring
+        </h1>
+        <div className="flex justify-center pt-10 items-start">
+          <Messages setTopic={setTopic} topic={topic} cluster={cluster} />
+        </div>
+      </>
     );
   } else if (dashboardMode === "clusterHistory") {
     dashboardView = <ClusterHistory chartData={chartData} />;
+  } else if (dashboardMode === "snapshotComparison") {
+    dashboardView = <SnapshotComparison chartData={chartData} />;
   }
 
   // update metrics object with desired viewing metrics

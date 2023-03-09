@@ -17,7 +17,7 @@ const metricSchema = new Schema({
   successful_authentication_count: Object,
   consumer_lag_offsets: Object,
   cluster_load_percent: Object,
-  created_at: { type: Date, default: Date.now() }
+  created_at: Date
 });
 
 module.exports = new model("Metric", metricSchema);
