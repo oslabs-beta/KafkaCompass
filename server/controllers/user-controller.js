@@ -180,9 +180,9 @@ userController.addMetrics = async (req, res, next) => {
   const user = await User.findById(req.session.user._id);
   const metricsData = res.locals.metricsData;
   metricsData.clusterId = clusterId;
+  metricsData.created_at = Date.now();
   try {
     const metric = await Metric.create(metricsData);
-    metric.created_at = Date.now();
     user.metric.push(metric);
     user.save();
     res.locals.metric = metric;
