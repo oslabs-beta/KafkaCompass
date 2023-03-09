@@ -7,6 +7,9 @@ import JasonKuyper from "../static/JasonKuyper.jpg";
 import RyanZarou from "../static/RyanZarou.png";
 import DisonRuan from "../static/DisonRuan.jpg";
 
+import { Dialog } from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+
 const AboutUs = () => {
   const team = [
     {
@@ -46,8 +49,10 @@ const AboutUs = () => {
     }
   ];
   return (
-    <div className="font-mono py-20">
-      <h3 className="page-title">Meet the team</h3>
+    <div className="py-20">
+      <h3 className="text-center text-5xl font-semibold text-gray-900">
+        Meet the team
+      </h3>
       <div className="about-body drawer-content flex-wrap justify-center">
         <Card team={team} />
       </div>

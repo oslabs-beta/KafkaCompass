@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/oslabs-beta/KafkaCompass#readme",
   "dependencies": {
+    "@headlessui/react": "^1.7.13",
+    "@heroicons/react": "^2.0.16",
     "axios": "^1.1.3",
     "bcrypt": "^5.1.0",
     "chart.js": "^4.1.1",
