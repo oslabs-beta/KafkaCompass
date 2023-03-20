@@ -2,35 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dog from "../resources/images/404-dog.jpg";
 
-// const NotFound = () => {
-//   const navigate = useNavigate();
-
-//   const goHome = () => {
-//     console.log("Go Home button clicked");
-//     navigate("/");
-//   };
-
-//   return (
-//     <div>
-//       <h1>Page Not Found</h1>
-//       <p>Uh oh, the page you were looking for was not found.</p>
-//       <img src={dog}></img>
-//       <button onClick={goHome}>Go Home</button>
-//     </div>
-//   );
-// };
+const goHome = () => {
+  console.log("Go Home button clicked");
+  navigate("/");
+};
 
 export default function NotFound({ navigate }) {
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full">
-        <body class="h-full">
-        ```
-      */}
       <main className="grid min-h-full place-items-center bg-white py-24 px-6 sm:py-32 lg:px-8">
         <div className="text-center">
           <p className="text-base font-semibold text-indigo-600">404</p>
@@ -62,5 +41,3 @@ export default function NotFound({ navigate }) {
     </>
   );
 }
-
-// export default NotFound;
