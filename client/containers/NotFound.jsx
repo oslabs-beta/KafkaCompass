@@ -1,11 +1,4 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import dog from "../resources/images/404-dog.jpg";
-
-const goHome = () => {
-  console.log("Go Home button clicked");
-  navigate("/");
-};
+import React from "react";
 
 export default function NotFound({ navigate }) {
   return (
