@@ -122,10 +122,14 @@ function App() {
             exact
             path="/dashboard"
             element={
-              <>
-                <Navbar navigate={navigate} logUserOut={logUserOut} />
-                loggedIn ? <DashboardContainer /> : <Navigate to="/" />
-              </>
+              loggedIn ? (
+                <>
+                  <Navbar navigate={navigate} logUserOut={logUserOut} />
+                  <DashboardContainer />
+                </>
+              ) : (
+                <Navigate to="/" />
+              )
             }
           />
           <Route exact path="/auth" element={<Auth navigate={navigate} />} />

@@ -7,6 +7,7 @@ import contentMonitoringScreenshot from "../static/contentMonitoringScreenshot.p
 import "../static/styles.css";
 import AboutUsCards from "../components/card";
 import logoWithoutText from "../static/logo_without_text.png";
+import KafkaCompassDashboard from "../static/KafkaCompassDashboard.jpg";
 
 //placeholder
 // const navigation = [
@@ -58,8 +59,8 @@ const LandingPage = ({ navigate }) => {
               y2="474.645"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stopColor="#9089FC" />
-              <stop offset={1} stopColor="#FF80B5" />
+              <stop stopColor="#2d20f5" />
+              <stop offset={1} stopColor="#1435f5" />
             </linearGradient>
           </defs>
         </svg>
@@ -199,7 +200,7 @@ const LandingPage = ({ navigate }) => {
                   }}
                   className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Get started
+                  Create new account
                 </a>
                 <a
                   style={{ cursor: "pointer" }}
@@ -213,7 +214,7 @@ const LandingPage = ({ navigate }) => {
             <div className="mt-16 flow-root sm:mt-24">
               <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
                 <img
-                  src="https://tailwindui.com/img/component-images/project-app-screenshot.png"
+                  src={KafkaCompassDashboard}
                   alt="App screenshot"
                   width={2432}
                   height={1442}
@@ -241,8 +242,8 @@ const LandingPage = ({ navigate }) => {
                   y2="474.645"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop stopColor="#9089FC" />
-                  <stop offset={1} stopColor="#FF80B5" />
+                  <stop stopColor="#2d20f5" />
+                  <stop offset={1} stopColor="#1435f5" />
                 </linearGradient>
               </defs>
             </svg>

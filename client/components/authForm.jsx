@@ -39,8 +39,8 @@ const AuthForm = ({
               y2="474.645"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stopColor="#9089FC" />
-              <stop offset={1} stopColor="#FF80B5" />
+              <stop stopColor="#2d20f5" />
+              <stop offset={1} stopColor="#1435f5" />
             </linearGradient>
           </defs>
         </svg>
@@ -234,7 +234,7 @@ const AuthForm = ({
               </div>
 
               <div>
-                <button
+                {/* <button
                   onClick={() => {
                     setRenderDrawerButton(false);
                     setAuthMode("");
@@ -244,7 +244,7 @@ const AuthForm = ({
                   className="mt-2 flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Go Back
-                </button>
+                </button> */}
               </div>
             </form>
 
@@ -341,8 +341,8 @@ const AuthForm = ({
                   y2="474.645"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop stopColor="#9089FC" />
-                  <stop offset={1} stopColor="#FF80B5" />
+                  <stop stopColor="#2d20f5" />
+                  <stop offset={1} stopColor="#1435f5" />
                 </linearGradient>
               </defs>
             </svg>
