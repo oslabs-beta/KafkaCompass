@@ -146,7 +146,7 @@ const LandingPage = ({ navigate }) => {
       <main>
         <div className="relative py-10 sm:py-14 lg:pb-20">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="mx-auto max-w-2xl text-center">
+            <div className="mx-auto max-w-3xl text-center">
               <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
                 Don't get lost navigating your Kafka clusters. <br></br> Grab a
                 compass!
