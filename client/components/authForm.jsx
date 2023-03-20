@@ -1,5 +1,7 @@
 import React from "react";
 import logoWithoutText from "../static/logo_without_text.png";
+import { Dialog } from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 document.getElementsByTagName("html")[0].classList.add("bg-gray-50");
 document.getElementsByTagName("html")[0].classList.add("h-full");
@@ -42,6 +44,31 @@ const AuthForm = ({
             </linearGradient>
           </defs>
         </svg>
+      </div>
+      <div className="px-6 pt-6 lg:px-8">
+        <nav className="flex items-center justify-between" aria-label="Global">
+          <div className="flex lg:flex-1">
+            <a href="/" className="-m-1.5 p-1.5">
+              <span className="sr-only">KafkaCompass</span>
+              <img
+                className="h-8"
+                src={logoWithoutText}
+                alt="KafkaCompass Logo"
+              />
+            </a>
+          </div>
+          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+            <a
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                navigate("/");
+              }}
+              className="text-sm font-semibold leading-6 text-gray-900"
+            >
+              <span aria-hidden="true">&larr;</span> Go back
+            </a>
+          </div>
+        </nav>
       </div>
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
