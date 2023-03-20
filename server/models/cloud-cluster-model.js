@@ -8,7 +8,7 @@ const cloudClusterSchema = new Schema({
   API_SECRET: { type: String, required: true },
   CLOUD_KEY: { type: String, required: true },
   CLOUD_SECRET: { type: String, required: true },
-  clusterId: { type: String, required: true, unique: true },
+  clusterId: { type: String, required: true },
   RESTendpoint: { type: String, required: true },
   bootstrapServer: { type: String, required: true }
 });

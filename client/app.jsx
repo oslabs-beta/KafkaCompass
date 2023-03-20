@@ -30,6 +30,7 @@ function App() {
   const [metricIndex, setMetricIndex] = useState(-1);
   // holder for data -> metric is the part of user state to force the re-render when user updates metrics
   const [metric, setMetric] = useState({});
+  const [metricUpdated, setMetricUpdated] = useState(false);
 
   // shared navigation bar state
   const providerValue = {
@@ -45,7 +46,7 @@ function App() {
       () => ({ authMode, setAuthMode }),
       [authMode, setAuthMode]
     ),
-    userState: useMemo(() => ({ user, setUser }), [user, setUser]),
+    userState: { user, setUser },
     dashboardState: useMemo(
       () => ({ dashboardMode, setDashboardMode }),
       [dashboardMode, setDashboardMode]
@@ -54,11 +55,9 @@ function App() {
       () => ({ sideBarMode, setSideBarMode }),
       [sideBarMode, setSideBarMode]
     ),
-    metricState: useMemo(() => ({ metric, setMetric }), [metric, setMetric]),
-    metricIndexState: useMemo(
-      () => ({ metricIndex, setMetricIndex }),
-      [metricIndex, setMetricIndex]
-    )
+    metricState: { metric, setMetric },
+    metricIndexState: { metricIndex, setMetricIndex },
+    metricUpdatedState: { metricUpdated, setMetricUpdated }
   };
 
   const checkSession = async () => {
@@ -101,6 +100,7 @@ function App() {
     if (metric.created_at) {
       user.metric.push(metric);
       setUser(user);
+      setMetricUpdated(!metricUpdated);
     }
   }, [metric]);
 
