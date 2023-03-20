@@ -4,7 +4,8 @@ import logoWithoutText from "../static/logo_without_text.png";
 const Footer = () => {
   return (
     <>
-      <footer className="footer p-10 bg-gray-700 text-neutral-content mt-auto">
+      {/* text-neutral-content */}
+      <footer className="footer p-10 bg-gray-700 font-sans text-slate-100 mt-auto">
         <div>
           <img className="h-12" src={logoWithoutText} alt="Kafka logo" />
           <p>
@@ -14,7 +15,7 @@ const Footer = () => {
           </p>
         </div>
         <div>
-          <span className="footer-title">Social</span>
+          <span className="text-xl font-bold">Social</span>
           <div className="grid grid-flow-col gap-4">
             <a
               href="https://www.linkedin.com/company/kafkacompass/"
