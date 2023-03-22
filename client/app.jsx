@@ -116,13 +116,21 @@ function App() {
   return (
     <NavbarContext.Provider value={providerValue}>
       <main className="flex flex-col min-h-screen">
-        <Navbar navigate={navigate} logUserOut={logUserOut} />
         <Routes>
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<NotFound navigate={navigate} />} />
           <Route
             exact
             path="/dashboard"
-            element={loggedIn ? <DashboardContainer /> : <Navigate to="/" />}
+            element={
+              loggedIn ? (
+                <>
+                  <Navbar navigate={navigate} logUserOut={logUserOut} />
+                  <DashboardContainer />
+                </>
+              ) : (
+                <Navigate to="/" />
+              )
+            }
           />
           <Route exact path="/auth" element={<Auth navigate={navigate} />} />
           <Route exact path="/" element={<LandingPage navigate={navigate} />} />
