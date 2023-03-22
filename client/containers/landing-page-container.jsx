@@ -24,7 +24,7 @@ const LandingPage = ({ navigate }) => {
     let targetImage = targetImageNumber - 1;
     console.log("targetImage is", targetImage);
 
-    let targetXPixel = carouselWidth * targetImage + 1;
+    let targetXPixel = carouselWidth * targetImage + 8;
     console.log("targetXPixel is", targetXPixel);
 
     if (carouselElement.current) {
@@ -224,7 +224,7 @@ const LandingPage = ({ navigate }) => {
                       className="rounded-md shadow-2xl ring-1 ring-gray-900/10"
                     />
                   </div>
-                  <div id="item2" className="carousel-item w-full">
+                  <div id="item2" className="carousel-item w-full mx-[14px]">
                     <img
                       src={KafkaCompassDashboard}
                       alt="App screenshot"
