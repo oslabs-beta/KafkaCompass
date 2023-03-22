@@ -7,7 +7,7 @@ import contentMonitoringScreenshot from "../static/contentMonitoringScreenshot.p
 import "../static/styles.css";
 import AboutUsCards from "../components/card";
 import logoWithoutText from "../static/logo_without_text.png";
-import KafkaCompassDashboard from "../static/KafkaCompassDashboard.jpg";
+import KafkaCompassDashboard from "../static/KafkaCompassDashboard3.png";
 
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -171,14 +171,14 @@ const LandingPage = ({ navigate }) => {
                 compass!
               </h1>
               <p className="mt-6 text-lg leading-8 text-gray-600">
-                Welcome to KafkaCompass: an open source tool to make your Kafka
-                experience easier. KafkaCompass will be your navigator while
-                working with Confluent Cloud. Get performance and content
-                statistics to monitor your Kafka cluster, view messages in your
-                topics, and check your cluster's history snapshots to see how
-                you cluster's performance changed over time. All you need to get
-                started is a running Kafka cluster in your Confluent Cloud.
-                Create an account and start monitoring!
+                Welcome to KafkaCompass: an open source web application to make
+                your Kafka monitoring experience easier. KafkaCompass will be
+                your navigator while working with Confluent Cloud. Get
+                performance and content statistics to monitor your Kafka
+                cluster, read and debug message streams, and check and compare
+                historical cluster snapshots to track performance changes over
+                time. All you need to get started is a running Kafka cluster in
+                your Confluent Cloud. Create an account and start monitoring!
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <a
