@@ -7,12 +7,33 @@ import contentMonitoringScreenshot from "../static/contentMonitoringScreenshot.p
 import "../static/styles.css";
 import AboutUsCards from "../components/card";
 import logoWithoutText from "../static/logo_without_text.png";
-import KafkaCompassDashboard from "../static/KafkaCompassDashboard3.png";
+import KafkaCompassDashboardPic from "../static/KafkaCompassDashboard3.png";
+import ConsumeMessagesGif from "../static/ConsumeMessages.gif";
+import ClusterHistoryGif from "../static/clusterHistory.gif";
 
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 const LandingPage = ({ navigate }) => {
+  let carouselElement = useRef(); // carouselElement has to hold the HTMLElement of the carousel
+
+  function scrollCarousel(targetImageNumber) {
+    let carouselWidth = window.innerWidth * 0.94666;
+
+    console.log("carouselWidth is ", carouselWidth);
+
+    // Images are numbered from 1 to 4 so thats why we substract 1
+    let targetImage = targetImageNumber - 1;
+    console.log("targetImage is", targetImage);
+
+    let targetXPixel = carouselWidth * targetImage + 8;
+    console.log("targetXPixel is", targetXPixel);
+
+    if (carouselElement.current) {
+      carouselElement.current.scrollTo(targetXPixel, 0);
+    }
+  }
+
   const { setAuthMode } = useContext(NavbarContext).authModeState;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   // const { loggedIn } = useContext(NavbarContext).loggedState;
@@ -181,7 +202,7 @@ const LandingPage = ({ navigate }) => {
                 </a>
               </div>
             </div>
-            <div className="mt-16 flow-root sm:mt-24">
+            {/* <div className="mt-16 flow-root sm:mt-24">
               <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
                 <img
                   src={KafkaCompassDashboard}
@@ -191,8 +212,60 @@ const LandingPage = ({ navigate }) => {
                   className="rounded-md shadow-2xl ring-1 ring-gray-900/10"
                 />
               </div>
+            </div> */}
+
+            <div className="mt-16 flow-root sm:mt-24">
+              <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+                <div ref={carouselElement} className="carousel w-full">
+                  <div id="item1" className="carousel-item w-full">
+                    <img
+                      src={KafkaCompassDashboardPic}
+                      alt="App screenshot"
+                      width={2432}
+                      height={1442}
+                      className="rounded-md shadow-2xl ring-1 ring-gray-900/10"
+                    />
+                  </div>
+                  <div id="item2" className="carousel-item w-full mx-[14px]">
+                    <img
+                      src={ConsumeMessagesGif}
+                      alt="App screenshot"
+                      width={2432}
+                      height={1442}
+                      className="rounded-md shadow-2xl ring-1 ring-gray-900/10"
+                    />
+                  </div>
+                  <div id="item3" className="carousel-item w-full">
+                    <img
+                      src={ClusterHistoryGif}
+                      alt="App screenshot"
+                      width={2432}
+                      height={1442}
+                      className="rounded-md shadow-2xl ring-1 ring-gray-900/10"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-center w-full py-2 gap-2 mt-4">
+                <button
+                  onClick={() => scrollCarousel(1)}
+                  // href="#item1"
+                  className="btn btn-xs min-h-0 w-2 h-2 btn-circle"
+                ></button>
+                <button
+                  onClick={() => scrollCarousel(2)}
+                  // href="#item2"
+                  className="btn btn-xs min-h-0 w-2 h-2 btn-circle"
+                ></button>
+                <button
+                  onClick={() => scrollCarousel(3)}
+                  // href="#item3"
+                  className="btn btn-xs min-h-0 w-2 h-2 btn-circle"
+                ></button>
+              </div>
             </div>
           </div>
+
           <div className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
             <svg
               className="relative left-[calc(50%+3rem)] h-[21.1875rem] max-w-none -translate-x-1/2 sm:left-[calc(50%+36rem)] sm:h-[42.375rem]"
