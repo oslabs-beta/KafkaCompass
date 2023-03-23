@@ -7,7 +7,9 @@ import contentMonitoringScreenshot from "../static/contentMonitoringScreenshot.p
 import "../static/styles.css";
 import AboutUsCards from "../components/card";
 import logoWithoutText from "../static/logo_without_text.png";
-import KafkaCompassDashboard from "../static/KafkaCompassDashboard3.png";
+import KafkaCompassDashboardPic from "../static/KafkaCompassDashboard3.png";
+import ConsumeMessagesGif from "../static/ConsumeMessages.gif";
+import ClusterHistoryGif from "../static/clusterHistory.gif";
 
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -217,7 +219,7 @@ const LandingPage = ({ navigate }) => {
                 <div ref={carouselElement} className="carousel w-full">
                   <div id="item1" className="carousel-item w-full">
                     <img
-                      src={KafkaCompassDashboard}
+                      src={KafkaCompassDashboardPic}
                       alt="App screenshot"
                       width={2432}
                       height={1442}
@@ -226,7 +228,7 @@ const LandingPage = ({ navigate }) => {
                   </div>
                   <div id="item2" className="carousel-item w-full mx-[14px]">
                     <img
-                      src={KafkaCompassDashboard}
+                      src={ConsumeMessagesGif}
                       alt="App screenshot"
                       width={2432}
                       height={1442}
@@ -235,7 +237,7 @@ const LandingPage = ({ navigate }) => {
                   </div>
                   <div id="item3" className="carousel-item w-full">
                     <img
-                      src={KafkaCompassDashboard}
+                      src={ClusterHistoryGif}
                       alt="App screenshot"
                       width={2432}
                       height={1442}
