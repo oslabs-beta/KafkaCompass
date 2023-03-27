@@ -177,7 +177,7 @@ const Messages = ({ topic, setTopic, cluster }) => {
               className="overflow-y-auto relative shadow-md sm:rounded-lg w-full mb-2"
             >
               <table className="w-full text-sm text-gray-500 rounded table-fixed">
-                <thead className="bg-gray-700 text-xs text-gray-200 uppercase bg-gray-50 table-header-group sticky top-0">
+                <thead className="bg-gray-700 text-xs text-gray-200 uppercase table-header-group sticky top-0">
                   <tr>
                     {/* TABLE COLUMN HEADERS */}
                     {/* Checkbox column: might be added in a later version */}

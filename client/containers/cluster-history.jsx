@@ -47,13 +47,13 @@ const ClusterHistory = ({ chartData }) => {
         <AggregatedChart chartData={chartData} />
         <h1 className="text-center text-xl font-bold pb-5">Snapshots</h1>
         <div className="table-history pb-5">
-          <div className="overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="history-table table-compact w-auto">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+          <div className="overflow-x-auto overflow-y-auto shadow-md sm:rounded-lg">
+            <table className="history-table table-compact w-auto rounded table-fixed">
+              <thead className="text-xs text-gray-200 uppercase bg-gray-700 sticky top-0">
                 <tr>
-                  <th></th>
-                  <th className="py-3 px-6 text-center">Date</th>
-                  <th className="py-3 px-6 text-center">Cluster Id:</th>
+                  <th className="w-20"></th>
+                  <th className="py-3 text-left">Date</th>
+                  <th className="py-3 px-6 text-center">Cluster Id</th>
                   <th className="py-3 px-6 text-center">View Metrics</th>
                 </tr>
               </thead>
