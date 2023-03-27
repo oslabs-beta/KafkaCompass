@@ -95,7 +95,7 @@ const PerformanceStatistics = ({
               </th>
             </thead>
           </table>
-          <h1 className="flex justify-around text-xl pb-5 pt-5">
+          <h1 className="flex justify-around text-l pb-5 pt-5">
             <b>Cluster: {clusterId}</b> <b>Snapshot: {snapshotTime}</b>
           </h1>
           {chartData && (
