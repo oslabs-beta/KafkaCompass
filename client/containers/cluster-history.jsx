@@ -47,7 +47,7 @@ const ClusterHistory = ({ chartData }) => {
         <AggregatedChart chartData={chartData} />
         <h1 className="text-center text-xl font-bold pb-5">Snapshots</h1>
         <div className="table-history pb-5">
-          <div className="overflow-x-auto overflow-y-auto shadow-md sm:rounded-lg">
+          <div className="overflow-x-auto overflow-y-auto shadow-md sm:rounded-lg max-h-[36rem]">
             <table className="history-table table-compact w-auto rounded table-fixed">
               <thead className="text-xs text-gray-200 uppercase bg-gray-700 sticky top-0">
                 <tr>
