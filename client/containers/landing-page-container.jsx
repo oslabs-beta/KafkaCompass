@@ -8,8 +8,8 @@ import "../static/styles.css";
 import AboutUsCards from "../components/card";
 import logoWithoutText from "../static/logo_without_text.png";
 import KafkaCompassDashboardPic from "../static/KafkaCompassDashboard3.png";
-import ConsumeMessagesGif from "../static/ConsumeMessages.gif";
-import ClusterHistoryGif from "../static/clusterHistory.gif";
+import ContentMonitoringScreenshot from "../static/contentMonitoringScreenshot2.png";
+import ClusterHistoryScreenshot from "../static/clusterHistoryScreenshot2.png";
 
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -228,7 +228,7 @@ const LandingPage = ({ navigate }) => {
                   </div>
                   <div id="item2" className="carousel-item w-full mx-[14px]">
                     <img
-                      src={ConsumeMessagesGif}
+                      src={ContentMonitoringScreenshot}
                       alt="App screenshot"
                       width={2432}
                       height={1442}
@@ -237,7 +237,7 @@ const LandingPage = ({ navigate }) => {
                   </div>
                   <div id="item3" className="carousel-item w-full">
                     <img
-                      src={ClusterHistoryGif}
+                      src={ClusterHistoryScreenshot}
                       alt="App screenshot"
                       width={2432}
                       height={1442}
