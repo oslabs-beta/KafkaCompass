@@ -71,16 +71,6 @@ const Navbar = ({ navigate, logUserOut }) => {
           </li>
           <li
             className={
-              dashboardMode === "snapshotComparison"
-                ? " bg-blue-800 text-white"
-                : ""
-            }
-            onClick={changeModeSnapshotComparison}
-          >
-            <a>Snapshot Comparison</a>
-          </li>
-          <li
-            className={
               dashboardMode === "clusterHistory"
                 ? " bg-blue-800 text-white"
                 : ""
@@ -92,6 +82,16 @@ const Navbar = ({ navigate, logUserOut }) => {
             }}
           >
             <a>Cluster History</a>
+          </li>
+          <li
+            className={
+              dashboardMode === "snapshotComparison"
+                ? " bg-blue-800 text-white"
+                : ""
+            }
+            onClick={changeModeSnapshotComparison}
+          >
+            <a>Snapshot Comparison</a>
           </li>
           <b>Cluster Options</b>
           <li>

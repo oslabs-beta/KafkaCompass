@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import TopicButtons from "../components/topic-buttons";
+import date from "../helper/dateFormatter";
 
 const Messages = ({ topic, setTopic, cluster }) => {
   //state for current topic
@@ -101,17 +102,6 @@ const Messages = ({ topic, setTopic, cluster }) => {
     }
   };
 
-  const date = new Intl.DateTimeFormat("en-US", {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-    timeZoneName: "short"
-  });
-
   //check if messageList contains messages
 
   messageList.sort((a, b) => b.timestamp - a.timestamp);
@@ -186,8 +176,8 @@ const Messages = ({ topic, setTopic, cluster }) => {
               style={{ maxHeight: "36rem" }}
               className="overflow-y-auto relative shadow-md sm:rounded-lg w-full mb-2"
             >
-              <table className="w-full text-sm text-gray-500 rounded dark:text-gray-400 table-fixed">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 table-header-group">
+              <table className="w-full text-sm text-gray-500 rounded table-fixed">
+                <thead className="bg-gray-700 text-xs text-gray-200 uppercase table-header-group sticky top-0">
                   <tr>
                     {/* TABLE COLUMN HEADERS */}
                     {/* Checkbox column: might be added in a later version */}

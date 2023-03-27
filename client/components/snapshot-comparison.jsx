@@ -4,6 +4,7 @@ import AddClusterForm from "../components/add-cluster-form";
 import ClusterItem from "../components/cluster-item";
 import AggregatedChart from "../components/aggregated-chart";
 import { NavbarContext } from "../NavbarContext";
+import date from "../helper/dateFormatter";
 
 const SnapshotComparison = ({ chartData }) => {
   //state toggling if displaying selection menu or comparison
@@ -51,12 +52,14 @@ const SnapshotComparison = ({ chartData }) => {
             }
           >
             <a
-              className="justify-end"
+              className="justify-start"
               onClick={selectSnapshot1}
               id={metricIndex}
             >
               {metrics[metricIndex].clusterId} :{" "}
-              {metrics[metricIndex].created_at}
+              {metrics[metricIndex].created_at !== undefined
+                ? date.format(new Date(metrics[metricIndex].created_at))
+                : "N/A"}
             </a>
           </li>
         );
@@ -68,12 +71,14 @@ const SnapshotComparison = ({ chartData }) => {
             }
           >
             <a
-              className="justify-end"
+              className="justify-start"
               onClick={selectSnapshot2}
               id={metricIndex}
             >
               {metrics[metricIndex].clusterId} :{" "}
-              {metrics[metricIndex].created_at}
+              {metrics[metricIndex].created_at !== undefined
+                ? date.format(new Date(metrics[metricIndex].created_at))
+                : "N/A"}
             </a>
           </li>
         );
@@ -92,7 +97,7 @@ const SnapshotComparison = ({ chartData }) => {
               </label>
               <ul
                 tabIndex={0}
-                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-min max-h-96 overflow-y-auto flex-nowrap"
+                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-[18rem] max-h-96 overflow-y-auto flex-nowrap"
               >
                 {snapshotList1}
               </ul>
@@ -103,7 +108,7 @@ const SnapshotComparison = ({ chartData }) => {
               </label>
               <ul
                 tabIndex={0}
-                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-min h-96 max-h-96 overflow-y-auto flex-nowrap"
+                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-[18rem] h-96 max-h-96 overflow-y-auto flex-nowrap"
               >
                 {snapshotList2}
               </ul>
@@ -158,12 +163,16 @@ const SnapshotComparison = ({ chartData }) => {
                 <tr>
                   <th>
                     Cluster: {snapshot1Obj.clusterId} at{" "}
-                    {snapshot1Obj.created_at}
+                    {snapshot1Obj.created_at !== undefined
+                      ? date.format(new Date(snapshot1Obj.created_at))
+                      : "N/A"}
                   </th>
                   <th className="text-center">Metric</th>
                   <th>
                     Cluster: {snapshot2Obj.clusterId} at{" "}
-                    {snapshot2Obj.created_at}
+                    {snapshot2Obj.created_at !== undefined
+                      ? date.format(new Date(snapshot2Obj.created_at))
+                      : "N/A"}
                   </th>
                 </tr>
               </thead>

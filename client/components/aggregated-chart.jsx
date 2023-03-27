@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { NavbarContext } from "../NavbarContext";
 import "chart.js/auto";
 import { Bar, Line } from "react-chartjs-2";
+import date from "../helper/dateFormatter";
 
 const AggregatedChart = (props) => {
   const { user } = useContext(NavbarContext).userState;
@@ -29,14 +30,16 @@ const AggregatedChart = (props) => {
       const labels = [];
       let curr = rawMetric[0].clusterId;
       for (let i = 0; i < rawMetric.length; i++) {
-        data.labels.push(rawMetric[i].created_at);
-        statArr.push({
-          x: rawMetric[i].created_at,
-          //edge case where some of the arrays were empty
-          y: rawMetric[i][stat].metrics.length
-            ? rawMetric[i][stat].metrics[0].value
-            : 0
-        });
+        if (rawMetric[i].created_at !== undefined) {
+          data.labels.push(date.format(new Date(rawMetric[i].created_at)));
+          statArr.push({
+            x: date.format(new Date(rawMetric[i].created_at)),
+            //edge case where some of the arrays were empty
+            y: rawMetric[i][stat].metrics.length
+              ? rawMetric[i][stat].metrics[0].value
+              : 0
+          });
+        }
         if (i + 1 === rawMetric.length || rawMetric[i + 1].clusterId !== curr) {
           const metricObj = { label: curr, data: statArr };
           // data.labels.sort();

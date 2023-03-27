@@ -42,8 +42,8 @@ const PerformanceStatistics = ({
       key={key}
       onClick={() => {
         updateSideDrawer(key);
-        // if we switched to history mode but have not choosen the snapshot,
-        // and now we whant to back to the chart on current cluster
+        // if we switched to history mode but have not chosen the snapshot,
+        // and now we what to back to the chart on current cluster
         if (sideBarMode === "history" && metricIndex === -1) {
           setSideBarMode("current");
           setDashboardMode("performanceStatistics");
@@ -95,7 +95,7 @@ const PerformanceStatistics = ({
               </th>
             </thead>
           </table>
-          <h1 className="flex justify-around text-xl pb-5 pt-5">
+          <h1 className="flex justify-around text-l pb-5 pt-5">
             <b>Cluster: {clusterId}</b> <b>Snapshot: {snapshotTime}</b>
           </h1>
           {chartData && (

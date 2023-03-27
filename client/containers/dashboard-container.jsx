@@ -10,6 +10,7 @@ import ClusterHistory from "./cluster-history";
 import SwitchCluster from "../components/switch-cluster-form";
 import PerformanceStatistics from "../components/performance-statistics";
 import SnapshotComparison from "../components/snapshot-comparison";
+import date from "../helper/dateFormatter";
 
 const DashboardContainer = (props) => {
   // state of current topic inside the Content Monitoring view
@@ -70,7 +71,7 @@ const DashboardContainer = (props) => {
       setTableData(dataForTable);
       setChart(mapChartData(data));
       setClusterId(data.clusterId);
-      setSnapshotTime(data.created_at);
+      setSnapshotTime(date.format(new Date(data.created_at)));
     } catch {
       console.log("No clusters in user data");
     }
