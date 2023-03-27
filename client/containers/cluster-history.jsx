@@ -52,7 +52,7 @@ const ClusterHistory = ({ chartData }) => {
               <thead className="text-xs text-gray-200 uppercase bg-gray-700 sticky top-0">
                 <tr>
                   <th className="w-20"></th>
-                  <th className="py-3 text-left">Date</th>
+                  <th className="py-3 text-left w-[17rem]">Date</th>
                   <th className="py-3 px-6 text-center">Cluster Id</th>
                   <th className="py-3 px-6 text-center">View Metrics</th>
                 </tr>
