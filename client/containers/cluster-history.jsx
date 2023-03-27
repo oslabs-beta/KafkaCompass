@@ -4,6 +4,7 @@ import AddClusterForm from "../components/add-cluster-form";
 import ClusterItem from "../components/cluster-item";
 import AggregatedChart from "../components/aggregated-chart";
 import { NavbarContext } from "../NavbarContext";
+import date from "../helper/dateFormatter";
 
 const ClusterHistory = ({ chartData }) => {
   const navigate = useNavigate();
@@ -17,11 +18,17 @@ const ClusterHistory = ({ chartData }) => {
 
   // gets cluster items from metrics
   const clusterItems = metrics.map((metric, idx) => {
+    // console.log("time at:", metric.created_at);
+    let metricDate = "N/A";
+    if (metric.created_at !== undefined) {
+      metricDate = date.format(new Date(metric.created_at));
+      console.log(metricDate);
+    }
     return (
       <ClusterItem
         index={idx}
         key={metric._id}
-        date={metric.created_at}
+        date={metricDate}
         clusterId={metric.clusterId}
         navigate={navigate}
       />
@@ -45,9 +52,9 @@ const ClusterHistory = ({ chartData }) => {
               <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
                   <th></th>
-                  <th>Date</th>
-                  <th>Cluster Id:</th>
-                  <th>View Metrics</th>
+                  <th className="py-3 px-6 text-center">Date</th>
+                  <th className="py-3 px-6 text-center">Cluster Id:</th>
+                  <th className="py-3 px-6 text-center">View Metrics</th>
                 </tr>
               </thead>
               <tbody>{clusterItems}</tbody>

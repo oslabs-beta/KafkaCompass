@@ -42,8 +42,8 @@ const PerformanceStatistics = ({
       key={key}
       onClick={() => {
         updateSideDrawer(key);
-        // if we switched to history mode but have not choosen the snapshot,
-        // and now we whant to back to the chart on current cluster
+        // if we switched to history mode but have not chosen the snapshot,
+        // and now we what to back to the chart on current cluster
         if (sideBarMode === "history" && metricIndex === -1) {
           setSideBarMode("current");
           setDashboardMode("performanceStatistics");
